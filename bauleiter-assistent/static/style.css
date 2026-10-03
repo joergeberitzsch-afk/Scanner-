@@ -1,0 +1,247 @@
+:root {
+  --hintergrund: #f3f4f6;
+  --flaeche: #ffffff;
+  --text: #1f2933;
+  --text-leise: #616e7c;
+  --rand: #d9dee4;
+  --akzent: #1f5fa8;
+  --akzent-hell: #e3edf9;
+  --gefahr: #b42318;
+  --warnung: #b54708;
+  --warnung-hell: #fff4e5;
+  --ok: #1b7a3a;
+  --foto: #1f5fa8;
+  --mangel: #d92d20;
+  --radius: 8px;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--text);
+  background: var(--hintergrund);
+}
+a { color: var(--akzent); }
+code { font-size: 0.9em; background: #eef1f4; padding: 0 4px; border-radius: 4px; word-break: break-all; }
+h1 { font-size: 1.35rem; margin: 0; }
+h2 { font-size: 1.1rem; margin: 0 0 0.6rem; }
+h2 small, h3 small { font-weight: normal; color: var(--text-leise); font-size: 0.85rem; }
+h3 { font-size: 1rem; margin: 1rem 0 0.5rem; }
+
+/* Kopfzeile */
+.kopfzeile {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1.25rem;
+  padding: 0.55rem 1rem;
+  background: #16324f; color: #fff;
+}
+.app-marke { display: flex; align-items: center; gap: 0.5rem; font-weight: 600; }
+.logo { font-size: 1.3rem; }
+.badge {
+  display: inline-block; padding: 1px 8px; border-radius: 999px;
+  background: #f79009; color: #1f1300; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.02em;
+}
+.badge.neu { background: var(--akzent-hell); color: var(--akzent); }
+.projekt { color: #c8d6e5; font-size: 0.9rem; flex: 1; min-width: 8rem; }
+.navigation { display: flex; flex-wrap: wrap; gap: 0.25rem; }
+.navigation a {
+  color: #dfe8f1; text-decoration: none; padding: 0.35rem 0.7rem; border-radius: 6px;
+}
+.navigation a:hover { background: rgba(255,255,255,0.1); }
+.navigation a.aktiv { background: #fff; color: #16324f; font-weight: 600; }
+
+.inhalt { padding: 1rem; max-width: 1500px; margin: 0 auto; }
+
+/* Meldungen */
+.meldung {
+  position: fixed; right: 1rem; bottom: 1rem; z-index: 50; max-width: min(32rem, calc(100vw - 2rem));
+  padding: 0.7rem 1rem; border-radius: var(--radius); white-space: pre-line;
+  background: #12263a; color: #fff; box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+.meldung.fehler { background: var(--gefahr); }
+
+/* Bausteine */
+.karte {
+  background: var(--flaeche); border: 1px solid var(--rand); border-radius: var(--radius);
+  padding: 1rem; margin-bottom: 1rem;
+}
+.karte.hinweis { background: var(--warnung-hell); border-color: #f5c27a; }
+.fehlerkarte { border-color: var(--gefahr); }
+.leer { color: var(--text-leise); font-style: italic; }
+.hilfe { color: var(--text-leise); font-size: 0.88rem; margin: 0.25rem 0 0.75rem; }
+.status { color: var(--text-leise); font-size: 0.88rem; }
+.abstand { flex: 1; }
+.zeile { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+
+.werkzeugleiste { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin-bottom: 0.75rem; }
+
+.knopf {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.3rem;
+  padding: 0.4rem 0.8rem; min-height: 2.25rem;
+  border: 1px solid var(--rand); border-radius: 6px; background: #fff; color: var(--text);
+  font: inherit; text-decoration: none; cursor: pointer; white-space: nowrap;
+}
+.knopf:hover { border-color: #9aa5b1; background: #f8fafc; }
+.knopf.primaer { background: var(--akzent); border-color: var(--akzent); color: #fff; }
+.knopf.primaer:hover { background: #174b86; }
+.knopf.gefahr { color: var(--gefahr); }
+.knopf.gefahr:hover { border-color: var(--gefahr); background: #fef3f2; }
+.knopf.klein { padding: 0.1rem 0.5rem; min-height: 1.8rem; font-size: 0.85rem; }
+
+input, select, textarea {
+  font: inherit; color: inherit; width: 100%;
+  padding: 0.38rem 0.5rem; border: 1px solid var(--rand); border-radius: 6px; background: #fff;
+}
+input:focus, select:focus, textarea:focus { outline: 2px solid var(--akzent-hell); border-color: var(--akzent); }
+textarea { resize: vertical; }
+input[type=checkbox] { width: auto; }
+
+.feld-inline { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.9rem; }
+.feld-inline input { width: auto; }
+
+.filterleiste {
+  display: flex; flex-wrap: wrap; align-items: end; gap: 0.6rem;
+  background: var(--flaeche); border: 1px solid var(--rand); border-radius: var(--radius);
+  padding: 0.6rem 0.8rem; margin-bottom: 1rem;
+}
+.filterleiste label { display: flex; flex-direction: column; font-size: 0.8rem; color: var(--text-leise); gap: 0.15rem; }
+.filterleiste label.check { flex-direction: row; align-items: center; gap: 0.35rem; font-size: 0.9rem; color: var(--text); padding-bottom: 0.45rem; }
+.filterleiste input, .filterleiste select { width: auto; min-width: 7rem; }
+
+.formular { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.7rem 1rem; }
+.formular label { display: flex; flex-direction: column; gap: 0.2rem; font-size: 0.85rem; color: var(--text-leise); }
+.formular label > input, .formular label > select, .formular label > textarea { color: var(--text); font-size: 0.95rem; }
+.formular .breit { grid-column: 1 / -1; }
+fieldset { border: 1px solid var(--rand); border-radius: var(--radius); padding: 0.5rem 0.75rem 0.75rem; margin: 0; }
+legend { font-size: 0.85rem; color: var(--text-leise); padding: 0 0.3rem; }
+
+/* Tabellen */
+.tabelle { width: 100%; border-collapse: collapse; background: var(--flaeche); border: 1px solid var(--rand); border-radius: var(--radius); overflow: hidden; }
+.tabelle th, .tabelle td { padding: 0.5rem 0.6rem; border-bottom: 1px solid var(--rand); text-align: left; vertical-align: top; }
+.tabelle th { background: #f8fafc; font-size: 0.82rem; color: var(--text-leise); font-weight: 600; }
+.tabelle.kompakt th, .tabelle.kompakt td { padding: 0.25rem 0.35rem; }
+.tabelle tr.erledigt td { color: var(--text-leise); }
+.tabelle tr.klickbar { cursor: pointer; }
+.tabelle tr.klickbar:hover td { background: var(--akzent-hell); }
+.tabelle td.aktionen { white-space: nowrap; text-align: right; }
+.tabelle td.aktionen > * { margin-left: 0.25rem; }
+.tabelle .eingabe-geschoss { width: 6rem; }
+.ueberfaellig { color: var(--gefahr); font-weight: 600; }
+
+/* Übersicht */
+.kacheln { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.kachel {
+  display: flex; flex-direction: column; gap: 0.2rem; text-decoration: none; color: var(--text);
+  background: var(--flaeche); border: 1px solid var(--rand); border-radius: var(--radius); padding: 1rem;
+}
+.kachel:hover { border-color: var(--akzent); }
+.kachel .zahl { font-size: 2rem; font-weight: 700; color: var(--akzent); line-height: 1.1; }
+.kachel.warnung { border-color: #f5a3a3; background: #fff6f5; }
+.kachel.warnung .zahl { color: var(--gefahr); }
+.kachel.offen { border-color: #f5c27a; background: var(--warnung-hell); }
+.spalten { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1rem; align-items: start; }
+
+.mini-raster { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 0.5rem; margin-bottom: 0.6rem; }
+.mini-raster img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 6px; border: 1px solid var(--rand); display: block; }
+.mini-raster figure { margin: 0; display: flex; flex-direction: column; gap: 0.2rem; }
+
+/* Fotos */
+.tag-kopf { display: flex; align-items: center; gap: 0.6rem; margin: 1.2rem 0 0.6rem; }
+.foto-raster { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 0.8rem; }
+.foto-karte {
+  display: flex; flex-direction: column; gap: 0.4rem;
+  background: var(--flaeche); border: 1px solid var(--rand); border-radius: var(--radius); padding: 0.5rem;
+}
+.foto-karte img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 6px; display: block; background: #e5e7eb; }
+.foto-karte .zeile { flex-wrap: nowrap; }
+.foto-karte .zeile > * { flex: 1; min-width: 0; }
+.foto-karte .zeile > .knopf { flex: 0 0 auto; }
+.foto-karte .fuss { justify-content: space-between; color: var(--text-leise); }
+.foto-karte .fuss small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Pläne */
+.plan-layout { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 1rem; align-items: start; }
+.plan-seite { position: sticky; top: 4.5rem; max-height: calc(100vh - 6rem); overflow: auto; }
+.plan-rahmen {
+  background: #e5e7eb; border: 1px solid var(--rand); border-radius: var(--radius);
+  overflow: auto; max-height: calc(100vh - 9rem); min-height: 300px;
+}
+.plan-buehne { position: relative; background: #fff; margin: 0 auto; }
+.plan-buehne.markiermodus { cursor: crosshair; }
+.plan-ebene, .plan-markierungen { position: absolute; inset: 0; }
+.plan-ebene canvas, .plan-ebene img { width: 100%; height: 100%; display: block; }
+.plan-markierungen { pointer-events: none; }
+.marke {
+  position: absolute; transform: translate(-50%, -100%);
+  pointer-events: auto; cursor: pointer;
+  min-width: 26px; height: 26px; padding: 0 5px; border: 2px solid #fff;
+  border-radius: 13px 13px 13px 2px; color: #fff; font: 700 11px/22px system-ui, sans-serif;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.45);
+}
+.marke.foto { background: var(--foto); }
+.marke.mangel { background: var(--mangel); }
+.marke.mangel.erledigt { background: var(--ok); }
+.plan-popup {
+  position: absolute; z-index: 5; transform: translate(8px, 8px);
+  width: 260px; background: #fff; border: 1px solid var(--rand); border-radius: var(--radius);
+  padding: 0.5rem; box-shadow: 0 8px 24px rgba(0,0,0,0.2); cursor: default; font-size: 0.9rem;
+}
+.plan-popup img { width: 100%; max-height: 160px; object-fit: cover; border-radius: 6px; margin-bottom: 0.3rem; }
+.popup-knoepfe { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.4rem; }
+.popup-knoepfe .knopf { padding: 0.15rem 0.5rem; min-height: 1.9rem; font-size: 0.85rem; }
+.plan-iframe { width: 100%; height: 75vh; border: 0; background: #fff; }
+.legende { display: flex; align-items: center; gap: 0.35rem; font-size: 0.82rem; color: var(--text-leise); margin: 0.5rem 0 1rem; flex-wrap: wrap; }
+.punkt { display: inline-block; width: 10px; height: 10px; border-radius: 50%; flex: 0 0 auto; }
+.punkt.foto { background: var(--foto); }
+.punkt.mangel { background: var(--mangel); }
+.punkt.mangel.erledigt { background: var(--ok); }
+.markierungsliste { display: flex; flex-direction: column; gap: 0.2rem; }
+.liste-eintrag {
+  display: flex; align-items: center; gap: 0.45rem; text-align: left;
+  border: 0; background: none; padding: 0.3rem 0.35rem; border-radius: 6px; font: inherit; font-size: 0.88rem; cursor: pointer; color: var(--text);
+}
+.liste-eintrag:hover { background: var(--akzent-hell); }
+
+/* Bautagebuch */
+.tagebuch-layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 1rem; align-items: start; }
+.tageliste { display: flex; flex-direction: column; gap: 0.15rem; max-height: calc(100vh - 9rem); overflow: auto; }
+.tag-eintrag { display: flex; flex-direction: column; padding: 0.4rem 0.5rem; border-radius: 6px; text-decoration: none; color: var(--text); }
+.tag-eintrag small { color: var(--text-leise); }
+.tag-eintrag:hover { background: var(--akzent-hell); }
+.tag-eintrag.aktiv { background: var(--akzent); color: #fff; }
+.tag-eintrag.aktiv small { color: #dbe7f5; }
+.personal input { padding: 0.25rem 0.4rem; }
+
+/* Dialog */
+.dialog { border: 0; border-radius: 12px; padding: 0; width: min(760px, calc(100vw - 2rem)); max-height: calc(100vh - 2rem); box-shadow: 0 20px 60px rgba(0,0,0,0.35); }
+.dialog::backdrop { background: rgba(15, 23, 42, 0.45); }
+.dialog form { padding: 1rem 1.2rem; }
+.dialog-kopf { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.8rem; }
+.dialog-kopf h2 { margin: 0; flex: 1; }
+.dialog-fuss { display: flex; gap: 0.5rem; align-items: center; margin-top: 1rem; }
+
+dl.info { display: grid; grid-template-columns: max-content 1fr; gap: 0.35rem 1rem; margin: 0 0 0.8rem; font-size: 0.9rem; }
+dl.info dt { color: var(--text-leise); }
+dl.info dd { margin: 0; }
+
+/* Tablet / Smartphone */
+@media (max-width: 900px) {
+  .plan-layout, .tagebuch-layout { grid-template-columns: 1fr; }
+  .plan-seite { position: static; max-height: none; }
+  .tageliste { max-height: 14rem; }
+  .plan-rahmen { max-height: 70vh; }
+}
+@media (max-width: 640px) {
+  .inhalt { padding: 0.6rem; }
+  .formular { grid-template-columns: 1fr; }
+  .tabelle { display: block; overflow-x: auto; }
+  .projekt { display: none; }
+  .navigation a { padding: 0.3rem 0.5rem; font-size: 0.9rem; }
+}
+
+.werkzeugleiste input, .werkzeugleiste select { width: auto; }
+.filterleiste input[type=checkbox] { min-width: 0; }

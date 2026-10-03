@@ -1,0 +1,11 @@
+{
+  "_hinweis": "Testversion: eigener Port und eigener Datenordner, damit V1 (Port 8787) unberührt bleibt.",
+  "host": "127.0.0.1",
+  "port": 8788,
+  "datenordner": "daten_test",
+  "sicherungsordner": "sicherungen",
+  "logordner": "logs",
+  "sicherungen_behalten": 20,
+  "max_upload_mb": 200,
+  "browser_oeffnen": true
+}
