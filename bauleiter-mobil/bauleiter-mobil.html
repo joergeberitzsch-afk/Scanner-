@@ -1,0 +1,1640 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bauleiter mobil</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: App-Rahmen mit fester Kopfzeile, Inhalt in einer Spalte (max. 960px), Navigation unten auf Handy/Tablet, oben ab 1000px */
+:root {
+  --bg: #eceff2;
+  --flaeche: #ffffff;
+  --flaeche-2: #f5f7f9;
+  --text: #17212b;
+  --leise: #5b6873;
+  --rand: #d3d9df;
+  --tinte: #1b2a3a;
+  --tinte-text: #e9eef3;
+  --akzent: #d24a0c;
+  --akzent-text: #ffffff;
+  --akzent-hell: #fdebe1;
+  --foto: #1c64b4;
+  --gefahr: #c0262d;
+  --gefahr-hell: #fdeceb;
+  --ok: #1d7a3e;
+  --ok-hell: #e3f3e8;
+  --warn: #a35a00;
+  --warn-hell: #fff3dc;
+  --schatten: 0 10px 30px rgba(17, 27, 38, 0.18);
+  --font-titel: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --font-text: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  --radius: 10px;
+  --nav-h: 62px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11161c; --flaeche: #1a2129; --flaeche-2: #212a34; --text: #e4e9ee; --leise: #98a5b1; --rand: #2e3a46;
+    --tinte: #0b1015; --tinte-text: #e4e9ee; --akzent: #ff7a3d; --akzent-text: #1a0d05; --akzent-hell: #3a2216;
+    --foto: #5aa2f0; --gefahr: #ff6b6b; --gefahr-hell: #3a1d1f; --ok: #5cc97f; --ok-hell: #17301f; --warn: #f0b44c; --warn-hell: #33280f;
+    --schatten: 0 10px 30px rgba(0, 0, 0, 0.5);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11161c; --flaeche: #1a2129; --flaeche-2: #212a34; --text: #e4e9ee; --leise: #98a5b1; --rand: #2e3a46;
+  --tinte: #0b1015; --tinte-text: #e4e9ee; --akzent: #ff7a3d; --akzent-text: #1a0d05; --akzent-hell: #3a2216;
+  --foto: #5aa2f0; --gefahr: #ff6b6b; --gefahr-hell: #3a1d1f; --ok: #5cc97f; --ok-hell: #17301f; --warn: #f0b44c; --warn-hell: #33280f;
+  --schatten: 0 10px 30px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: var(--font-text); font-size: 15px; line-height: 1.45;
+  -webkit-tap-highlight-color: transparent;
+}
+button, input, select, textarea { font: inherit; color: inherit; }
+h1, h2, h3 { font-family: var(--font-titel); font-weight: 600; letter-spacing: 0.01em; text-wrap: balance; margin: 0; }
+h2 { font-size: 1.35rem; }
+h3 { font-size: 1.12rem; }
+small, .leise { color: var(--leise); }
+.zahlen { font-variant-numeric: tabular-nums; }
+:focus-visible { outline: 3px solid var(--akzent); outline-offset: 2px; }
+
+/* Kopf */
+.kopf {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30;
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 16px; min-height: 56px;
+  background: var(--tinte); color: var(--tinte-text);
+}
+.kopf-titel { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.kopf-titel strong { font-family: var(--font-titel); font-size: 1.45rem; font-weight: 600; line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.kopf-titel small { color: color-mix(in srgb, var(--tinte-text) 70%, transparent); font-size: 0.78rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.kopf-aktionen { display: flex; gap: 6px; }
+.kopf .knopf { background: transparent; color: var(--tinte-text); border-color: color-mix(in srgb, var(--tinte-text) 35%, transparent); }
+.kopf .knopf.primaer { background: var(--akzent); color: var(--akzent-text); border-color: var(--akzent); }
+.kopf-nav { display: none; }
+
+main { max-width: 960px; margin: 0 auto; padding-block: 14px calc(var(--nav-h) + 28px + env(safe-area-inset-bottom, 0px)); padding-inline: 16px; display: flex; flex-direction: column; gap: 14px; }
+
+/* Navigation unten */
+.unten {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+  display: grid; grid-template-columns: repeat(6, 1fr);
+  background: var(--flaeche); border-top: 1px solid var(--rand);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.unten button {
+  height: var(--nav-h); border: 0; background: none; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  color: var(--leise); font-size: 0.7rem; font-weight: 500; position: relative;
+}
+.unten svg, .kopf-nav svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.unten button[aria-current="page"] { color: var(--akzent); }
+.unten button[aria-current="page"]::before { content: ""; position: absolute; top: 0; left: 22%; right: 22%; height: 3px; border-radius: 0 0 3px 3px; background: var(--akzent); }
+.punkt-zahl { position: absolute; top: 7px; left: calc(50% + 6px); min-width: 17px; height: 17px; padding: 0 4px; border-radius: 9px; background: var(--gefahr); color: #fff; font-size: 0.66rem; font-weight: 600; line-height: 17px; text-align: center; }
+
+@media (min-width: 1000px) {
+  .unten { display: none; }
+  .kopf-nav { display: flex; gap: 2px; }
+  .kopf-nav button { display: flex; align-items: center; gap: 6px; padding: 7px 11px; border: 0; border-radius: 8px; background: none; color: var(--tinte-text); cursor: pointer; font-size: 0.92rem; position: relative; }
+  .kopf-nav button[aria-current="page"] { background: color-mix(in srgb, var(--tinte-text) 14%, transparent); }
+  .kopf-nav .punkt-zahl { top: 0; left: auto; right: -2px; }
+  main { padding-bottom: 40px; }
+}
+
+/* Bausteine */
+.karte { background: var(--flaeche); border: 1px solid var(--rand); border-radius: var(--radius); padding: 14px; min-width: 0; }
+.karte > h3 { margin-bottom: 10px; }
+.zeile { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.zeile.ende { justify-content: flex-end; }
+.abstand { flex: 1; }
+.leer { color: var(--leise); text-align: center; padding: 18px 8px; }
+.hinweis { border-radius: var(--radius); padding: 12px 14px; background: var(--warn-hell); color: var(--text); border: 1px solid color-mix(in srgb, var(--warn) 35%, transparent); display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.hinweis p { margin: 0; flex: 1 1 220px; }
+
+.knopf {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 42px; padding: 8px 14px; border-radius: 9px;
+  border: 1px solid var(--rand); background: var(--flaeche); color: var(--text);
+  font-weight: 500; cursor: pointer; text-decoration: none; white-space: nowrap;
+}
+.knopf:active { transform: translateY(1px); }
+.knopf.primaer { background: var(--akzent); border-color: var(--akzent); color: var(--akzent-text); }
+.knopf.gefahr { color: var(--gefahr); border-color: color-mix(in srgb, var(--gefahr) 40%, var(--rand)); }
+.knopf.klein { min-height: 34px; padding: 4px 10px; font-size: 0.88rem; }
+.knopf.breit { flex: 1; }
+.knopf[disabled] { opacity: 0.5; cursor: not-allowed; }
+.knopf svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+.feld { display: flex; flex-direction: column; gap: 4px; font-size: 0.82rem; color: var(--leise); min-width: 0; }
+input, select, textarea {
+  width: 100%; min-height: 42px; padding: 8px 10px; border-radius: 8px;
+  border: 1px solid var(--rand); background: var(--flaeche); color: var(--text); font-size: 16px;
+}
+textarea { min-height: 76px; resize: vertical; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--akzent); box-shadow: 0 0 0 3px var(--akzent-hell); }
+.formular { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.formular .voll { grid-column: 1 / -1; }
+@media (max-width: 520px) { .formular { grid-template-columns: 1fr; } }
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  border: 1px solid var(--rand); background: var(--flaeche); color: var(--text);
+  border-radius: 999px; padding: 6px 12px; min-height: 36px; cursor: pointer; font-size: 0.88rem;
+}
+.chip[aria-pressed="true"] { background: var(--tinte); color: var(--tinte-text); border-color: var(--tinte); }
+:root[data-theme="dark"] .chip[aria-pressed="true"] { background: var(--akzent); color: var(--akzent-text); border-color: var(--akzent); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .chip[aria-pressed="true"] { background: var(--akzent); color: var(--akzent-text); border-color: var(--akzent); } }
+
+.status { display: inline-flex; align-items: center; gap: 5px; border-radius: 999px; padding: 2px 9px; font-size: 0.76rem; font-weight: 600; white-space: nowrap; }
+.status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.status.offen { background: var(--gefahr-hell); color: var(--gefahr); }
+.status.in_arbeit { background: var(--warn-hell); color: var(--warn); }
+.status.erledigt { background: var(--ok-hell); color: var(--ok); }
+.frist-rot { color: var(--gefahr); font-weight: 600; }
+
+/* Übersicht */
+.kennzahlen { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 640px) { .kennzahlen { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.kennzahl { background: var(--flaeche); border: 1px solid var(--rand); border-radius: var(--radius); padding: 12px; text-align: left; cursor: pointer; color: var(--text); }
+.kennzahl b { display: block; font-family: var(--font-titel); font-size: 2.3rem; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; }
+.kennzahl span { font-size: 0.84rem; color: var(--leise); }
+.kennzahl.alarm { border-color: color-mix(in srgb, var(--gefahr) 45%, var(--rand)); }
+.kennzahl.alarm b { color: var(--gefahr); }
+.kennzahl.offen b { color: var(--warn); }
+.schnell { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.schnell .knopf { flex-direction: column; min-height: 72px; gap: 4px; font-size: 0.86rem; white-space: normal; text-align: center; }
+.schnell .knopf svg { width: 24px; height: 24px; }
+
+/* Listen */
+.liste { display: flex; flex-direction: column; }
+.eintrag { display: flex; gap: 12px; align-items: flex-start; padding: 11px 2px; border-bottom: 1px solid var(--rand); background: none; border-left: 0; border-right: 0; border-top: 0; width: 100%; text-align: left; cursor: pointer; color: var(--text); }
+.eintrag:last-child { border-bottom: 0; }
+.eintrag .nr { font-family: var(--font-titel); font-size: 1.25rem; font-weight: 600; min-width: 2.4rem; color: var(--leise); font-variant-numeric: tabular-nums; }
+.eintrag .mitte { flex: 1; min-width: 0; }
+.eintrag .mitte strong { display: block; overflow-wrap: anywhere; }
+.eintrag .mitte small { display: block; overflow-wrap: anywhere; }
+.eintrag .rechts { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; text-align: right; font-size: 0.82rem; }
+.eintrag img { width: 52px; height: 52px; object-fit: cover; border-radius: 6px; flex: 0 0 auto; background: var(--flaeche-2); }
+
+/* Fotos */
+.tag-titel { display: flex; align-items: baseline; gap: 8px; margin: 6px 2px 0; }
+.raster { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 6px; }
+.raster button { position: relative; padding: 0; border: 0; border-radius: 8px; overflow: hidden; aspect-ratio: 1; background: var(--flaeche-2); cursor: pointer; max-width: 100%; }
+.raster img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.raster .marken { position: absolute; left: 5px; bottom: 5px; display: flex; gap: 3px; }
+.raster .marken span { background: rgba(10, 15, 20, 0.72); color: #fff; font-size: 0.68rem; padding: 1px 6px; border-radius: 6px; }
+.raster.klein { grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); }
+
+/* Pläne */
+.plan-liste { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+.plan-karte { background: var(--flaeche); border: 1px solid var(--rand); border-radius: var(--radius); overflow: hidden; cursor: pointer; text-align: left; padding: 0; color: var(--text); display: flex; flex-direction: column; }
+.plan-karte img { width: 100%; aspect-ratio: 4 / 3; object-fit: contain; background: #fff; border-bottom: 1px solid var(--rand); display: block; }
+.plan-karte div { padding: 9px 11px; }
+.geschoss { display: inline-block; font-family: var(--font-titel); font-weight: 700; font-size: 0.95rem; background: var(--tinte); color: var(--tinte-text); border-radius: 5px; padding: 0 7px; margin-right: 6px; letter-spacing: 0.03em; }
+.planfenster { position: relative; overflow: auto; background: #d9dde2; border: 1px solid var(--rand); border-radius: var(--radius); max-height: calc(100dvh - 250px); min-height: 160px; touch-action: pan-x pan-y pinch-zoom; }
+.planbuehne { position: relative; margin: 0 auto; }
+.planbuehne img { width: 100%; display: block; background: #fff; user-select: none; -webkit-user-drag: none; }
+.planbuehne.zielmodus { cursor: crosshair; }
+.marke {
+  position: absolute; transform: translate(-50%, -100%);
+  min-width: 28px; height: 28px; padding: 0 5px;
+  border: 2px solid #fff; border-radius: 14px 14px 14px 3px;
+  color: #fff; font: 700 11.5px/24px var(--font-text); cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+}
+.marke.foto { background: #1c64b4; }
+.marke.mangel { background: #c0262d; }
+.marke.mangel.in_arbeit { background: #b86400; }
+.marke.mangel.erledigt { background: #1d7a3e; }
+.marke.gewaehlt { outline: 3px solid #ffd43b; outline-offset: 1px; }
+.zielleiste { position: sticky; top: calc(56px + env(safe-area-inset-top, 0px)); z-index: 5; background: var(--akzent); color: var(--akzent-text); border-radius: var(--radius); padding: 10px 12px; display: flex; gap: 10px; align-items: center; font-weight: 500; }
+.zielleiste .knopf { background: transparent; color: var(--akzent-text); border-color: currentColor; }
+
+/* Blatt (Bearbeiten) und Rückfrage */
+.blatt-hg { position: fixed; inset: 0; z-index: 50; background: rgba(8, 12, 16, 0.5); display: flex; align-items: flex-end; justify-content: center; }
+.blatt {
+  width: min(720px, 100%); max-height: calc(100dvh - 24px - env(safe-area-inset-top, 0px)); overflow: auto;
+  background: var(--bg); border-radius: 16px 16px 0 0; box-shadow: var(--schatten);
+  padding: 0 16px calc(18px + env(safe-area-inset-bottom, 0px));
+}
+@media (min-width: 760px) { .blatt-hg { align-items: center; } .blatt { border-radius: 16px; max-height: calc(100dvh - 60px); } }
+.blatt-kopf { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 10px; padding: 14px 0 10px; background: var(--bg); border-bottom: 1px solid var(--rand); margin-bottom: 12px; }
+.blatt-kopf h2 { flex: 1; }
+.blatt-inhalt { display: flex; flex-direction: column; gap: 14px; }
+.grossbild { width: 100%; max-height: 52vh; object-fit: contain; background: #0c1116; border-radius: var(--radius); display: block; }
+.frage-hg { z-index: 60; align-items: center; }
+.frage { background: var(--flaeche); border-radius: 14px; padding: 18px; width: min(380px, calc(100% - 32px)); box-shadow: var(--schatten); display: flex; flex-direction: column; gap: 14px; }
+.frage p { margin: 0; }
+
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(var(--nav-h) + 14px + env(safe-area-inset-bottom, 0px)); z-index: 70; background: var(--tinte); color: var(--tinte-text); padding: 10px 16px; border-radius: 10px; box-shadow: var(--schatten); max-width: calc(100% - 32px); white-space: pre-line; }
+.toast.fehler { background: var(--gefahr); color: #fff; }
+@media (min-width: 1000px) { .toast { bottom: 24px; } }
+
+.personal-zeile { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) 4.4rem 42px; gap: 6px; align-items: center; }
+.personal-kopf { font-size: 0.78rem; color: var(--leise); }
+.summe { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+.segment { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--rand); border-radius: 9px; overflow: hidden; }
+.segment button { border: 0; background: var(--flaeche); min-height: 42px; cursor: pointer; font-weight: 500; color: var(--text); }
+.segment button + button { border-left: 1px solid var(--rand); }
+.segment button[aria-pressed="true"].offen { background: var(--gefahr-hell); color: var(--gefahr); }
+.segment button[aria-pressed="true"].in_arbeit { background: var(--warn-hell); color: var(--warn); }
+.segment button[aria-pressed="true"].erledigt { background: var(--ok-hell); color: var(--ok); }
+.info-liste { display: grid; grid-template-columns: max-content 1fr; gap: 6px 14px; margin: 0; font-size: 0.9rem; }
+.info-liste dt { color: var(--leise); }
+.info-liste dd { margin: 0; overflow-wrap: anywhere; }
+.balken { height: 8px; border-radius: 4px; background: var(--flaeche-2); overflow: hidden; }
+.balken span { display: block; height: 100%; background: var(--akzent); }
+.versteckt { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (prefers-reduced-motion: no-preference) {
+  .blatt { animation: hoch 0.18s ease-out; }
+  @keyframes hoch { from { transform: translateY(24px); opacity: 0.6; } to { transform: none; opacity: 1; } }
+}
+</style>
+
+<header class="kopf">
+  <div class="kopf-titel"><strong id="kopf-titel">Übersicht</strong><small id="kopf-projekt">Bauleiter mobil</small></div>
+  <nav class="kopf-nav" id="kopf-nav" aria-label="Bereiche"></nav>
+  <div class="kopf-aktionen" id="kopf-aktionen"></div>
+</header>
+<main id="inhalt">
+  <div class="karte leer">Bauleiter mobil wird geladen …</div>
+</main>
+<nav class="unten" id="nav-unten" aria-label="Bereiche"></nav>
+<div class="blatt-hg" id="blatt" hidden><div class="blatt" role="dialog" aria-modal="true" id="blatt-box"></div></div>
+<div class="blatt-hg frage-hg" id="frage" hidden><div class="frage" role="alertdialog" aria-modal="true" id="frage-box"></div></div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+"use strict";
+
+/* ================================================================ Grundlagen */
+
+const VERSION = "mobil 0.1";
+const PDFJS_WORKER = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+const PLAN_MAX = 3200;      // längste Planseite in Pixeln
+const FOTO_MAX = 1600;      // längste Fotoseite in Pixeln
+const VORSCHAU_MAX = 360;
+const STATUS = { offen: "offen", in_arbeit: "in Arbeit", erledigt: "erledigt" };
+const WETTER = ["sonnig", "heiter", "bewölkt", "Regen", "Schnee", "Frost", "Wind", "Gewitter"];
+const WOCHENTAG = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+const GESCHOSSE = ["UG", "EG", "OG1", "OG2", "OG3", "OG4", "OG5", "OG6", "OG7", "OG8", "OG9", "OG10", "DG"];
+const STANDARD_GEWERKE = "Rohbau, Elektro, Sanitär, Heizung, Lüftung, Trockenbau, Estrich, Fliesen, Maler, Bodenbelag, Fenster, Dach, Außenanlagen";
+
+const $ = (s, w = document) => w.querySelector(s);
+const $$ = (s, w = document) => [...w.querySelectorAll(s)];
+let inhalt = $("#inhalt");
+// Seite neu anlegen, damit keine Ereignis-Listener früherer Ansichten übrig bleiben
+function seiteLeeren() { const neu = inhalt.cloneNode(false); inhalt.replaceWith(neu); inhalt = neu; }
+
+const Z = {
+  ansicht: "uebersicht", param: null, dirty: false,
+  einst: {}, fluechtig: false,
+  mFilter: { status: "nicht_erledigt", q: "", gewerk: "" },
+  planZoom: 1, planZiel: null, planAuswahl: null,
+};
+
+function esc(w) {
+  return String(w ?? "").replace(/[&<>"']/g, (z) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[z]));
+}
+function isoDatum(d) {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+const heute = () => isoDatum(new Date());
+function tageAb(iso, n) { const [j, m, t] = iso.split("-").map(Number); return isoDatum(new Date(j, m - 1, t + n)); }
+function datumDE(iso) { if (!iso) return ""; const [j, m, t] = iso.split("-"); return `${t}.${m}.${j}`; }
+function wochentag(iso) { const [j, m, t] = iso.split("-").map(Number); return WOCHENTAG[new Date(j, m - 1, t).getDay()]; }
+function kurzTag(iso) { return wochentag(iso).slice(0, 2) + ", " + datumDE(iso); }
+function ueberfaellig(m) { return m.status !== "erledigt" && m.frist && m.frist < heute(); }
+function geschossRang(g) {
+  g = (g || "").toUpperCase();
+  if (!g) return 1000;
+  let m = g.match(/^(UG|KG|TG)(\d?)$/); if (m) return -Number(m[2] || 1);
+  if (g === "EG") return 0;
+  m = g.match(/^OG(\d{1,2})$/); if (m) return Number(m[1]);
+  return g === "DG" ? 99 : 500;
+}
+function geschossAusName(name) {
+  const t = name.replace(/\.[^.]+$/, "").toUpperCase().split(/[^A-Z0-9]+/).filter(Boolean);
+  for (let i = 0; i < t.length; i++) {
+    if (/^((UG|KG|TG)\d?|EG|OG\d{1,2}|DG)$/.test(t[i])) return t[i];
+    if (t[i] === "OG" && /^\d+$/.test(t[i - 1] || "")) return "OG" + Number(t[i - 1]);
+    const m = t[i].match(/^(\d{1,2})OG$/); if (m) return "OG" + Number(m[1]);
+  }
+  return "";
+}
+function datumAusName(name) {
+  for (const re of [/(20\d{2})(\d{2})(\d{2})[_\-T ]?\d{4,6}/, /(20\d{2})-(\d{2})-(\d{2})/]) {
+    const m = name.match(re);
+    if (m) { const d = new Date(+m[1], +m[2] - 1, +m[3]); if (d.getMonth() === +m[2] - 1 && d.getDate() === +m[3]) return isoDatum(d); }
+  }
+  return "";
+}
+function gewerke() { return (Z.einst.gewerke || STANDARD_GEWERKE).split(",").map((s) => s.trim()).filter(Boolean); }
+function optionen(paare, gewaehlt, leer) {
+  return (leer !== undefined ? `<option value="">${esc(leer)}</option>` : "") +
+    paare.map(([w, t]) => `<option value="${esc(w)}"${String(w) === String(gewaehlt ?? "") ? " selected" : ""}>${esc(t)}</option>`).join("");
+}
+const ICON = {
+  uebersicht: '<path d="M4 11.5 12 5l8 6.5V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1z"/>',
+  plaene: '<path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z"/><path d="M9 4v13.5M15 6.5V20"/>',
+  fotos: '<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
+  maengel: '<path d="M12 4 2.8 19.5h18.4z"/><path d="M12 10v4.5M12 17.2v.1"/>',
+  tagebuch: '<path d="M6 3.5h11a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6z"/><path d="M6 3.5v17M9.5 8h5M9.5 11.5h5"/>',
+  mehr: '<circle cx="12" cy="12" r="3"/><path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M5.5 18.5l1.7-1.7M16.8 7.2l1.7-1.7"/>',
+  kamera: '<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  galerie: '<rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="m4 17 5-5 4 4 3-3 4 4"/><circle cx="15.5" cy="9" r="1.5"/>',
+  pdf: '<path d="M6 3.5h8l4 4v13H6z"/><path d="M14 3.5v4h4M9 13h6M9 16.5h6"/>',
+  pin: '<path d="M12 21s-6-5.5-6-10a6 6 0 0 1 12 0c0 4.5-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/>',
+};
+const icon = (n) => `<svg viewBox="0 0 24 24" aria-hidden="true">${ICON[n]}</svg>`;
+
+/* ================================================================ Speicher (IndexedDB, sonst nur im Arbeitsspeicher) */
+
+const STORES = { plaene: "id", fotos: "id", maengel: "id", tagebuch: "datum", meta: "k" };
+let dbVersprechen = null;
+const speicherFluechtig = new Map(Object.keys(STORES).map((s) => [s, new Map()]));
+let naechsteId = 1;
+
+function dbOeffnen() {
+  if (!dbVersprechen) {
+    dbVersprechen = new Promise((ok, fehler) => {
+      let r;
+      try { r = indexedDB.open("bauleiter-mobil", 1); } catch (e) { fehler(e); return; }
+      r.onupgradeneeded = () => {
+        for (const [name, key] of Object.entries(STORES)) {
+          if (!r.result.objectStoreNames.contains(name)) r.result.createObjectStore(name, key === "id" ? { keyPath: "id", autoIncrement: true } : { keyPath: key });
+        }
+      };
+      r.onsuccess = () => ok(r.result);
+      r.onerror = () => fehler(r.error);
+      r.onblocked = () => fehler(new Error("Datenbank blockiert"));
+    }).catch((e) => { console.warn("IndexedDB nicht verfügbar", e); Z.fluechtig = true; return null; });
+  }
+  return dbVersprechen;
+}
+async function vorgang(store, modus, fn) {
+  const db = await dbOeffnen();
+  if (!db) return fn(null);
+  return new Promise((ok, fehler) => {
+    const t = db.transaction(store, modus);
+    let ergebnis;
+    const r = fn(t.objectStore(store));
+    if (r) r.onsuccess = () => { ergebnis = r.result; };
+    t.oncomplete = () => ok(ergebnis);
+    t.onerror = () => fehler(t.error);
+    t.onabort = () => fehler(t.error || new Error("Speichern abgebrochen – eventuell ist der Speicher voll"));
+  });
+}
+const S = {
+  alle: (s) => vorgang(s, "readonly", (st) => st ? st.getAll() : null).then((r) => r ?? [...speicherFluechtig.get(s).values()]),
+  hole: (s, k) => vorgang(s, "readonly", (st) => st ? st.get(k) : null).then((r) => r ?? speicherFluechtig.get(s).get(k)),
+  async setze(s, obj) {
+    if (Z.fluechtig || !(await dbOeffnen())) {
+      if (STORES[s] === "id" && obj.id == null) obj.id = naechsteId++;
+      speicherFluechtig.get(s).set(obj[STORES[s]], obj);
+      return obj[STORES[s]];
+    }
+    const key = await vorgang(s, "readwrite", (st) => st.put(obj));
+    if (STORES[s] === "id") obj.id = key;
+    return key;
+  },
+  async weg(s, k) {
+    if (Z.fluechtig || !(await dbOeffnen())) { speicherFluechtig.get(s).delete(k); return; }
+    await vorgang(s, "readwrite", (st) => st.delete(k));
+  },
+  async leeren(s) {
+    if (Z.fluechtig || !(await dbOeffnen())) { speicherFluechtig.get(s).clear(); return; }
+    await vorgang(s, "readwrite", (st) => st.clear());
+  },
+};
+
+const urlCache = new Map();
+function bildUrl(schluessel, blob) {
+  if (!blob) return "";
+  const alt = urlCache.get(schluessel);
+  if (alt && alt.blob === blob) return alt.url;
+  if (alt) URL.revokeObjectURL(alt.url);
+  const url = URL.createObjectURL(blob);
+  urlCache.set(schluessel, { blob, url });
+  return url;
+}
+
+/* ================================================================ Bilder und Pläne */
+
+function bildLaden(quelle) {
+  return new Promise((ok, fehler) => {
+    const url = typeof quelle === "string" ? quelle : URL.createObjectURL(quelle);
+    const img = new Image();
+    img.onload = () => ok(img);
+    img.onerror = () => fehler(new Error("Bild konnte nicht gelesen werden (Format wird nicht unterstützt)"));
+    img.src = url;
+  });
+}
+function canvasBlob(c, typ = "image/jpeg", q = 0.84) {
+  return new Promise((ok, fehler) => c.toBlob((b) => (b ? ok(b) : fehler(new Error("Bild konnte nicht erzeugt werden"))), typ, q));
+}
+function skaliert(img, max, weiss = false) {
+  const w = img.naturalWidth || img.width, h = img.naturalHeight || img.height;
+  const f = Math.min(1, max / Math.max(w, h));
+  const c = document.createElement("canvas");
+  c.width = Math.max(1, Math.round(w * f)); c.height = Math.max(1, Math.round(h * f));
+  const ctx = c.getContext("2d");
+  if (weiss) { ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, c.width, c.height); }
+  ctx.drawImage(img, 0, 0, c.width, c.height);
+  return c;
+}
+async function fotoVerarbeiten(datei) {
+  const img = await bildLaden(datei);
+  const gross = skaliert(img, FOTO_MAX);
+  return { bild: await canvasBlob(gross, "image/jpeg", 0.82), vorschau: await canvasBlob(skaliert(gross, VORSCHAU_MAX), "image/jpeg", 0.75) };
+}
+
+let pdfVorbereitet = false;
+function pdfWorkerSetzen(mitPort) {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_WORKER;
+  pdfjsLib.GlobalWorkerOptions.workerPort = null;
+  if (mitPort) {
+    try {
+      const code = `importScripts(${JSON.stringify(PDFJS_WORKER)});`;
+      pdfjsLib.GlobalWorkerOptions.workerPort = new Worker(URL.createObjectURL(new Blob([code], { type: "text/javascript" })));
+    } catch (e) { /* Rückfall: pdf.js lädt den Worker selbst */ }
+  }
+}
+function mitFrist(p, ms, text) {
+  return Promise.race([p, new Promise((_, f) => setTimeout(() => f(new Error(text)), ms))]);
+}
+async function pdfOeffnen(daten) {
+  if (!window.pdfjsLib) throw new Error("PDF-Pläne brauchen beim Öffnen der Seite eine Internetverbindung. Alternativ den Plan als Bild (JPG/PNG) importieren.");
+  if (!pdfVorbereitet) { pdfWorkerSetzen(true); pdfVorbereitet = true; }
+  try {
+    return await mitFrist(pdfjsLib.getDocument({ data: daten.slice(0) }).promise, 20000, "Zeitüberschreitung");
+  } catch (e) {
+    pdfWorkerSetzen(false);
+    return mitFrist(pdfjsLib.getDocument({ data: daten.slice(0) }).promise, 40000, "Die PDF-Datei konnte nicht geöffnet werden");
+  }
+}
+async function planVerarbeiten(datei) {
+  let canvas, seiten = 1;
+  if (/pdf$/i.test(datei.type) || /\.pdf$/i.test(datei.name)) {
+    const pdf = await pdfOeffnen(new Uint8Array(await datei.arrayBuffer()));
+    seiten = pdf.numPages;
+    const seite = await pdf.getPage(1);
+    const vp1 = seite.getViewport({ scale: 1 });
+    const vp = seite.getViewport({ scale: Math.min(10, PLAN_MAX / Math.max(vp1.width, vp1.height)) });
+    canvas = document.createElement("canvas");
+    canvas.width = Math.round(vp.width); canvas.height = Math.round(vp.height);
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+    await seite.render({ canvasContext: ctx, viewport: vp }).promise;
+    pdf.destroy();
+  } else {
+    canvas = skaliert(await bildLaden(datei), PLAN_MAX, true);
+  }
+  return {
+    bild: await canvasBlob(canvas, "image/jpeg", 0.86),
+    vorschau: await canvasBlob(skaliert(canvas, 640, true), "image/jpeg", 0.8),
+    breite: canvas.width, hoehe: canvas.height, seiten,
+  };
+}
+
+function dateienWaehlen({ kamera = false, mehrere = true, accept = "image/*" } = {}) {
+  return new Promise((ok) => {
+    const inp = document.createElement("input");
+    inp.type = "file"; inp.accept = accept; inp.multiple = mehrere && !kamera;
+    if (kamera) inp.setAttribute("capture", "environment");
+    inp.className = "versteckt";
+    document.body.appendChild(inp);
+    inp.addEventListener("change", () => { ok([...inp.files]); inp.remove(); });
+    inp.addEventListener("cancel", () => { ok([]); inp.remove(); });
+    inp.click();
+  });
+}
+
+async function fotosImportieren(dateien, vorgaben = {}) {
+  let ok = 0; const fehler = [];
+  for (const [i, d] of dateien.entries()) {
+    toast(`Foto ${i + 1} von ${dateien.length} wird gespeichert …`, "ok", 60000);
+    try {
+      const { bild, vorschau } = await fotoVerarbeiten(d);
+      const datum = vorgaben.datum || datumAusName(d.name) || (d.lastModified ? isoDatum(new Date(d.lastModified)) : heute());
+      await S.setze("fotos", { datum, notiz: "", geschoss: vorgaben.geschoss || "", plan_id: null, x: null, y: null, mangel_id: vorgaben.mangel_id ?? null, bild, vorschau, erstellt: Date.now() });
+      ok++;
+    } catch (e) { fehler.push(`${d.name}: ${e.message}`); }
+  }
+  if (fehler.length) toast(fehler.join("\n"), "fehler");
+  else if (ok) toast(ok === 1 ? "Foto gespeichert" : `${ok} Fotos gespeichert`);
+  if (ok) dauerhaftAnfragen();
+  return ok;
+}
+
+let dauerhaftGefragt = false;
+function dauerhaftAnfragen() {
+  if (dauerhaftGefragt) return;
+  dauerhaftGefragt = true;
+  try { navigator.storage?.persist?.().catch(() => {}); } catch (e) { /* nicht verfügbar */ }
+}
+
+/* ================================================================ Rückmeldungen, Blatt, Rückfrage */
+
+let toastTimer;
+function toast(text, art = "ok", dauer) {
+  const el = $("#toast");
+  el.textContent = text; el.className = "toast" + (art === "fehler" ? " fehler" : ""); el.hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.hidden = true; }, dauer || (art === "fehler" ? 7000 : 2600));
+}
+function fehlerZeigen(e) { console.error(e); toast(e.message || String(e), "fehler"); }
+
+let blattSchliessenHook = null;
+function blattOeffnen(titel, html, { aktionen = "" } = {}) {
+  const box = $("#blatt-box");
+  box.innerHTML = `<div class="blatt-kopf"><h2>${esc(titel)}</h2>${aktionen}<button class="knopf klein" data-blatt-zu aria-label="Schließen">Schließen</button></div><div class="blatt-inhalt">${html}</div>`;
+  $("#blatt").hidden = false;
+  document.body.style.overflow = "hidden";
+  $("[data-blatt-zu]", box).onclick = () => blattSchliessen();
+  return box;
+}
+async function blattSchliessen(erzwingen = false) {
+  if (!erzwingen && blattSchliessenHook && !(await blattSchliessenHook())) return;
+  blattSchliessenHook = null;
+  $("#blatt").hidden = true;
+  $("#blatt-box").innerHTML = "";
+  document.body.style.overflow = "";
+}
+$("#blatt").addEventListener("click", (e) => { if (e.target.id === "blatt") blattSchliessen(); });
+
+function frage(text, { ja = "OK", nein = "Abbrechen", gefahr = false } = {}) {
+  return new Promise((ok) => {
+    const box = $("#frage-box");
+    box.innerHTML = `<p>${esc(text)}</p><div class="zeile ende"><button class="knopf" data-n>${esc(nein)}</button><button class="knopf ${gefahr ? "gefahr" : "primaer"}" data-j>${esc(ja)}</button></div>`;
+    $("#frage").hidden = false;
+    const fertig = (w) => { $("#frage").hidden = true; ok(w); };
+    $("[data-n]", box).onclick = () => fertig(false);
+    $("[data-j]", box).onclick = () => fertig(true);
+    $("[data-j]", box).focus();
+  });
+}
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape") return;
+  if (!$("#frage").hidden) $("#frage [data-n]").click();
+  else if (!$("#blatt").hidden) blattSchliessen();
+});
+
+/* ================================================================ Dateien speichern (Download) */
+
+async function dateiAnbieten(dateiname, daten) {
+  const dl = window.claude?.use ? await window.claude.use("downloads").catch(() => null) : null;
+  if (dl) {
+    try {
+      await dl.save({ filename: dateiname, data: daten });
+      toast("Datei gespeichert");
+    } catch (e) {
+      if (e && e.code === "declined") return;
+      if (e && e.code === "rate_limited") { toast("Bitte kurz warten und erneut versuchen", "fehler"); return; }
+      toast("Die Datei konnte hier nicht gespeichert werden" + (e && e.message ? ` (${e.message})` : ""), "fehler");
+    }
+    return;
+  }
+  // Ohne Claude-Oberfläche (lokal geöffnete Datei): normaler Browser-Download
+  const blob = daten instanceof Blob ? daten : new Blob([daten]);
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = dateiname;
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 4000);
+}
+
+/* ================================================================ Navigation */
+
+const BEREICHE = [
+  ["uebersicht", "Übersicht"], ["plaene", "Pläne"], ["fotos", "Fotos"],
+  ["maengel", "Mängel"], ["tagebuch", "Tagebuch"], ["mehr", "Mehr"],
+];
+function navAufbauen() {
+  const knoepfe = BEREICHE.map(([k, t]) => `<button data-ziel="${k}">${icon(k)}<span>${t}</span></button>`).join("");
+  $("#nav-unten").innerHTML = knoepfe;
+  $("#kopf-nav").innerHTML = knoepfe;
+  $$("[data-ziel]").forEach((b) => b.addEventListener("click", () => gehe(b.dataset.ziel)));
+}
+async function navZahlen() {
+  const m = await S.alle("maengel");
+  const n = m.filter(ueberfaellig).length;
+  $$('[data-ziel="maengel"]').forEach((b) => {
+    $(".punkt-zahl", b)?.remove();
+    if (n) b.insertAdjacentHTML("beforeend", `<span class="punkt-zahl" aria-label="${n} überfällig">${n}</span>`);
+  });
+}
+async function gehe(ansicht, param = null) {
+  if (Z.dirty && !(await frage("Ungespeicherte Eingaben verwerfen?", { ja: "Verwerfen", gefahr: true }))) return;
+  Z.dirty = false;
+  if (ansicht !== "plaene" || param == null) { Z.planZiel = null; Z.planAuswahl = null; }
+  Z.ansicht = ansicht; Z.param = param;
+  $$("[data-ziel]").forEach((b) => (b.dataset.ziel === ansicht ? b.setAttribute("aria-current", "page") : b.removeAttribute("aria-current")));
+  window.scrollTo(0, 0);
+  await zeichnen();
+}
+async function zeichnen() {
+  const titel = { uebersicht: "Übersicht", plaene: "Pläne", fotos: "Fotos", maengel: "Mängel", tagebuch: "Bautagebuch", mehr: "Projekt & Daten" };
+  $("#kopf-titel").textContent = titel[Z.ansicht] || "";
+  $("#kopf-aktionen").innerHTML = "";
+  seiteLeeren();
+  try {
+    await ({ uebersicht: ansichtUebersicht, plaene: ansichtPlaene, fotos: ansichtFotos, maengel: ansichtMaengel, tagebuch: ansichtTagebuch, mehr: ansichtMehr }[Z.ansicht])();
+  } catch (e) {
+    console.error(e);
+    inhalt.innerHTML = `<div class="karte"><h3>Das hat nicht geklappt</h3><p>${esc(e.message)}</p></div>`;
+  }
+  navZahlen();
+}
+function kopfAktionen(html) { $("#kopf-aktionen").innerHTML = html; return $("#kopf-aktionen"); }
+function projektKopf() {
+  const t = [Z.einst.projekt_nr, Z.einst.projekt_name].filter(Boolean).join(" · ");
+  $("#kopf-projekt").textContent = t || "Bauleiter mobil";
+}
+
+/* ================================================================ Übersicht */
+
+async function ansichtUebersicht() {
+  const [maengel, fotos, tage, plaene] = await Promise.all([S.alle("maengel"), S.alle("fotos"), S.alle("tagebuch"), S.alle("plaene")]);
+  const offen = maengel.filter((m) => m.status !== "erledigt");
+  const ueber = offen.filter(ueberfaellig);
+  const in7 = tageAb(heute(), 7);
+  const faellig = offen.filter((m) => m.frist && m.frist <= in7).sort((a, b) => a.frist.localeCompare(b.frist));
+  const tagHeute = tage.find((t) => t.datum === heute());
+  const fotosHeute = fotos.filter((f) => f.datum === heute()).length;
+  const beispiel = [maengel, fotos, tage, plaene].some((l) => l.some((x) => x.beispiel));
+  const neueste = [...fotos].sort((a, b) => (b.datum + b.erstellt).localeCompare(a.datum + a.erstellt)).slice(0, 8);
+
+  inhalt.innerHTML = `
+    ${Z.fluechtig ? `<div class="hinweis"><p><strong>Daten werden nicht gespeichert.</strong> Dieser Browser erlaubt hier keinen Speicher (z. B. privater Modus). Alles geht beim Schließen verloren.</p></div>` : ""}
+    ${beispiel ? `<div class="hinweis"><p>Zum Ausprobieren sind <strong>Beispieldaten</strong> geladen: ein Grundriss, Fotos, Mängel und zwei Tagebuchtage.</p><button class="knopf klein" id="beispiel-weg">Beispieldaten entfernen</button></div>` : ""}
+    <div class="kennzahlen">
+      <button class="kennzahl ${ueber.length ? "alarm" : ""}" data-gehe="maengel"><b>${offen.length}</b><span>offene Mängel${ueber.length ? `, davon ${ueber.length} überfällig` : ""}</span></button>
+      <button class="kennzahl" data-gehe="fotos"><b>${fotosHeute}</b><span>Fotos heute · ${fotos.length} gesamt</span></button>
+      <button class="kennzahl ${tagHeute ? "" : "offen"}" data-gehe="tagebuch" data-param="${heute()}"><b>${tage.length}</b><span>Tagebuch – heute ${tagHeute ? "erfasst" : "noch offen"}</span></button>
+      <button class="kennzahl" data-gehe="plaene"><b>${plaene.length}</b><span>Pläne</span></button>
+    </div>
+    <div class="schnell">
+      <button class="knopf" id="s-foto">${icon("kamera")}Foto aufnehmen</button>
+      <button class="knopf" id="s-mangel">${icon("maengel")}Mangel erfassen</button>
+      <button class="knopf" id="s-tag">${icon("tagebuch")}Tagebuch heute</button>
+    </div>
+    <section class="karte">
+      <h3>Fällige Mängel <small>– überfällig oder in den nächsten 7 Tagen</small></h3>
+      ${faellig.length ? `<div class="liste">${faellig.slice(0, 8).map(mangelZeile).join("")}</div>` : `<div class="leer">Keine Fristen in den nächsten 7 Tagen.</div>`}
+    </section>
+    <section class="karte">
+      <h3>Neueste Fotos</h3>
+      ${neueste.length ? `<div class="raster klein">${neueste.map((f) => `<button data-foto="${f.id}" aria-label="Foto vom ${datumDE(f.datum)}"><img src="${bildUrl("fv" + f.id, f.vorschau)}" alt=""></button>`).join("")}</div>` : `<div class="leer">Noch keine Fotos.</div>`}
+    </section>`;
+
+  $$("[data-gehe]", inhalt).forEach((b) => b.onclick = () => gehe(b.dataset.gehe, b.dataset.param || null));
+  $("#s-foto").onclick = async () => { if (await fotosImportieren(await dateienWaehlen({ kamera: true }))) zeichnen(); };
+  $("#s-mangel").onclick = () => mangelBlatt(null);
+  $("#s-tag").onclick = () => gehe("tagebuch", heute());
+  $$("[data-mangel]", inhalt).forEach((b) => b.onclick = () => mangelBlatt(Number(b.dataset.mangel)));
+  $$("[data-foto]", inhalt).forEach((b) => b.onclick = () => fotoBlatt(Number(b.dataset.foto)));
+  const weg = $("#beispiel-weg");
+  if (weg) weg.onclick = beispielEntfernen;
+}
+
+function mangelZeile(m) {
+  const ort = [m.geschoss, m.ort].filter(Boolean).join(" · ");
+  return `<button class="eintrag" data-mangel="${m.id}">
+    <span class="nr">M${m.nr}</span>
+    <span class="mitte"><strong>${esc(m.titel)}</strong><small>${esc([ort, m.gewerk, m.firma].filter(Boolean).join(" · ") || "ohne Ort")}</small></span>
+    <span class="rechts"><span class="status ${m.status}">${STATUS[m.status]}</span>${m.frist ? `<span class="zahlen ${ueberfaellig(m) ? "frist-rot" : "leise"}">${datumDE(m.frist)}</span>` : ""}</span>
+  </button>`;
+}
+
+/* ================================================================ Pläne */
+
+async function ansichtPlaene() {
+  if (Z.param != null) return planAnsicht(Number(Z.param));
+  const plaene = (await S.alle("plaene")).sort((a, b) => geschossRang(a.geschoss) - geschossRang(b.geschoss) || a.bezeichnung.localeCompare(b.bezeichnung, "de"));
+  const [fotos, maengel] = await Promise.all([S.alle("fotos"), S.alle("maengel")]);
+  kopfAktionen(`<button class="knopf primaer klein" id="plan-neu">${icon("plus")}Plan</button>`);
+  inhalt.innerHTML = `
+    <p class="leise" style="margin:0">PDF-Pläne werden beim Import in ein Bild umgewandelt (Seite 1). Das Geschoss wird aus dem Dateinamen erkannt, z. B. <code>A_GR_OG5_ST3_NB.pdf</code> → OG5.</p>
+    ${plaene.length ? `<div class="plan-liste">${plaene.map((p) => {
+      const nf = fotos.filter((f) => f.plan_id === p.id && f.x != null).length;
+      const nm = maengel.filter((m) => m.plan_id === p.id && m.x != null && m.status !== "erledigt").length;
+      return `<button class="plan-karte" data-plan="${p.id}"><img src="${bildUrl("pv" + p.id, p.vorschau)}" alt="">
+        <div>${p.geschoss ? `<span class="geschoss">${esc(p.geschoss)}</span>` : ""}<strong>${esc(p.bezeichnung)}</strong><br><small>${nm} offene Mängel · ${nf} Fotos markiert</small></div></button>`;
+    }).join("")}</div>` : `<div class="karte leer">Noch keine Pläne. Über „Plan“ oben rechts einen Grundriss als PDF, JPG oder PNG importieren.</div>`}`;
+  $("#plan-neu").onclick = planImport;
+  $$("[data-plan]", inhalt).forEach((b) => b.onclick = () => gehe("plaene", Number(b.dataset.plan)));
+}
+
+async function planImport() {
+  const dateien = await dateienWaehlen({ accept: "application/pdf,.pdf,image/jpeg,image/png" });
+  let n = 0;
+  for (const d of dateien) {
+    toast(`${d.name} wird umgewandelt …`, "ok", 120000);
+    try {
+      const p = await planVerarbeiten(d);
+      await S.setze("plaene", { bezeichnung: d.name.replace(/\.[^.]+$/, ""), geschoss: geschossAusName(d.name), dateiname: d.name, ...p, erstellt: Date.now() });
+      n++;
+      if (p.seiten > 1) toast(`${d.name}: ${p.seiten} Seiten – übernommen wurde Seite 1`);
+    } catch (e) { fehlerZeigen(new Error(`${d.name}: ${e.message}`)); }
+  }
+  if (n) { toast(n === 1 ? "Plan importiert" : `${n} Pläne importiert`); dauerhaftAnfragen(); zeichnen(); }
+}
+
+async function planAnsicht(planId) {
+  const plan = await S.hole("plaene", planId);
+  if (!plan) { Z.param = null; return ansichtPlaene(); }
+  const [fotos, maengel] = await Promise.all([S.alle("fotos"), S.alle("maengel")]);
+  const mPlan = maengel.filter((m) => m.plan_id === plan.id && m.x != null);
+  const fPlan = fotos.filter((f) => f.plan_id === plan.id && f.x != null);
+  $("#kopf-titel").textContent = (plan.geschoss ? plan.geschoss + " · " : "") + plan.bezeichnung;
+  kopfAktionen(`<button class="knopf klein" id="zoom-aus" aria-label="Verkleinern">−</button><button class="knopf klein" id="zoom-ein" aria-label="Vergrößern">+</button>`);
+
+  const ziel = Z.planZiel;
+  let zielText = "";
+  if (ziel?.art === "neu") zielText = "Auf die Stelle des neuen Mangels tippen";
+  else if (ziel?.art === "mangel") { const m = maengel.find((x) => x.id === ziel.id); zielText = m ? `Position für M${m.nr} ${m.titel} antippen` : ""; }
+  else if (ziel?.art === "foto") zielText = "Position des Fotos im Plan antippen";
+
+  const auswahl = Z.planAuswahl;
+  inhalt.innerHTML = `
+    <div class="zeile"><button class="knopf klein" id="zurueck">← Alle Pläne</button><span class="abstand"></span>
+      <button class="knopf klein" id="ziel-neu">${icon("plus")}Mangel hier</button>
+      <button class="knopf klein" id="plan-bearb">Bearbeiten</button></div>
+    ${zielText ? `<div class="zielleiste"><span style="flex:1">${esc(zielText)}</span><button class="knopf klein" id="ziel-ab">Abbrechen</button></div>` : ""}
+    <div class="planfenster" id="planfenster">
+      <div class="planbuehne ${ziel ? "zielmodus" : ""}" id="buehne" style="width:${Z.planZoom * 100}%">
+        <img src="${bildUrl("pb" + plan.id, plan.bild)}" alt="Plan ${esc(plan.bezeichnung)}" draggable="false">
+        ${mPlan.map((m) => `<button class="marke mangel ${m.status} ${auswahl?.art === "mangel" && auswahl.id === m.id ? "gewaehlt" : ""}" style="left:${m.x * 100}%;top:${m.y * 100}%" data-art="mangel" data-id="${m.id}" aria-label="Mangel M${m.nr}">M${m.nr}</button>`).join("")}
+        ${fPlan.map((f) => `<button class="marke foto ${auswahl?.art === "foto" && auswahl.id === f.id ? "gewaehlt" : ""}" style="left:${f.x * 100}%;top:${f.y * 100}%" data-art="foto" data-id="${f.id}" aria-label="Foto vom ${datumDE(f.datum)}">F</button>`).join("")}
+      </div>
+    </div>
+    <div id="auswahl"></div>
+    <section class="karte">
+      <h3>Auf diesem Plan</h3>
+      ${mPlan.length + fPlan.length ? `<div class="liste">
+        ${mPlan.sort((a, b) => a.nr - b.nr).map(mangelZeile).join("")}
+        ${fPlan.map((f) => `<button class="eintrag" data-foto-liste="${f.id}"><img src="${bildUrl("fv" + f.id, f.vorschau)}" alt=""><span class="mitte"><strong>Foto ${datumDE(f.datum)}</strong><small>${esc(f.notiz || "ohne Notiz")}</small></span></button>`).join("")}
+      </div>` : `<div class="leer">Noch nichts markiert. „Mangel hier“ antippen oder bei einem Foto „Auf Plan markieren“ wählen.</div>`}
+    </section>`;
+
+  const fenster = $("#planfenster"), buehne = $("#buehne");
+  const zoomen = (faktor) => {
+    const alt = Z.planZoom;
+    Z.planZoom = Math.min(6, Math.max(1, Math.round(alt * faktor * 100) / 100));
+    const mx = (fenster.scrollLeft + fenster.clientWidth / 2) / buehne.offsetWidth;
+    const my = (fenster.scrollTop + fenster.clientHeight / 2) / buehne.offsetHeight;
+    buehne.style.width = Z.planZoom * 100 + "%";
+    fenster.scrollLeft = mx * buehne.offsetWidth - fenster.clientWidth / 2;
+    fenster.scrollTop = my * buehne.offsetHeight - fenster.clientHeight / 2;
+  };
+  $("#zoom-ein").onclick = () => zoomen(1.5);
+  $("#zoom-aus").onclick = () => zoomen(1 / 1.5);
+  $("#zurueck").onclick = () => gehe("plaene");
+  $("#ziel-neu").onclick = () => { Z.planZiel = { art: "neu" }; Z.planAuswahl = null; planAnsicht(planId); };
+  $("#plan-bearb").onclick = () => planBlatt(plan);
+  const ab = $("#ziel-ab");
+  if (ab) ab.onclick = () => { Z.planZiel = null; planAnsicht(planId); };
+
+  buehne.addEventListener("click", async (e) => {
+    const marke = e.target.closest(".marke");
+    if (marke && !Z.planZiel) {
+      Z.planAuswahl = { art: marke.dataset.art, id: Number(marke.dataset.id) };
+      $$(".marke", buehne).forEach((m) => m.classList.toggle("gewaehlt", m === marke));
+      return auswahlZeigen(plan);
+    }
+    if (!Z.planZiel) return;
+    const r = buehne.getBoundingClientRect();
+    const x = Math.round(Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)) * 10000) / 10000;
+    const y = Math.round(Math.min(1, Math.max(0, (e.clientY - r.top) / r.height)) * 10000) / 10000;
+    const z = Z.planZiel;
+    Z.planZiel = null;
+    try {
+      if (z.art === "neu") {
+        mangelBlatt(null, { plan_id: plan.id, x, y, geschoss: plan.geschoss });
+        planAnsicht(planId);
+        return;
+      }
+      const store = z.art === "foto" ? "fotos" : "maengel";
+      const obj = await S.hole(store, z.id);
+      Object.assign(obj, { plan_id: plan.id, x, y });
+      if (!obj.geschoss && plan.geschoss) obj.geschoss = plan.geschoss;
+      await S.setze(store, obj);
+      Z.planAuswahl = { art: z.art, id: z.id };
+      toast("Markierung gesetzt");
+      planAnsicht(planId);
+    } catch (err) { fehlerZeigen(err); }
+  });
+  $$("[data-mangel]", inhalt).forEach((b) => b.onclick = () => mangelBlatt(Number(b.dataset.mangel)));
+  $$("[data-foto-liste]", inhalt).forEach((b) => b.onclick = () => fotoBlatt(Number(b.dataset.fotoListe)));
+  if (auswahl) auswahlZeigen(plan);
+}
+
+async function auswahlZeigen(plan) {
+  const a = Z.planAuswahl, el = $("#auswahl");
+  if (!a || !el) return;
+  const obj = await S.hole(a.art === "foto" ? "fotos" : "maengel", a.id);
+  if (!obj) { el.innerHTML = ""; return; }
+  el.innerHTML = `<div class="karte"><div class="liste">${a.art === "mangel" ? mangelZeile(obj)
+    : `<button class="eintrag" data-foto-liste="${obj.id}"><img src="${bildUrl("fv" + obj.id, obj.vorschau)}" alt=""><span class="mitte"><strong>Foto ${datumDE(obj.datum)}</strong><small>${esc(obj.notiz || "ohne Notiz")}</small></span></button>`}</div>
+    <div class="zeile ende"><button class="knopf klein" data-verschieben>Verschieben</button><button class="knopf klein gefahr" data-entfernen>Markierung entfernen</button></div></div>`;
+  $("[data-mangel]", el)?.addEventListener("click", () => mangelBlatt(obj.id));
+  $("[data-foto-liste]", el)?.addEventListener("click", () => fotoBlatt(obj.id));
+  $("[data-verschieben]", el).onclick = () => { Z.planZiel = { art: a.art, id: a.id }; planAnsicht(plan.id); };
+  $("[data-entfernen]", el).onclick = async () => {
+    Object.assign(obj, { plan_id: null, x: null, y: null });
+    await S.setze(a.art === "foto" ? "fotos" : "maengel", obj);
+    Z.planAuswahl = null; toast("Markierung entfernt"); planAnsicht(plan.id);
+  };
+}
+
+function planBlatt(plan) {
+  const box = blattOeffnen("Plan bearbeiten", `
+    <div class="formular">
+      <label class="feld voll">Bezeichnung<input id="p-bez" value="${esc(plan.bezeichnung)}"></label>
+      <label class="feld">Geschoss<input id="p-gs" list="geschosse" value="${esc(plan.geschoss)}"></label>
+      <label class="feld">Datei<input value="${esc(plan.dateiname || "")}" disabled></label>
+    </div>
+    <datalist id="geschosse">${GESCHOSSE.map((g) => `<option value="${g}">`).join("")}</datalist>
+    <div class="zeile"><button class="knopf gefahr" id="p-weg">Plan löschen</button><span class="abstand"></span><button class="knopf primaer" id="p-ok">Speichern</button></div>`);
+  $("#p-ok", box).onclick = async () => {
+    plan.bezeichnung = $("#p-bez").value.trim() || plan.bezeichnung;
+    plan.geschoss = $("#p-gs").value.trim().toUpperCase();
+    await S.setze("plaene", plan);
+    blattSchliessen(true); toast("Gespeichert"); zeichnen();
+  };
+  $("#p-weg", box).onclick = async () => {
+    if (!(await frage("Plan löschen? Markierungen auf diesem Plan werden entfernt, Fotos und Mängel bleiben erhalten.", { ja: "Löschen", gefahr: true }))) return;
+    for (const s of ["fotos", "maengel"]) {
+      for (const o of await S.alle(s)) if (o.plan_id === plan.id) { Object.assign(o, { plan_id: null, x: null, y: null }); await S.setze(s, o); }
+    }
+    await S.weg("plaene", plan.id);
+    blattSchliessen(true); toast("Plan gelöscht"); gehe("plaene");
+  };
+}
+
+/* ================================================================ Fotos */
+
+async function ansichtFotos() {
+  const fotos = (await S.alle("fotos")).sort((a, b) => b.datum.localeCompare(a.datum) || b.erstellt - a.erstellt);
+  kopfAktionen(`<button class="knopf klein" id="f-galerie" aria-label="Aus Galerie">${icon("galerie")}</button><button class="knopf primaer klein" id="f-kamera">${icon("kamera")}Foto</button>`);
+  const gruppen = new Map();
+  for (const f of fotos) { if (!gruppen.has(f.datum)) gruppen.set(f.datum, []); gruppen.get(f.datum).push(f); }
+  inhalt.innerHTML = fotos.length ? [...gruppen].map(([d, l]) => `
+    <div class="tag-titel"><h3>${kurzTag(d)}</h3><small>${l.length} ${l.length === 1 ? "Foto" : "Fotos"}</small></div>
+    <div class="raster">${l.map((f) => `<button data-foto="${f.id}" aria-label="Foto ${esc(f.notiz || datumDE(f.datum))}"><img loading="lazy" src="${bildUrl("fv" + f.id, f.vorschau)}" alt="">
+      <span class="marken">${f.x != null ? "<span>Plan</span>" : ""}${f.mangel_id ? "<span>Mangel</span>" : ""}${f.notiz ? "<span>Notiz</span>" : ""}</span></button>`).join("")}</div>`).join("")
+    : `<div class="karte leer">Noch keine Fotos. Mit „Foto“ oben rechts die Kamera öffnen oder über das Galerie-Symbol vorhandene Bilder übernehmen.</div>`;
+  $("#f-kamera").onclick = async () => { if (await fotosImportieren(await dateienWaehlen({ kamera: true }))) zeichnen(); };
+  $("#f-galerie").onclick = async () => { if (await fotosImportieren(await dateienWaehlen({ mehrere: true }))) zeichnen(); };
+  $$("[data-foto]", inhalt).forEach((b) => b.onclick = () => fotoBlatt(Number(b.dataset.foto)));
+}
+
+async function fotoBlatt(id) {
+  const f = await S.hole("fotos", id);
+  if (!f) return;
+  const [plaene, maengel] = await Promise.all([S.alle("plaene"), S.alle("maengel")]);
+  const planPaare = plaene.sort((a, b) => geschossRang(a.geschoss) - geschossRang(b.geschoss)).map((p) => [p.id, (p.geschoss ? p.geschoss + " · " : "") + p.bezeichnung]);
+  const vorschlag = f.plan_id || plaene.find((p) => p.geschoss && p.geschoss === f.geschoss)?.id || (plaene.length === 1 ? plaene[0].id : "");
+  const box = blattOeffnen(`Foto vom ${datumDE(f.datum)}`, `
+    <img class="grossbild" src="${bildUrl("fb" + f.id, f.bild)}" alt="">
+    <div class="formular">
+      <label class="feld voll">Notiz<textarea id="f-notiz" rows="2" placeholder="Was ist zu sehen?">${esc(f.notiz)}</textarea></label>
+      <label class="feld">Datum<input type="date" id="f-datum" value="${esc(f.datum)}"></label>
+      <label class="feld">Geschoss<input id="f-gs" list="geschosse" value="${esc(f.geschoss)}"></label>
+      <label class="feld voll">Mangel<select id="f-mangel">${optionen(maengel.sort((a, b) => a.nr - b.nr).map((m) => [m.id, `M${m.nr} ${m.titel}`]), f.mangel_id, "– keinem Mangel zugeordnet –")}</select></label>
+      <label class="feld voll">Plan<select id="f-plan">${optionen(planPaare, vorschlag, "– Plan wählen –")}</select></label>
+    </div>
+    <datalist id="geschosse">${GESCHOSSE.map((g) => `<option value="${g}">`).join("")}</datalist>
+    <p class="leise" style="margin:0">${f.x != null ? "Auf dem Plan markiert." : "Noch nicht auf einem Plan markiert."}</p>
+    <div class="zeile"><button class="knopf gefahr" id="f-weg">Löschen</button><span class="abstand"></span>
+      <button class="knopf" id="f-markieren">${icon("pin")}${f.x != null ? "Markierung verschieben" : "Auf Plan markieren"}</button>
+      <button class="knopf primaer" id="f-ok">Speichern</button></div>`);
+  const lesen = () => {
+    f.notiz = $("#f-notiz").value.trim();
+    f.datum = $("#f-datum").value || f.datum;
+    f.geschoss = $("#f-gs").value.trim().toUpperCase();
+    f.mangel_id = $("#f-mangel").value ? Number($("#f-mangel").value) : null;
+  };
+  let geaendert = false;
+  box.addEventListener("input", () => { geaendert = true; });
+  blattSchliessenHook = async () => !geaendert || frage("Änderungen am Foto verwerfen?", { ja: "Verwerfen", gefahr: true });
+  $("#f-ok", box).onclick = async () => { lesen(); await S.setze("fotos", f); blattSchliessen(true); toast("Gespeichert"); zeichnen(); };
+  $("#f-markieren", box).onclick = async () => {
+    const planId = Number($("#f-plan").value);
+    if (!planId) { toast("Bitte zuerst einen Plan wählen", "fehler"); return; }
+    lesen(); await S.setze("fotos", f);
+    blattSchliessen(true);
+    Z.planZiel = { art: "foto", id: f.id }; Z.planZoom = 1;
+    gehe("plaene", planId);
+  };
+  $("#f-weg", box).onclick = async () => {
+    if (!(await frage("Foto endgültig löschen?", { ja: "Löschen", gefahr: true }))) return;
+    await S.weg("fotos", f.id);
+    blattSchliessen(true); toast("Foto gelöscht"); zeichnen();
+  };
+}
+
+/* ================================================================ Mängel */
+
+async function ansichtMaengel() {
+  const alle = (await S.alle("maengel")).sort((a, b) => a.nr - b.nr);
+  const f = Z.mFilter;
+  const q = f.q.trim().toLowerCase();
+  const liste = alle.filter((m) =>
+    (f.status === "alle" || (f.status === "nicht_erledigt" ? m.status !== "erledigt" : f.status === "ueberfaellig" ? ueberfaellig(m) : m.status === f.status)) &&
+    (!f.gewerk || m.gewerk === f.gewerk) &&
+    (!q || [m.titel, m.beschreibung, m.ort, m.firma, m.geschoss, "m" + m.nr].join(" ").toLowerCase().includes(q)));
+  const gewerkeVorhanden = [...new Set(alle.map((m) => m.gewerk).filter(Boolean))].sort((a, b) => a.localeCompare(b, "de"));
+  const chips = [["nicht_erledigt", "Nicht erledigt"], ["ueberfaellig", "Überfällig"], ["offen", "Offen"], ["in_arbeit", "In Arbeit"], ["erledigt", "Erledigt"], ["alle", "Alle"]];
+
+  kopfAktionen(`<button class="knopf klein" id="m-pdf" ${window.jspdf ? "" : "disabled title=\"PDF-Export braucht beim Laden eine Internetverbindung\""}>${icon("pdf")}PDF</button><button class="knopf primaer klein" id="m-neu">${icon("plus")}Mangel</button>`);
+  inhalt.innerHTML = `
+    <div class="chips" role="group" aria-label="Status">${chips.map(([k, t]) => `<button class="chip" data-status="${k}" aria-pressed="${f.status === k}">${t}</button>`).join("")}</div>
+    <div class="zeile">
+      <input id="m-suche" type="search" placeholder="Suchen: Text, Firma, Ort, M-Nr." value="${esc(f.q)}" style="flex:2 1 200px" aria-label="Suche">
+      <select id="m-gewerk" style="flex:1 1 140px" aria-label="Gewerk">${optionen(gewerkeVorhanden.map((g) => [g, g]), f.gewerk, "Alle Gewerke")}</select>
+    </div>
+    <section class="karte" style="padding-block:4px">
+      ${liste.length ? `<div class="liste">${liste.map(mangelZeile).join("")}</div>` : `<div class="leer">${alle.length ? "Keine Mängel für diese Auswahl." : "Noch keine Mängel erfasst. Über „Mangel“ oben rechts den ersten anlegen."}</div>`}
+    </section>
+    <p class="leise zahlen" style="margin:0;text-align:center">${liste.length} von ${alle.length} Mängeln</p>`;
+
+  $$("[data-status]", inhalt).forEach((b) => b.onclick = () => { f.status = b.dataset.status; ansichtMaengel(); });
+  let t;
+  $("#m-suche").oninput = (e) => { clearTimeout(t); t = setTimeout(async () => { f.q = e.target.value; const pos = e.target.selectionStart; await ansichtMaengel(); const s = $("#m-suche"); s.focus(); s.setSelectionRange(pos, pos); }, 250); };
+  $("#m-gewerk").onchange = (e) => { f.gewerk = e.target.value; ansichtMaengel(); };
+  $$("[data-mangel]", inhalt).forEach((b) => b.onclick = () => mangelBlatt(Number(b.dataset.mangel)));
+  $("#m-neu").onclick = () => mangelBlatt(null);
+  $("#m-pdf").onclick = () => pdfMaengel(liste, chips.find(([k]) => k === f.status)[1] + (f.gewerk ? ", " + f.gewerk : "") + (f.q ? `, Suche „${f.q}“` : "")).catch(fehlerZeigen);
+}
+
+async function mangelBlatt(id, vorgaben = {}) {
+  const alle = await S.alle("maengel");
+  let m = id ? alle.find((x) => x.id === id) : null;
+  const neu = !m;
+  if (neu) m = { titel: "", beschreibung: "", geschoss: "", ort: "", gewerk: "", firma: "", frist: "", status: "offen", plan_id: null, x: null, y: null, ...vorgaben };
+  const [plaene, fotos] = await Promise.all([S.alle("plaene"), S.alle("fotos")]);
+  const mFotos = neu ? [] : fotos.filter((f) => f.mangel_id === m.id);
+  const firmen = [...new Set(alle.map((x) => x.firma).filter(Boolean))];
+  const planPaare = plaene.sort((a, b) => geschossRang(a.geschoss) - geschossRang(b.geschoss)).map((p) => [p.id, (p.geschoss ? p.geschoss + " · " : "") + p.bezeichnung]);
+  let status = m.status;
+
+  const box = blattOeffnen(neu ? "Neuer Mangel" : `Mangel M${m.nr}`, `
+    <div class="formular">
+      <label class="feld voll">Kurzbeschreibung<input id="m-titel" value="${esc(m.titel)}" placeholder="z. B. Putzriss über Fenstersturz" maxlength="200"></label>
+      <div class="voll"><div class="segment" role="group" aria-label="Status">${Object.entries(STATUS).map(([k, t]) => `<button class="${k}" data-st="${k}" aria-pressed="${status === k}">${t}</button>`).join("")}</div></div>
+      <label class="feld">Gewerk<input id="m-gewerk-f" list="gewerke-liste" value="${esc(m.gewerk)}"></label>
+      <label class="feld">Firma<input id="m-firma" list="firmen-liste" value="${esc(m.firma)}"></label>
+      <label class="feld">Geschoss<input id="m-gs" list="geschosse" value="${esc(m.geschoss)}"></label>
+      <label class="feld">Ort / Raum<input id="m-ort" value="${esc(m.ort)}" placeholder="z. B. Bad Whg. 5.2"></label>
+      <label class="feld">Frist<input type="date" id="m-frist" value="${esc(m.frist)}"></label>
+      <div class="feld"><span>Frist setzen</span><div class="chips">${[3, 7, 14].map((n) => `<button class="chip" data-frist="${n}">+${n} Tage</button>`).join("")}</div></div>
+      <label class="feld voll">Beschreibung<textarea id="m-beschr" rows="3">${esc(m.beschreibung)}</textarea></label>
+      <label class="feld voll">Plan<select id="m-plan">${optionen(planPaare, m.plan_id || plaene.find((p) => p.geschoss && p.geschoss === m.geschoss)?.id || "", "– kein Plan –")}</select></label>
+    </div>
+    <datalist id="geschosse">${GESCHOSSE.map((g) => `<option value="${g}">`).join("")}</datalist>
+    <datalist id="gewerke-liste">${gewerke().map((g) => `<option value="${esc(g)}">`).join("")}</datalist>
+    <datalist id="firmen-liste">${firmen.map((g) => `<option value="${esc(g)}">`).join("")}</datalist>
+    <p class="leise" style="margin:0">${m.x != null ? "Auf dem Plan markiert." : "Noch nicht auf einem Plan markiert."}</p>
+    <div class="karte">
+      <div class="zeile"><h3 style="flex:1">Fotos</h3>
+        <button class="knopf klein" id="m-galerie" aria-label="Foto aus Galerie">${icon("galerie")}</button>
+        <button class="knopf klein" id="m-kamera">${icon("kamera")}Foto</button></div>
+      ${mFotos.length ? `<div class="raster klein" style="margin-top:10px">${mFotos.map((f) => `<button data-mfoto="${f.id}"><img src="${bildUrl("fv" + f.id, f.vorschau)}" alt=""></button>`).join("")}</div>` : `<p class="leise" style="margin:8px 0 0">${neu ? "Fotos lassen sich direkt hinzufügen; der Mangel wird dabei gespeichert." : "Keine Fotos."}</p>`}
+    </div>
+    <div class="zeile">${neu ? "" : `<button class="knopf gefahr" id="m-weg">Löschen</button>`}<span class="abstand"></span>
+      <button class="knopf" id="m-markieren">${icon("pin")}${m.x != null ? "Verschieben" : "Auf Plan"}</button>
+      <button class="knopf primaer" id="m-ok">Speichern</button></div>`);
+
+  let geaendert = neu && vorgaben.plan_id != null;
+  box.addEventListener("input", () => { geaendert = true; });
+  blattSchliessenHook = async () => !geaendert || frage(neu ? "Neuen Mangel verwerfen?" : "Änderungen verwerfen?", { ja: "Verwerfen", gefahr: true });
+  $$("[data-st]", box).forEach((b) => b.onclick = () => { status = b.dataset.st; geaendert = true; $$("[data-st]", box).forEach((x) => x.setAttribute("aria-pressed", x === b)); });
+  $$("[data-frist]", box).forEach((b) => b.onclick = () => { $("#m-frist").value = tageAb(heute(), Number(b.dataset.frist)); geaendert = true; });
+  $("#m-gs").addEventListener("change", () => {
+    const p = plaene.find((x) => x.geschoss && x.geschoss === $("#m-gs").value.trim().toUpperCase());
+    if (p && !$("#m-plan").value) $("#m-plan").value = p.id;
+  });
+
+  const speichern = async () => {
+    const titel = $("#m-titel").value.trim();
+    if (!titel) { $("#m-titel").focus(); throw new Error("Bitte eine Kurzbeschreibung eingeben"); }
+    const planNeu = $("#m-plan").value ? Number($("#m-plan").value) : null;
+    if (planNeu !== m.plan_id) { m.x = null; m.y = null; }
+    const warErledigt = m.status === "erledigt";
+    Object.assign(m, {
+      titel, status, plan_id: planNeu,
+      gewerk: $("#m-gewerk-f").value.trim(), firma: $("#m-firma").value.trim(),
+      geschoss: $("#m-gs").value.trim().toUpperCase(), ort: $("#m-ort").value.trim(),
+      frist: $("#m-frist").value, beschreibung: $("#m-beschr").value.trim(),
+    });
+    if (status === "erledigt" && !warErledigt) m.erledigt_am = heute();
+    if (status !== "erledigt") m.erledigt_am = "";
+    if (m.nr == null) { m.nr = (await S.alle("maengel")).reduce((n, x) => Math.max(n, x.nr || 0), 0) + 1; m.erstellt = Date.now(); }
+    await S.setze("maengel", m);
+    geaendert = false;
+    return m;
+  };
+  $("#m-ok", box).onclick = async () => {
+    try { await speichern(); blattSchliessen(true); toast(neu ? `Mangel M${m.nr} angelegt` : "Gespeichert"); zeichnen(); } catch (e) { fehlerZeigen(e); }
+  };
+  const fotoNeu = (kamera) => async () => {
+    try {
+      await speichern();
+      const n = await fotosImportieren(await dateienWaehlen({ kamera, mehrere: !kamera }), { mangel_id: m.id, geschoss: m.geschoss });
+      blattSchliessen(true);
+      if (n || neu) await zeichnen();
+      mangelBlatt(m.id);
+    } catch (e) { fehlerZeigen(e); }
+  };
+  $("#m-kamera", box).onclick = fotoNeu(true);
+  $("#m-galerie", box).onclick = fotoNeu(false);
+  $$("[data-mfoto]", box).forEach((b) => b.onclick = async () => { if (await blattSchliessenHook()) { blattSchliessen(true); fotoBlatt(Number(b.dataset.mfoto)); } });
+  $("#m-markieren", box).onclick = async () => {
+    const planId = Number($("#m-plan").value);
+    if (!planId) { toast("Bitte zuerst einen Plan wählen", "fehler"); return; }
+    try {
+      await speichern();
+      blattSchliessen(true);
+      Z.planZiel = { art: "mangel", id: m.id }; Z.planZoom = 1;
+      gehe("plaene", planId);
+    } catch (e) { fehlerZeigen(e); }
+  };
+  const weg = $("#m-weg", box);
+  if (weg) weg.onclick = async () => {
+    if (!(await frage(`Mangel M${m.nr} löschen? Zugeordnete Fotos bleiben erhalten.`, { ja: "Löschen", gefahr: true }))) return;
+    for (const f of mFotos) { f.mangel_id = null; await S.setze("fotos", f); }
+    await S.weg("maengel", m.id);
+    blattSchliessen(true); toast("Mangel gelöscht"); zeichnen();
+  };
+  if (neu && !vorgaben.titel) setTimeout(() => $("#m-titel")?.focus(), 60);
+}
+
+/* ================================================================ Bautagebuch */
+
+async function ansichtTagebuch() {
+  if (Z.param) return tagAnsicht(Z.param);
+  const tage = (await S.alle("tagebuch")).sort((a, b) => b.datum.localeCompare(a.datum));
+  const fotos = await S.alle("fotos");
+  kopfAktionen(`<button class="knopf primaer klein" id="t-heute">${icon("plus")}Heute</button>`);
+  inhalt.innerHTML = `
+    <div class="karte zeile"><label class="feld" style="flex:1">Anderen Tag öffnen<input type="date" id="t-datum" value="${heute()}"></label><button class="knopf" id="t-oeffnen" style="align-self:flex-end">Öffnen</button></div>
+    <section class="karte" style="padding-block:4px">
+      ${tage.length ? `<div class="liste">${tage.map((t) => {
+        const ak = (t.personal || []).reduce((s, p) => s + (Number(p.anzahl) || 0), 0);
+        const nf = fotos.filter((f) => f.datum === t.datum).length;
+        return `<button class="eintrag" data-tag="${t.datum}"><span class="mitte"><strong>${wochentag(t.datum)}, ${datumDE(t.datum)}</strong>
+          <small>${esc([t.wetter, ak ? ak + " Arbeitskräfte" : "", nf ? nf + " Fotos" : ""].filter(Boolean).join(" · ") || "ohne Angaben")}</small>
+          <small>${esc((t.leistungen || "").split("\n")[0].slice(0, 90))}</small></span></button>`;
+      }).join("")}</div>` : `<div class="leer">Noch keine Einträge. Mit „Heute“ den ersten Tagesbericht anlegen.</div>`}
+    </section>`;
+  $("#t-heute").onclick = () => gehe("tagebuch", heute());
+  $("#t-oeffnen").onclick = () => { const d = $("#t-datum").value; if (d) gehe("tagebuch", d); };
+  $$("[data-tag]", inhalt).forEach((b) => b.onclick = () => gehe("tagebuch", b.dataset.tag));
+}
+
+async function tagAnsicht(datum) {
+  const vorhanden = await S.hole("tagebuch", datum);
+  const t = vorhanden || { datum, wetter: "", temperatur: "", arbeitszeit: "07:00 – 16:00", personal: [], leistungen: "", behinderungen: "", vorkommnisse: "", anordnungen: "", besucher: "" };
+  const fotos = (await S.alle("fotos")).filter((f) => f.datum === datum);
+  const alleTage = (await S.alle("tagebuch")).sort((a, b) => b.datum.localeCompare(a.datum));
+  $("#kopf-titel").textContent = `${kurzTag(datum)}`;
+  kopfAktionen(`<button class="knopf klein" id="t-pdf" ${vorhanden && window.jspdf ? "" : "disabled"}>${icon("pdf")}PDF</button>`);
+  seiteLeeren();
+  const textfeld = (k, titel, zeilen = 2, ph = "") => `<label class="feld voll">${titel}<textarea id="t-${k}" rows="${zeilen}" placeholder="${esc(ph)}">${esc(t[k])}</textarea></label>`;
+
+  inhalt.innerHTML = `
+    <div class="zeile"><button class="knopf klein" id="t-zurueck">← Alle Tage</button><span class="abstand"></span>${vorhanden ? "" : `<span class="status in_arbeit">neu</span>`}</div>
+    <section class="karte formular">
+      <label class="feld">Wetter<input id="t-wetter" value="${esc(t.wetter)}"></label>
+      <label class="feld">Temperatur<input id="t-temperatur" value="${esc(t.temperatur)}" placeholder="z. B. 8 – 14 °C"></label>
+      <div class="chips voll">${WETTER.map((w) => `<button class="chip" data-wetter="${w}">${w}</button>`).join("")}</div>
+      <label class="feld voll">Arbeitszeit<input id="t-arbeitszeit" value="${esc(t.arbeitszeit)}"></label>
+    </section>
+    <section class="karte">
+      <div class="zeile" style="margin-bottom:8px"><h3 style="flex:1">Personal</h3><span class="leise">Summe <b class="summe" id="t-summe">0</b></span></div>
+      <div class="personal-zeile personal-kopf"><span>Firma</span><span>Gewerk</span><span>Anzahl</span><span></span></div>
+      <div id="t-personal" style="display:flex;flex-direction:column;gap:6px;margin-top:4px"></div>
+      <div class="zeile" style="margin-top:10px"><button class="knopf klein" id="t-plus">${icon("plus")}Zeile</button><button class="knopf klein" id="t-vortag">Vom letzten Eintrag übernehmen</button></div>
+    </section>
+    <section class="karte formular">
+      ${textfeld("leistungen", "Ausgeführte Leistungen", 5, "Eine Zeile je Leistung")}
+      ${textfeld("behinderungen", "Behinderungen / Erschwernisse")}
+      ${textfeld("vorkommnisse", "Besondere Vorkommnisse")}
+      ${textfeld("anordnungen", "Anordnungen / Vereinbarungen")}
+      ${textfeld("besucher", "Besucher / Besprechungen")}
+    </section>
+    <section class="karte">
+      <div class="zeile"><h3 style="flex:1">Fotos des Tages</h3><button class="knopf klein" id="t-galerie" aria-label="Aus Galerie">${icon("galerie")}</button><button class="knopf klein" id="t-kamera">${icon("kamera")}Foto</button></div>
+      ${fotos.length ? `<div class="raster klein" style="margin-top:10px">${fotos.map((f) => `<button data-foto="${f.id}"><img src="${bildUrl("fv" + f.id, f.vorschau)}" alt=""></button>`).join("")}</div>` : `<p class="leise" style="margin:8px 0 0">Keine Fotos mit diesem Datum.</p>`}
+    </section>
+    <div class="zeile">${vorhanden ? `<button class="knopf gefahr" id="t-weg">Eintrag löschen</button>` : ""}<span class="abstand"></span><button class="knopf primaer" id="t-ok">Tagesbericht speichern</button></div>`;
+
+  const liste = $("#t-personal");
+  const summe = () => { $("#t-summe").textContent = $$("[data-p=anzahl]", liste).reduce((s, i) => s + (parseInt(i.value, 10) || 0), 0); };
+  const zeile = (p = {}) => {
+    liste.insertAdjacentHTML("beforeend", `<div class="personal-zeile">
+      <input data-p="firma" value="${esc(p.firma || "")}" aria-label="Firma" list="firmen-t">
+      <input data-p="gewerk" value="${esc(p.gewerk || "")}" aria-label="Gewerk" list="gewerke-t">
+      <input data-p="anzahl" type="number" inputmode="numeric" min="0" value="${esc(p.anzahl ?? "")}" aria-label="Anzahl">
+      <button class="knopf klein" data-p-weg aria-label="Zeile entfernen">×</button></div>`);
+  };
+  inhalt.insertAdjacentHTML("beforeend", `<datalist id="gewerke-t">${gewerke().map((g) => `<option value="${esc(g)}">`).join("")}</datalist>
+    <datalist id="firmen-t">${[...new Set(alleTage.flatMap((x) => (x.personal || []).map((p) => p.firma)).filter(Boolean))].map((g) => `<option value="${esc(g)}">`).join("")}</datalist>`);
+  (t.personal.length ? t.personal : [{}]).forEach(zeile);
+  summe();
+  const lesen = () => {
+    const d = { ...t };
+    for (const k of ["wetter", "temperatur", "arbeitszeit", "leistungen", "behinderungen", "vorkommnisse", "anordnungen", "besucher"]) d[k] = $("#t-" + k).value.trim();
+    d.personal = $$(".personal-zeile", liste).map((z) => ({ firma: $("[data-p=firma]", z).value.trim(), gewerk: $("[data-p=gewerk]", z).value.trim(), anzahl: parseInt($("[data-p=anzahl]", z).value, 10) || 0 }))
+      .filter((p) => p.firma || p.gewerk || p.anzahl);
+    d.geaendert = Date.now();
+    return d;
+  };
+  const speichern = async () => { const d = lesen(); await S.setze("tagebuch", d); Z.dirty = false; return d; };
+
+  inhalt.addEventListener("input", (e) => { if (e.target.closest("#t-zurueck")) return; Z.dirty = true; summe(); });
+  liste.addEventListener("click", (e) => { if (e.target.closest("[data-p-weg]")) { e.target.closest(".personal-zeile").remove(); summe(); Z.dirty = true; } });
+  $$("[data-wetter]", inhalt).forEach((b) => b.onclick = () => {
+    const f = $("#t-wetter"); const teile = f.value.split(",").map((s) => s.trim()).filter(Boolean);
+    f.value = teile.includes(b.dataset.wetter) ? teile.filter((x) => x !== b.dataset.wetter).join(", ") : [...teile, b.dataset.wetter].join(", ");
+    Z.dirty = true;
+  });
+  $("#t-plus").onclick = () => zeile();
+  $("#t-vortag").onclick = () => {
+    const frueher = alleTage.find((x) => x.datum < datum && (x.personal || []).length);
+    if (!frueher) { toast("Kein früherer Eintrag mit Personal vorhanden", "fehler"); return; }
+    liste.innerHTML = ""; frueher.personal.forEach(zeile); summe(); Z.dirty = true;
+    toast(`Personal vom ${datumDE(frueher.datum)} übernommen – bitte prüfen`);
+  };
+  $("#t-zurueck").onclick = () => gehe("tagebuch");
+  $("#t-ok").onclick = async () => { try { await speichern(); toast("Tagesbericht gespeichert"); dauerhaftAnfragen(); tagAnsicht(datum); } catch (e) { fehlerZeigen(e); } };
+  const fotoNeu = (kamera) => async () => {
+    const dateien = await dateienWaehlen({ kamera, mehrere: !kamera });
+    if (!dateien.length) return;
+    if (Z.dirty) await speichern();
+    if (await fotosImportieren(dateien, { datum })) tagAnsicht(datum);
+  };
+  $("#t-kamera").onclick = fotoNeu(true);
+  $("#t-galerie").onclick = fotoNeu(false);
+  $$("[data-foto]", inhalt).forEach((b) => b.onclick = () => fotoBlatt(Number(b.dataset.foto)));
+  $("#t-pdf").onclick = async () => {
+    try { const d = Z.dirty ? await speichern() : lesen(); await pdfTagebuch(d); } catch (e) { fehlerZeigen(e); }
+  };
+  const weg = $("#t-weg");
+  if (weg) weg.onclick = async () => {
+    if (!(await frage(`Tagesbericht vom ${datumDE(datum)} löschen? Fotos bleiben erhalten.`, { ja: "Löschen", gefahr: true }))) return;
+    await S.weg("tagebuch", datum); Z.dirty = false; toast("Eintrag gelöscht"); gehe("tagebuch");
+  };
+}
+
+/* ================================================================ PDF-Erzeugung */
+
+const SEITE = { l: 16, r: 194, o: 16, u: 284 };
+const pdfText = (s) => String(s ?? "").replace(/[–—]/g, "-").replace(/[„“”]/g, '"').replace(/[‚‘’]/g, "'").replace(/…/g, "...").replace(/[^\n\x20-\x7E\xA0-\xFF]/g, "");
+
+function blobDataUrl(blob) {
+  return new Promise((ok, f) => { const r = new FileReader(); r.onload = () => ok(r.result); r.onerror = () => f(r.error); r.readAsDataURL(blob); });
+}
+async function bildFuerPdf(blob, max) {
+  const img = await bildLaden(bildUrl("pdf-tmp", blob));
+  const c = skaliert(img, max, true);
+  return { url: c.toDataURL("image/jpeg", 0.8), w: c.width, h: c.height };
+}
+
+function pdfStart(titel, rechts) {
+  if (!window.jspdf) throw new Error("Der PDF-Export braucht beim Öffnen der Seite eine Internetverbindung.");
+  const doc = new window.jspdf.jsPDF({ unit: "mm", format: "a4" });
+  const st = { doc, y: SEITE.o, titel };
+  const e = Z.einst;
+  const projekt = [e.projekt_nr, e.projekt_name].filter(Boolean).join(" · ") || "Projekt (unter „Mehr“ eintragen)";
+  doc.setFont("helvetica", "bold"); doc.setFontSize(10); doc.setTextColor(20);
+  doc.text(pdfText(projekt), SEITE.l, st.y + 4);
+  doc.setFont("helvetica", "normal"); doc.setFontSize(8.5); doc.setTextColor(70);
+  let y = st.y + 8.5;
+  for (const [k, l] of [["adresse", "Baustelle"], ["bauherr", "Bauherr"], ["bauleiter", "Bauleitung"]]) if (e[k]) { doc.text(pdfText(`${l}: ${e[k]}`), SEITE.l, y); y += 4; }
+  let yr = st.y + 4;
+  for (const z of rechts) { doc.text(pdfText(z), SEITE.r, yr, { align: "right" }); yr += 4.2; }
+  st.y = Math.max(y, yr) + 1;
+  doc.setDrawColor(30); doc.setLineWidth(0.5); doc.line(SEITE.l, st.y, SEITE.r, st.y);
+  st.y += 9;
+  doc.setFont("helvetica", "bold"); doc.setFontSize(17); doc.setTextColor(15);
+  doc.text(pdfText(titel), SEITE.l, st.y);
+  st.y += 6;
+  return st;
+}
+function pdfPlatz(st, h) {
+  if (st.y + h <= SEITE.u) return false;
+  st.doc.addPage("a4", "portrait");
+  st.y = SEITE.o;
+  st.doc.setFont("helvetica", "normal"); st.doc.setFontSize(8); st.doc.setTextColor(110);
+  st.doc.text(pdfText(st.titel + " (Fortsetzung)"), SEITE.l, st.y);
+  st.y += 6;
+  return true;
+}
+function pdfAbschnitt(st, titel) {
+  pdfPlatz(st, 15);
+  st.y += 3;
+  const d = st.doc;
+  d.setFont("helvetica", "bold"); d.setFontSize(11.5); d.setTextColor(15);
+  d.text(pdfText(titel), SEITE.l, st.y);
+  d.setDrawColor(150); d.setLineWidth(0.2); d.line(SEITE.l, st.y + 1.6, SEITE.r, st.y + 1.6);
+  st.y += 6.5;
+}
+function pdfAbsatz(st, text, { groesse = 10, leer = "-" } = {}) {
+  const d = st.doc;
+  d.setFont("helvetica", "normal"); d.setFontSize(groesse); d.setTextColor(text ? 20 : 120);
+  const zh = groesse * 0.3528 * 1.4;
+  for (const z of d.splitTextToSize(pdfText(text || leer), SEITE.r - SEITE.l)) {
+    pdfPlatz(st, zh);
+    d.text(z, SEITE.l, st.y + zh * 0.75);
+    st.y += zh;
+  }
+  st.y += 1.5;
+}
+/* spalten: [{t: Titel, b: Breite mm}], zeilen: [[zelle]], zelle = Text oder {t, farbe, fett, bilder:[{url,w,h}]} */
+function pdfTabelle(st, spalten, zeilen, { groesse = 9 } = {}) {
+  const d = st.doc, pad = 1.6, zh = groesse * 0.3528 * 1.35, bildH = 16;
+  const kopf = () => {
+    d.setFillColor(236, 239, 242); d.setDrawColor(170); d.setLineWidth(0.2);
+    d.rect(SEITE.l, st.y, SEITE.r - SEITE.l, 7, "FD");
+    d.setFont("helvetica", "bold"); d.setFontSize(8.3); d.setTextColor(40);
+    let x = SEITE.l;
+    for (const s of spalten) { d.text(pdfText(s.t), x + pad, st.y + 4.8); x += s.b; }
+    st.y += 7;
+  };
+  pdfPlatz(st, 18);
+  kopf();
+  for (const zeile of zeilen) {
+    d.setFontSize(groesse);
+    const zellen = zeile.map((z, i) => {
+      const o = typeof z === "object" && z !== null ? z : { t: z };
+      d.setFont("helvetica", o.fett ? "bold" : "normal");
+      const zeilenText = d.splitTextToSize(pdfText(o.t ?? ""), spalten[i].b - 2 * pad);
+      const h = zeilenText.length * zh + (o.bilder?.length ? bildH + 1.5 : 0);
+      return { ...o, zeilenText, h };
+    });
+    const h = Math.max(...zellen.map((z) => z.h)) + 2 * pad;
+    if (pdfPlatz(st, h)) kopf();
+    let x = SEITE.l;
+    d.setDrawColor(190); d.setLineWidth(0.2);
+    zellen.forEach((z, i) => {
+      d.rect(x, st.y, spalten[i].b, h);
+      d.setFont("helvetica", z.fett ? "bold" : "normal"); d.setFontSize(groesse);
+      d.setTextColor(...(z.farbe || [20, 20, 20]));
+      z.zeilenText.forEach((t, k) => d.text(t, x + pad, st.y + pad + zh * (k + 0.78)));
+      if (z.bilder?.length) {
+        let bx = x + pad;
+        const by = st.y + pad + z.zeilenText.length * zh + 1;
+        for (const b of z.bilder) {
+          const bw = Math.min(bildH * b.w / b.h, spalten[i].b - 2 * pad);
+          if (bx + bw > x + spalten[i].b) break;
+          d.addImage(b.url, "JPEG", bx, by, bw, bildH); bx += bw + 1.5;
+        }
+      }
+      x += spalten[i].b;
+    });
+    st.y += h;
+  }
+  st.y += 3;
+}
+function pdfUnterschriften(st, felder) {
+  pdfPlatz(st, 20);
+  st.y += 13;
+  const d = st.doc, b = (SEITE.r - SEITE.l - (felder.length - 1) * 12) / felder.length;
+  d.setDrawColor(40); d.setLineWidth(0.3); d.setFont("helvetica", "normal"); d.setFontSize(8.5); d.setTextColor(60);
+  felder.forEach((f, i) => { const x = SEITE.l + i * (b + 12); d.line(x, st.y, x + b, st.y); d.text(pdfText(f), x, st.y + 4); });
+  st.y += 8;
+}
+function pdfFertig(st) {
+  const d = st.doc, n = d.getNumberOfPages();
+  const stand = new Date();
+  for (let i = 1; i <= n; i++) {
+    d.setPage(i);
+    const quer = d.internal.pageSize.getWidth() > d.internal.pageSize.getHeight();
+    const breite = d.internal.pageSize.getWidth(), hoehe = d.internal.pageSize.getHeight();
+    d.setFont("helvetica", "normal"); d.setFontSize(7.5); d.setTextColor(120);
+    d.text(pdfText(`Stand ${datumDE(isoDatum(stand))} ${String(stand.getHours()).padStart(2, "0")}:${String(stand.getMinutes()).padStart(2, "0")}`), quer ? 12 : SEITE.l, hoehe - 8);
+    d.text(`Seite ${i} von ${n}`, breite - (quer ? 12 : 16), hoehe - 8, { align: "right" });
+  }
+  return d.output("blob");
+}
+
+async function pdfMaengel(liste, auswahlText) {
+  if (!liste.length) { toast("Keine Mängel in der aktuellen Auswahl", "fehler"); return; }
+  toast("PDF wird erstellt …", "ok", 60000);
+  const fotos = await S.alle("fotos");
+  const st = pdfStart("Mängelliste", [`Datum: ${datumDE(heute())}`, `Auswahl: ${auswahlText}`]);
+  const offen = liste.filter((m) => m.status !== "erledigt").length;
+  pdfAbsatz(st, `${liste.length} Mängel, davon ${offen} nicht erledigt, ${liste.filter(ueberfaellig).length} überfällig.`, { groesse: 9 });
+  const zeilen = [];
+  for (const m of liste) {
+    const bilder = [];
+    for (const f of fotos.filter((x) => x.mangel_id === m.id).slice(0, 3)) bilder.push(await bildFuerPdf(f.vorschau, 300));
+    zeilen.push([
+      { t: "M" + m.nr, fett: true },
+      { t: m.titel + (m.beschreibung ? "\n" + m.beschreibung : ""), bilder },
+      [m.geschoss, m.ort].filter(Boolean).join(" / "),
+      [m.gewerk, m.firma].filter(Boolean).join("\n"),
+      { t: datumDE(m.frist), farbe: ueberfaellig(m) ? [180, 30, 35] : undefined, fett: ueberfaellig(m) },
+      { t: STATUS[m.status] + (m.status === "erledigt" && m.erledigt_am ? "\n" + datumDE(m.erledigt_am) : ""), farbe: m.status === "erledigt" ? [25, 110, 55] : undefined },
+    ]);
+  }
+  pdfTabelle(st, [{ t: "Nr.", b: 12 }, { t: "Mangel", b: 66 }, { t: "Ort", b: 26 }, { t: "Gewerk / Firma", b: 32 }, { t: "Frist", b: 20 }, { t: "Status", b: 22 }], zeilen);
+  pdfUnterschriften(st, ["Ort, Datum", "Bauleitung", "Auftragnehmer"]);
+
+  // Je Plan eine Seite mit den markierten Mängeln der Auswahl
+  const planIds = [...new Set(liste.filter((m) => m.plan_id && m.x != null).map((m) => m.plan_id))];
+  for (const pid of planIds) {
+    const plan = await S.hole("plaene", pid);
+    if (!plan) continue;
+    const img = await bildLaden(bildUrl("pb" + plan.id, plan.bild));
+    const c = skaliert(img, 2400, true), ctx = c.getContext("2d");
+    const r = Math.max(14, c.width / 85);
+    for (const m of liste.filter((x) => x.plan_id === pid && x.x != null)) {
+      const x = m.x * c.width, y = m.y * c.height;
+      ctx.fillStyle = m.status === "erledigt" ? "#1d7a3e" : m.status === "in_arbeit" ? "#b86400" : "#c0262d";
+      ctx.strokeStyle = "#fff"; ctx.lineWidth = r * 0.2;
+      ctx.beginPath(); ctx.arc(x, y - r * 1.2, r, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(x - r * 0.45, y - r * 0.45); ctx.lineTo(x, y); ctx.lineTo(x + r * 0.45, y - r * 0.45); ctx.fill();
+      ctx.fillStyle = "#fff"; ctx.font = `bold ${Math.round(r * 0.95)}px Arial, sans-serif`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.fillText(String(m.nr), x, y - r * 1.2);
+    }
+    const quer = c.width > c.height;
+    st.doc.addPage("a4", quer ? "landscape" : "portrait");
+    const bw = st.doc.internal.pageSize.getWidth(), bh = st.doc.internal.pageSize.getHeight();
+    st.doc.setFont("helvetica", "bold"); st.doc.setFontSize(12); st.doc.setTextColor(15);
+    st.doc.text(pdfText(`Plan ${plan.geschoss ? plan.geschoss + " - " : ""}${plan.bezeichnung}`), 12, 14);
+    st.doc.setFont("helvetica", "normal"); st.doc.setFontSize(8); st.doc.setTextColor(90);
+    st.doc.text("Markierungen: Nummer = Mangel-Nr. (rot offen, orange in Arbeit, grün erledigt)", 12, 19);
+    const maxW = bw - 24, maxH = bh - 34, f = Math.min(maxW / c.width, maxH / c.height);
+    st.doc.addImage(c.toDataURL("image/jpeg", 0.85), "JPEG", 12 + (maxW - c.width * f) / 2, 23, c.width * f, c.height * f);
+  }
+  const blob = pdfFertig(st);
+  $("#toast").hidden = true;
+  await dateiAnbieten(`Maengelliste_${heute()}.pdf`, blob);
+}
+
+async function pdfTagebuch(t) {
+  toast("PDF wird erstellt …", "ok", 60000);
+  const alle = (await S.alle("tagebuch")).filter((x) => x.datum <= t.datum).length;
+  const st = pdfStart("Bautagebuch", [`${wochentag(t.datum)}, ${datumDE(t.datum)}`, `Bericht Nr. ${alle || 1}`]);
+  pdfTabelle(st, [{ t: "Wetter", b: 60 }, { t: "Temperatur", b: 40 }, { t: "Arbeitszeit", b: 78 }], [[t.wetter || "-", t.temperatur || "-", t.arbeitszeit || "-"]], { groesse: 9.5 });
+  pdfAbschnitt(st, "Personal auf der Baustelle");
+  if ((t.personal || []).length) {
+    const summe = t.personal.reduce((s, p) => s + (Number(p.anzahl) || 0), 0);
+    pdfTabelle(st, [{ t: "Firma", b: 80 }, { t: "Gewerk", b: 70 }, { t: "Anzahl", b: 28 }],
+      [...t.personal.map((p) => [p.firma, p.gewerk, String(p.anzahl)]), [{ t: "Summe", fett: true }, "", { t: String(summe), fett: true }]]);
+  } else pdfAbsatz(st, "", { leer: "keine Angaben" });
+  for (const [k, titel] of [["leistungen", "Ausgeführte Leistungen"], ["behinderungen", "Behinderungen / Erschwernisse"], ["vorkommnisse", "Besondere Vorkommnisse"], ["anordnungen", "Anordnungen / Vereinbarungen"], ["besucher", "Besucher / Besprechungen"]]) {
+    pdfAbschnitt(st, titel); pdfAbsatz(st, t[k]);
+  }
+  const fotos = (await S.alle("fotos")).filter((f) => f.datum === t.datum).sort((a, b) => a.erstellt - b.erstellt);
+  if (fotos.length) {
+    pdfAbschnitt(st, `Fotos (${fotos.length})`);
+    const spalte = (SEITE.r - SEITE.l - 2 * 5) / 3, bildH = 44;
+    for (let i = 0; i < fotos.length; i += 3) {
+      pdfPlatz(st, bildH + 12);
+      let hoechste = 0;
+      for (let k = 0; k < 3 && i + k < fotos.length; k++) {
+        const f = fotos[i + k];
+        const b = await bildFuerPdf(f.bild, 900);
+        const x = SEITE.l + k * (spalte + 5);
+        const fakt = Math.min(spalte / b.w, bildH / b.h);
+        st.doc.addImage(b.url, "JPEG", x, st.y, b.w * fakt, b.h * fakt);
+        st.doc.setFont("helvetica", "normal"); st.doc.setFontSize(7.8); st.doc.setTextColor(60);
+        const cap = st.doc.splitTextToSize(pdfText([f.geschoss, f.notiz].filter(Boolean).join(" - ") || `Foto ${i + k + 1}`), spalte).slice(0, 2);
+        st.doc.text(cap, x, st.y + b.h * fakt + 3.5);
+        hoechste = Math.max(hoechste, b.h * fakt + 3.5 + cap.length * 3.3);
+      }
+      st.y += hoechste + 4;
+    }
+  }
+  pdfUnterschriften(st, ["Bauleitung", "gesehen Auftraggeber"]);
+  const blob = pdfFertig(st);
+  $("#toast").hidden = true;
+  await dateiAnbieten(`Bautagebuch_${t.datum}.pdf`, blob);
+}
+
+/* ================================================================ Projekt & Daten */
+
+async function ansichtMehr() {
+  const e = Z.einst;
+  let schaetzung = null;
+  try { schaetzung = await navigator.storage?.estimate?.(); } catch (err) { /* nicht verfügbar */ }
+  let dauerhaft = null;
+  try { dauerhaft = await navigator.storage?.persisted?.(); } catch (err) { /* nicht verfügbar */ }
+  const [p, f, m, t] = await Promise.all(["plaene", "fotos", "maengel", "tagebuch"].map((s) => S.alle(s)));
+  const mb = (b) => (b / 1e6).toLocaleString("de-DE", { maximumFractionDigits: 1 }) + " MB";
+  seiteLeeren();
+  const feld = (k, l, ph = "") => `<label class="feld">${l}<input id="e-${k}" value="${esc(e[k] || "")}" placeholder="${esc(ph)}"></label>`;
+
+  inhalt.innerHTML = `
+    <section class="karte">
+      <h3>Projekt</h3>
+      <div class="formular">
+        ${feld("projekt_nr", "Projektnummer", "z. B. 2026-014")}
+        ${feld("projekt_name", "Projektname", "z. B. Wohnanlage Gartenstraße")}
+        <label class="feld voll">Baustelle / Adresse<input id="e-adresse" value="${esc(e.adresse || "")}"></label>
+        ${feld("bauherr", "Bauherr")}
+        ${feld("bauleiter", "Bauleitung")}
+        <label class="feld voll">Gewerke (kommagetrennt, als Vorschläge)<textarea id="e-gewerke" rows="3">${esc(e.gewerke || STANDARD_GEWERKE)}</textarea></label>
+      </div>
+      <div class="zeile ende" style="margin-top:12px"><button class="knopf primaer" id="e-ok">Speichern</button></div>
+    </section>
+    <section class="karte">
+      <h3>Daten auf diesem Gerät</h3>
+      <p style="margin-top:0">Alle Einträge liegen nur im Speicher dieses Browsers auf diesem Gerät. Sie werden nicht hochgeladen und erscheinen nicht auf anderen Geräten. Werden die Browserdaten gelöscht, sind sie weg. Deshalb regelmäßig eine Sicherung herunterladen.</p>
+      <dl class="info-liste zahlen">
+        <dt>Inhalt</dt><dd>${p.length} Pläne, ${f.length} Fotos, ${m.length} Mängel, ${t.length} Tagesberichte</dd>
+        ${schaetzung?.quota ? `<dt>Belegt</dt><dd>${mb(schaetzung.usage || 0)} von ca. ${mb(schaetzung.quota)}<div class="balken" style="margin-top:4px"><span style="width:${Math.min(100, Math.max(1, (schaetzung.usage / schaetzung.quota) * 100)).toFixed(1)}%"></span></div></dd>` : ""}
+        <dt>Speicher</dt><dd>${Z.fluechtig ? "nicht verfügbar – nichts wird gespeichert" : dauerhaft ? "dauerhaft (wird vom Browser nicht automatisch geräumt)" : "Standard (der Browser kann bei Platzmangel räumen)"}</dd>
+        <dt>Version</dt><dd>Bauleiter ${esc(VERSION)}</dd>
+      </dl>
+      <div class="zeile" style="margin-top:12px">
+        <button class="knopf" id="d-export">Sicherung herunterladen</button>
+        <button class="knopf" id="d-import">Sicherung einspielen</button>
+      </div>
+    </section>
+    <section class="karte">
+      <h3>Aufräumen</h3>
+      <div class="zeile">
+        <button class="knopf" id="d-beispiel">Beispieldaten entfernen</button>
+        <button class="knopf" id="d-beispiel-neu">Beispieldaten laden</button>
+        <button class="knopf gefahr" id="d-alles">Alle Daten löschen</button>
+      </div>
+    </section>`;
+
+  inhalt.addEventListener("input", () => { Z.dirty = true; });
+  $("#e-ok").onclick = async () => {
+    const neu = { k: "einstellungen" };
+    for (const k of ["projekt_nr", "projekt_name", "adresse", "bauherr", "bauleiter", "gewerke"]) neu[k] = $("#e-" + k).value.trim();
+    await S.setze("meta", neu);
+    Z.einst = neu; Z.dirty = false; projektKopf(); toast("Projektangaben gespeichert");
+  };
+  $("#d-export").onclick = () => sicherungExport().catch(fehlerZeigen);
+  $("#d-import").onclick = () => sicherungImport().catch(fehlerZeigen);
+  $("#d-beispiel").onclick = beispielEntfernen;
+  $("#d-beispiel-neu").onclick = async () => { await beispielLaden(); toast("Beispieldaten geladen"); zeichnen(); };
+  $("#d-alles").onclick = async () => {
+    if (!(await frage("Wirklich alle Pläne, Fotos, Mängel, Tagesberichte und Projektangaben auf diesem Gerät löschen?", { ja: "Alles löschen", gefahr: true }))) return;
+    for (const s of Object.keys(STORES)) await S.leeren(s);
+    await S.setze("meta", { k: "erststart", wert: Date.now() });
+    Z.einst = {}; projektKopf(); Z.dirty = false; toast("Alle Daten gelöscht"); zeichnen();
+  };
+}
+
+async function sicherungExport() {
+  toast("Sicherung wird erstellt …", "ok", 60000);
+  const daten = { format: "bauleiter-mobil", version: 1, exportiert: new Date().toISOString(), meta: await S.alle("meta"), tagebuch: await S.alle("tagebuch"), maengel: await S.alle("maengel"), plaene: [], fotos: [] };
+  for (const p of await S.alle("plaene")) daten.plaene.push({ ...p, bild: await blobDataUrl(p.bild), vorschau: await blobDataUrl(p.vorschau) });
+  for (const f of await S.alle("fotos")) daten.fotos.push({ ...f, bild: await blobDataUrl(f.bild), vorschau: await blobDataUrl(f.vorschau) });
+  $("#toast").hidden = true;
+  await dateiAnbieten(`Bauleiter-Sicherung_${heute()}.json`, new Blob([JSON.stringify(daten)], { type: "application/json" }));
+}
+function dataUrlBlob(url) {
+  const [kopf, b64] = String(url).split(",");
+  const typ = (kopf.match(/data:([^;]+)/) || [])[1] || "image/jpeg";
+  const bin = atob(b64 || "");
+  const arr = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+  return new Blob([arr], { type: typ });
+}
+async function sicherungImport() {
+  const [datei] = await dateienWaehlen({ mehrere: false, accept: "application/json,.json" });
+  if (!datei) return;
+  let daten;
+  try { daten = JSON.parse(await datei.text()); } catch (e) { throw new Error("Die Datei ist keine gültige Sicherung (kein JSON)."); }
+  if (daten?.format !== "bauleiter-mobil") throw new Error("Die Datei ist keine Sicherung von Bauleiter mobil.");
+  const n = `${daten.plaene.length} Pläne, ${daten.fotos.length} Fotos, ${daten.maengel.length} Mängel, ${daten.tagebuch.length} Tagesberichte`;
+  if (!(await frage(`Sicherung vom ${new Date(daten.exportiert).toLocaleString("de-DE")} einspielen (${n})? Die aktuellen Daten auf diesem Gerät werden dabei ersetzt.`, { ja: "Ersetzen", gefahr: true }))) return;
+  toast("Sicherung wird eingespielt …", "ok", 60000);
+  for (const s of Object.keys(STORES)) await S.leeren(s);
+  for (const x of daten.meta || []) await S.setze("meta", x);
+  for (const x of daten.tagebuch || []) await S.setze("tagebuch", x);
+  for (const x of daten.maengel || []) await S.setze("maengel", x);
+  for (const x of daten.plaene || []) await S.setze("plaene", { ...x, bild: dataUrlBlob(x.bild), vorschau: dataUrlBlob(x.vorschau) });
+  for (const x of daten.fotos || []) await S.setze("fotos", { ...x, bild: dataUrlBlob(x.bild), vorschau: dataUrlBlob(x.vorschau) });
+  Z.einst = (await S.hole("meta", "einstellungen")) || {};
+  projektKopf(); Z.dirty = false;
+  toast("Sicherung eingespielt"); gehe("uebersicht");
+}
+
+/* ================================================================ Beispieldaten */
+
+function beispielPlan() {
+  const c = document.createElement("canvas"); c.width = 2400; c.height = 1650;
+  const x = c.getContext("2d");
+  x.fillStyle = "#fff"; x.fillRect(0, 0, c.width, c.height);
+  x.strokeStyle = "#1d1d1d"; x.lineCap = "square";
+  const wand = (pts, w = 22) => { x.lineWidth = w; x.beginPath(); pts.forEach(([a, b], i) => (i ? x.lineTo(a, b) : x.moveTo(a, b))); x.stroke(); };
+  wand([[150, 150], [2250, 150], [2250, 1350], [150, 1350], [150, 150]], 34);
+  wand([[900, 150], [900, 640]]); wand([[900, 820], [900, 1350]]);
+  wand([[150, 760], [700, 760]]); wand([[1500, 150], [1500, 1350]], 22);
+  wand([[1500, 700], [2250, 700]]); wand([[1900, 700], [1900, 1350]]);
+  wand([[900, 1000], [1180, 1000]]); wand([[1320, 1000], [1500, 1000]]);
+  x.strokeStyle = "#7b8794"; x.lineWidth = 3;
+  for (let i = 0; i < 9; i++) { x.strokeRect(1560 + i * 34, 1100, 34, 220); }
+  x.beginPath(); x.arc(900, 640, 180, Math.PI * 0.5, Math.PI, false); x.stroke();
+  x.fillStyle = "#3d4a57"; x.font = "600 46px Arial, sans-serif"; x.textAlign = "center";
+  const raum = (t, a, px, py) => { x.fillText(t, px, py); x.font = "34px Arial, sans-serif"; x.fillText(a, px, py + 46); x.font = "600 46px Arial, sans-serif"; };
+  raum("Wohnen / Essen", "34,6 m²", 520, 440); raum("Schlafen", "16,2 m²", 520, 1060);
+  raum("Küche", "11,8 m²", 1200, 400); raum("Flur", "9,4 m²", 1200, 870); raum("Bad", "7,9 m²", 1200, 1200);
+  raum("Kind", "12,5 m²", 1875, 420); raum("Abstell.", "3,1 m²", 1700, 950); raum("Treppenhaus", "", 2075, 1010);
+  x.strokeStyle = "#1d1d1d"; x.lineWidth = 2; x.strokeRect(1650, 1420, 600, 190);
+  x.textAlign = "left"; x.font = "600 36px Arial, sans-serif"; x.fillText("Grundriss 2. OG  ·  Whg. 2.1", 1675, 1475);
+  x.font = "28px Arial, sans-serif"; x.fillText("Beispielplan  ·  M 1:100  ·  Index B", 1675, 1525); x.fillText("Nur zum Ausprobieren", 1675, 1570);
+  x.font = "26px Arial, sans-serif"; x.fillStyle = "#7b8794"; x.fillText("12,40", 1100, 120); x.fillText("8,24", 2275, 760);
+  return c;
+}
+function beispielFoto(text, farbe1, farbe2) {
+  const c = document.createElement("canvas"); c.width = 1200; c.height = 900;
+  const x = c.getContext("2d");
+  const g = x.createLinearGradient(0, 0, 1200, 900); g.addColorStop(0, farbe1); g.addColorStop(1, farbe2);
+  x.fillStyle = g; x.fillRect(0, 0, 1200, 900);
+  x.fillStyle = "rgba(255,255,255,0.08)"; for (let i = 0; i < 14; i++) x.fillRect(i * 95, 0, 40, 900);
+  x.fillStyle = "rgba(0,0,0,0.45)"; x.fillRect(0, 700, 1200, 200);
+  x.fillStyle = "#fff"; x.font = "600 56px Arial, sans-serif"; x.fillText("Beispielfoto", 50, 780);
+  x.font = "40px Arial, sans-serif"; x.fillText(text, 50, 845);
+  return c;
+}
+async function beispielLaden() {
+  const h = heute(), gestern = tageAb(h, -1), vorgestern = tageAb(h, -2);
+  const pc = beispielPlan();
+  const planId = await S.setze("plaene", { bezeichnung: "Grundriss Whg. 2.1 (Beispiel)", geschoss: "OG2", dateiname: "A_GR_OG2_Beispiel.png", bild: await canvasBlob(pc, "image/jpeg", 0.86), vorschau: await canvasBlob(skaliert(pc, 640, true), "image/jpeg", 0.8), breite: pc.width, hoehe: pc.height, seiten: 1, erstellt: Date.now(), beispiel: true });
+  const startNr = (await S.alle("maengel")).reduce((n, m) => Math.max(n, m.nr || 0), 0);
+  const maengel = [
+    { titel: "Putzriss über Fenstersturz", beschreibung: "Haarriss ca. 60 cm, vor Malerarbeiten schließen.", gewerk: "Maler", firma: "Malerbetrieb Kunze", ort: "Wohnen", frist: tageAb(h, -2), status: "offen", x: 0.24, y: 0.16 },
+    { titel: "Steckdose fehlt neben Küchenzeile", beschreibung: "Laut Elektroplan 2 Doppelsteckdosen, eingebaut nur eine.", gewerk: "Elektro", firma: "Elektro Rauch GmbH", ort: "Küche", frist: tageAb(h, 5), status: "in_arbeit", x: 0.56, y: 0.33 },
+    { titel: "Gefälle Duschbereich prüfen", beschreibung: "Wasser bleibt an der Wandseite stehen.", gewerk: "Fliesen", firma: "Fliesen Brandt", ort: "Bad", frist: tageAb(h, 10), status: "offen", x: 0.5, y: 0.76 },
+    { titel: "Türzarge Abstellraum beschädigt", beschreibung: "", gewerk: "Trockenbau", firma: "TB Hoffmann", ort: "Abstellraum", frist: tageAb(h, -6), status: "erledigt", erledigt_am: gestern, x: 0.71, y: 0.6 },
+  ];
+  const ids = [];
+  for (const [i, m] of maengel.entries()) {
+    ids.push(await S.setze("maengel", { erledigt_am: "", ...m, nr: startNr + i + 1, geschoss: "OG2", plan_id: planId, erstellt: Date.now() + i, beispiel: true }));
+  }
+  const fotoDaten = [
+    ["Riss am Fenstersturz, Wohnen", "#8a8f94", "#5b5f63", gestern, ids[0], 0.36, 0.3],
+    ["Elektro-Rohinstallation Küche", "#9b7b5a", "#5e4630", gestern, ids[1], 0.47, 0.45],
+    ["Estrich Bad, Gefälle", "#7d8a7a", "#4a5648", h, ids[2], null, null],
+    ["Fassadengerüst Nordseite", "#6d7f95", "#3c4a5b", vorgestern, null, null, null],
+  ];
+  for (const [i, [text, a, b, datum, mid, fx, fy]] of fotoDaten.entries()) {
+    const c = beispielFoto(text, a, b);
+    await S.setze("fotos", { datum, notiz: text, geschoss: "OG2", plan_id: fx != null ? planId : null, x: fx, y: fy, mangel_id: mid, bild: await canvasBlob(c), vorschau: await canvasBlob(skaliert(c, VORSCHAU_MAX), "image/jpeg", 0.75), erstellt: Date.now() + i, beispiel: true });
+  }
+  if (!(await S.hole("tagebuch", gestern))) await S.setze("tagebuch", { datum: gestern, beispiel: true, wetter: "bewölkt, Wind", temperatur: "9 – 13 °C", arbeitszeit: "07:00 – 16:30", personal: [{ firma: "Bau GmbH Lindner", gewerk: "Rohbau", anzahl: 6 }, { firma: "Elektro Rauch GmbH", gewerk: "Elektro", anzahl: 2 }, { firma: "Malerbetrieb Kunze", gewerk: "Maler", anzahl: 1 }], leistungen: "Mauerwerk 3. OG Achse A–C\nElektro-Rohinstallation Whg. 2.1 Küche und Flur\nSpachtelarbeiten Treppenhaus 1. OG", behinderungen: "Kranstillstand 10:15 – 11:00 wegen Windböen", vorkommnisse: "", anordnungen: "Zusätzliche Steckdose Küche Whg. 2.1 mit Elektro abgestimmt", besucher: "Baubesprechung 14:00 mit Bauherr und Architekt", geaendert: Date.now() });
+  if (!(await S.hole("tagebuch", vorgestern))) await S.setze("tagebuch", { datum: vorgestern, beispiel: true, wetter: "sonnig", temperatur: "11 – 17 °C", arbeitszeit: "07:00 – 16:00", personal: [{ firma: "Bau GmbH Lindner", gewerk: "Rohbau", anzahl: 5 }, { firma: "Gerüstbau Pohl", gewerk: "Gerüst", anzahl: 3 }], leistungen: "Gerüst Nordseite bis 4. OG gestellt\nDecke über 2. OG ausgeschalt", behinderungen: "", vorkommnisse: "", anordnungen: "", besucher: "", geaendert: Date.now() });
+  if (!Z.einst.projekt_name) {
+    Z.einst = { k: "einstellungen", projekt_nr: "2026-B01", projekt_name: "Beispiel: Wohnhaus Lindenweg", adresse: "Lindenweg 4", bauherr: "", bauleiter: "", gewerke: STANDARD_GEWERKE, beispiel: true };
+    await S.setze("meta", Z.einst);
+    projektKopf();
+  }
+}
+async function beispielEntfernen() {
+  if (!(await frage("Alle Beispieldaten entfernen? Eigene Einträge bleiben erhalten.", { ja: "Entfernen" }))) return;
+  for (const s of ["plaene", "fotos", "maengel", "tagebuch"]) {
+    for (const o of await S.alle(s)) if (o.beispiel) await S.weg(s, o[STORES[s]]);
+  }
+  // Verweise eigener Einträge auf gelöschte Beispiele lösen
+  const plaene = new Set((await S.alle("plaene")).map((p) => p.id));
+  const maengel = new Set((await S.alle("maengel")).map((m) => m.id));
+  for (const s of ["fotos", "maengel"]) for (const o of await S.alle(s)) {
+    let g = false;
+    if (o.plan_id && !plaene.has(o.plan_id)) { Object.assign(o, { plan_id: null, x: null, y: null }); g = true; }
+    if (s === "fotos" && o.mangel_id && !maengel.has(o.mangel_id)) { o.mangel_id = null; g = true; }
+    if (g) await S.setze(s, o);
+  }
+  if (Z.einst.beispiel) { await S.weg("meta", "einstellungen"); Z.einst = {}; projektKopf(); }
+  toast("Beispieldaten entfernt");
+  gehe(Z.ansicht === "mehr" ? "mehr" : "uebersicht");
+}
+
+/* ================================================================ Start */
+
+async function start() {
+  navAufbauen();
+  await dbOeffnen();
+  try {
+    Z.einst = (await S.hole("meta", "einstellungen")) || {};
+    if (!(await S.hole("meta", "erststart"))) {
+      await S.setze("meta", { k: "erststart", wert: Date.now() });
+      const leer = (await Promise.all(["plaene", "fotos", "maengel", "tagebuch"].map((s) => S.alle(s)))).every((l) => !l.length);
+      if (leer) await beispielLaden();
+    }
+  } catch (e) { fehlerZeigen(e); }
+  projektKopf();
+  $$('[data-ziel="uebersicht"]').forEach((b) => b.setAttribute("aria-current", "page"));
+  await zeichnen();
+}
+start();
+</script>
