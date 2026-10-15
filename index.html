@@ -28,6 +28,7 @@
           <select id="mode">
             <option value="clean">Text korrigieren</option>
             <option value="email">E-Mail</option>
+            <option value="letter">Schreiben / Brief</option>
             <option value="prompt">KI-Prompt</option>
             <option value="notes">Stichpunkte / Notiz</option>
             <option value="raw">Rohtext (ohne Aufbereitung)</option>
@@ -36,6 +37,14 @@
         <label class="field">
           <span>Dialekt / Region</span>
           <select id="dialect"></select>
+        </label>
+        <label class="field">
+          <span>Fachbereich</span>
+          <select id="domain">
+            <option value="general">Allgemein</option>
+            <option value="bau">Bauwesen (VOB, BGB, DIN)</option>
+            <option value="wohnen">Wohnungswirtschaft (Miete, WEG)</option>
+          </select>
         </label>
       </div>
 
@@ -71,6 +80,11 @@
       </div>
       <input id="subject" class="subject hidden" placeholder="Betreff">
       <textarea id="result" rows="8" placeholder="Das aufbereitete Ergebnis erscheint hier."></textarea>
+      <div id="hints" class="hints hidden">
+        <div class="hints-head">⚖️ Bitte prüfen</div>
+        <ul id="hintsList"></ul>
+        <small>Automatische Hinweise zu Form, Fristen und Datenschutz. Sie ersetzen keine Rechtsberatung.</small>
+      </div>
       <div class="export-grid">
         <button data-export="copy">📋 Kopieren</button>
         <button data-export="share">📤 Teilen</button>

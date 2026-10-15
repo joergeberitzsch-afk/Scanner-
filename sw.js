@@ -1,5 +1,5 @@
 // Offline-Cache für die App-Dateien. API-Aufrufe laufen immer direkt ins Netz.
-const CACHE = "sprachblitz-v1";
+const CACHE = "sprachblitz-v2";
 const FILES = [
   "./",
   "index.html",

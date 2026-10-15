@@ -77,8 +77,18 @@ main {
 }
 .card h2, .dlg h2 { font-size: 1rem; margin: 0; }
 
-.row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-@media (max-width: 420px) { .row { grid-template-columns: 1fr; } }
+.row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+
+.hints {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #f59e0b;
+  background: rgba(245, 158, 11, .1);
+}
+.hints-head { font-weight: 600; margin-bottom: 4px; }
+.hints ul { margin: 0 0 6px; padding-left: 18px; }
+.hints li { margin: 2px 0; }
 
 .field { display: grid; gap: 4px; font-size: .85rem; color: var(--muted); }
 .field input, .field select, textarea, .subject {

@@ -12,9 +12,13 @@ Diktier-App fürs Handy: sprechen, Text bekommen, weiterverwenden. Gedacht für 
 - **Aufbereitung mit Claude** – korrigiert falsch verstandene Wörter aus dem Zusammenhang, überträgt Mundart ins Hochdeutsche, setzt Satzzeichen und entfernt Füllwörter. Ausgabe wahlweise als
   - korrigierter Text,
   - fertige E-Mail mit Betreff,
+  - Schreiben bzw. Brief zum Ausdrucken oder Versenden,
   - sauber strukturierter KI-Prompt,
   - Stichpunkt-Notiz,
   - oder Rohtext ohne Bearbeitung.
+- **Natürlicher Ton** – keine Floskeln wie „Ich hoffe, es geht Ihnen gut“ oder „Zögern Sie nicht …“, keine Modewörter, keine aufgeblähten Sätze. Der Text soll klingen, als hätte man ihn selbst getippt.
+- **Fachbereiche Bau und Wohnungswirtschaft** – Fachbegriffe werden richtig erkannt und geschrieben (Bedenkenanmeldung, Behinderungsanzeige, Aufmaß, Nachtrag, Betriebskostenabrechnung, Mieterhöhungsverlangen, Hausgeld usw.). Der rechtliche Rahmen aus VOB/B, BGB (Bauvertrags- und Mietrecht), WEG, einschlägigen DIN-Normen und der DSGVO ist hinterlegt.
+- **Hinweise zu Form, Fristen und Datenschutz** – erscheinen getrennt unter dem Ergebnis und landen nicht im Export. Beispiele: „Kündigung nach § 568 BGB nur schriftlich, E-Mail reicht nicht“, „Bedenken nach § 4 Abs. 3 VOB/B unverzüglich schriftlich anmelden“, „Gesundheitsdaten des Mieters nur weitergeben, wenn nötig“. Fehlende Angaben wie Fristen oder Objektadresse werden als Platzhalter in eckigen Klammern markiert statt erfunden.
 - **Eigene Begriffe** – Namen, Fachwörter und Firmennamen hinterlegen, damit sie richtig geschrieben werden.
 - **Export** – Word (.docx), PDF, TXT, Markdown, direkt als E-Mail, Teilen-Menü des Handys oder Zwischenablage.
 - **Verlauf** – die letzten 50 Ergebnisse bleiben auf dem Gerät gespeichert.
@@ -52,6 +56,8 @@ Dann `http://localhost:8000` im Browser öffnen.
 | Grußformel | wird bei E-Mails als Abschluss verwendet |
 
 Ohne Schlüssel funktioniert die App auch – dann mit der Browser-Erkennung und einer einfachen Bereinigung ohne KI.
+
+**Für Bau- und Verwaltungsschreiben:** Fachbereich auswählen, Ausgabe „Schreiben / Brief“ oder „E-Mail“. Die Hinweise unter dem Ergebnis kurz prüfen, Platzhalter in eckigen Klammern ausfüllen. Die Hinweise sind eine Gedächtnisstütze und ersetzen keine Rechtsberatung.
 
 **Empfehlung bei starkem Dialekt:** Whisper / GPT-Transcribe als Erkennung, Dialekt auswählen, Ausgabe „Text korrigieren“ oder „E-Mail“. Die Kombination aus guter Erkennung und anschließender Korrektur im Zusammenhang bringt den größten Unterschied.
 
