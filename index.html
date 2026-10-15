@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Sprachblitz</title>
+  <meta name="description" content="Sprache schnell in Text umwandeln – auch mit Dialekt. Export als Word, PDF, Text oder direkt als E-Mail.">
+  <meta name="theme-color" content="#0f172a">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>⚡ Sprachblitz</h1>
+    <div class="topbar-actions">
+      <button class="icon-btn" id="btnHistory" aria-label="Verlauf" title="Verlauf">🕘</button>
+      <button class="icon-btn" id="btnSettings" aria-label="Einstellungen" title="Einstellungen">⚙️</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="card">
+      <div class="row">
+        <label class="field">
+          <span>Ausgabe als</span>
+          <select id="mode">
+            <option value="clean">Text korrigieren</option>
+            <option value="email">E-Mail</option>
+            <option value="prompt">KI-Prompt</option>
+            <option value="notes">Stichpunkte / Notiz</option>
+            <option value="raw">Rohtext (ohne Aufbereitung)</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Dialekt / Region</span>
+          <select id="dialect"></select>
+        </label>
+      </div>
+
+      <div class="recorder">
+        <button id="btnRecord" class="record-btn" aria-label="Aufnahme starten">
+          <span class="mic">🎤</span>
+        </button>
+        <div class="rec-info">
+          <div id="status" class="status">Tippen zum Sprechen</div>
+          <div id="timer" class="timer">0:00</div>
+          <div id="engineLabel" class="engine-label"></div>
+        </div>
+      </div>
+      <canvas id="level" class="level" height="28"></canvas>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <h2>Erkannter Text</h2>
+        <button class="link-btn" id="btnClearRaw">Leeren</button>
+      </div>
+      <textarea id="raw" rows="5" placeholder="Hier erscheint, was erkannt wurde. Du kannst den Text auch direkt bearbeiten oder einfügen."></textarea>
+      <div class="interim" id="interim"></div>
+      <div class="btn-row">
+        <button id="btnProcess" class="primary">✨ Aufbereiten</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <h2>Ergebnis</h2>
+        <button class="link-btn" id="btnCopyResult">Kopieren</button>
+      </div>
+      <input id="subject" class="subject hidden" placeholder="Betreff">
+      <textarea id="result" rows="8" placeholder="Das aufbereitete Ergebnis erscheint hier."></textarea>
+      <div class="export-grid">
+        <button data-export="copy">📋 Kopieren</button>
+        <button data-export="share">📤 Teilen</button>
+        <button data-export="mail">✉️ E-Mail</button>
+        <button data-export="docx">📄 Word</button>
+        <button data-export="pdf">🧾 PDF</button>
+        <button data-export="txt">📝 TXT</button>
+        <button data-export="md">Ⓜ️ Markdown</button>
+        <button data-export="save">💾 Merken</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Einstellungen -->
+  <dialog id="dlgSettings">
+    <form method="dialog" class="dlg">
+      <h2>Einstellungen</h2>
+
+      <fieldset>
+        <legend>Spracherkennung</legend>
+        <label class="radio">
+          <input type="radio" name="engine" value="browser">
+          <span><b>Browser (kostenlos, live)</b><br><small>Nutzt die Spracherkennung des Handys/Browsers. Schnell, aber bei starkem Dialekt fehleranfälliger.</small></span>
+        </label>
+        <label class="radio">
+          <input type="radio" name="engine" value="openai">
+          <span><b>Whisper / GPT-Transcribe (OpenAI)</b><br><small>Deutlich robuster bei Dialekt, Nuscheln und Hintergrundgeräuschen. Benötigt einen eigenen API-Schlüssel.</small></span>
+        </label>
+        <label class="field">
+          <span>OpenAI API-Schlüssel</span>
+          <input type="password" id="openaiKey" autocomplete="off" placeholder="sk-…">
+        </label>
+        <label class="field">
+          <span>Transkriptionsmodell</span>
+          <input id="openaiModel" list="openaiModels">
+          <datalist id="openaiModels">
+            <option value="gpt-4o-transcribe">
+            <option value="gpt-4o-mini-transcribe">
+            <option value="whisper-1">
+          </datalist>
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Aufbereitung mit Claude</legend>
+        <label class="field">
+          <span>Anthropic API-Schlüssel</span>
+          <input type="password" id="anthropicKey" autocomplete="off" placeholder="sk-ant-…">
+        </label>
+        <label class="field">
+          <span>Modell</span>
+          <select id="claudeModel">
+            <option value="claude-opus-5-5">Claude Opus 5.5 (beste Qualität)</option>
+            <option value="claude-sonnet-5-5">Claude Sonnet 5.5 (ausgewogen)</option>
+            <option value="claude-haiku-5-5">Claude Haiku 5.5 (am schnellsten, günstig)</option>
+          </select>
+        </label>
+        <label class="check">
+          <input type="checkbox" id="autoProcess">
+          <span>Nach der Aufnahme automatisch aufbereiten</span>
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Eigene Begriffe</legend>
+        <small>Namen, Fachwörter, Firmennamen – je einer pro Zeile oder mit Komma getrennt. Hilft gegen falsch verstandene Wörter.</small>
+        <textarea id="vocab" rows="4" placeholder="z. B. Eberitzsch, Scanner, Angebotsnummer"></textarea>
+      </fieldset>
+
+      <fieldset>
+        <legend>E-Mail</legend>
+        <label class="field">
+          <span>Grußformel / Name</span>
+          <input id="signature" placeholder="z. B. Viele Grüße, Jörg">
+        </label>
+      </fieldset>
+
+      <p class="hint">Schlüssel und Einstellungen werden nur auf diesem Gerät gespeichert (lokaler Browserspeicher) und direkt an den jeweiligen Anbieter gesendet.</p>
+
+      <div class="btn-row">
+        <button value="close" class="primary">Fertig</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Verlauf -->
+  <dialog id="dlgHistory">
+    <div class="dlg">
+      <div class="card-head">
+        <h2>Verlauf</h2>
+        <button class="link-btn" id="btnClearHistory">Alles löschen</button>
+      </div>
+      <ul id="historyList" class="history"></ul>
+      <div class="btn-row">
+        <button id="btnCloseHistory" class="primary">Schließen</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="vendor/jspdf.umd.min.js" defer></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
