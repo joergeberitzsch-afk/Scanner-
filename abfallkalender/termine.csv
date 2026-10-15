@@ -1,0 +1,4 @@
+datum,tonne
+# Termine aus dem Abfallkalender Saale-Holzland-Kreis (Veolia) für Oelknitz, Dorfanger 18 eintragen.
+# Format: JJJJ-MM-TT,schwarz|blau|gelb  – eine Zeile pro Abholung, z. B.:
+# 2026-10-20,schwarz
