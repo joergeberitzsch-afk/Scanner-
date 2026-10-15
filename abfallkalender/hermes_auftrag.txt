@@ -3,6 +3,7 @@ Lege bitte einen wiederkehrenden Auftrag an:
 Jeden Tag um 18:00 Uhr (Zeitzone Europe/Berlin) prüfst du, ob morgen ein Abholtermin aus der Liste unten ist.
 Wenn ja, schick mir per WhatsApp diese Nachricht:
 "Bitte heute Abend rausstellen – Abholung morgen: <Tonne(n)>"
+Beim Schadstoffmobil schreib stattdessen: "Achtung: Morgen kommt das Schadstoffmobil, 13:35 – 13:55 Uhr am Wertstoffcontainerplatz Oelknitz."
 Wenn morgen kein Termin ist, schick nichts.
 Nach dem letzten Termin (31.12.2026) erinnere mich einmalig daran, die Termine für 2027 nachzutragen.
 
@@ -10,6 +11,7 @@ Abholtermine Oelknitz, Dorfanger 18:
 - Mo 19.10.2026: Schwarze Tonne (Restmüll)
 - Do 22.10.2026: Blaue Tonne (Papier)
 - Do 29.10.2026: Gelbe Tonne (Verpackungen)
+- Fr 30.10.2026: SCHADSTOFFMOBIL, 13:35 – 13:55 Uhr am Wertstoffcontainerplatz Oelknitz (keine Tonne rausstellen, Schadstoffe persönlich abgeben)
 - Mo 02.11.2026: Schwarze Tonne (Restmüll)
 - Do 05.11.2026: Blaue Tonne (Papier)
 - Do 12.11.2026: Gelbe Tonne (Verpackungen)

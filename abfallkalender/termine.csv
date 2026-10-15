@@ -1,10 +1,12 @@
 datum,tonne
 # Oelknitz, Dorfanger 18 – Quelle: Abfallkalender Saale-Holzland-Kreis 2026 (Veolia), Tourenplan Landkreis
 # Restmüll: Montag ungerade KW | Blaue Tonne: Donnerstag ungerade KW | Gelbe Tonne: Donnerstag gerade KW
+# Schadstoffmobil: Wertstoffcontainerplatz Oelknitz, 13:35 – 13:55 Uhr (Abgabe persönlich, keine Tonne)
 # Feiertage ab 16.10.2026 betreffen diese Wochentage nicht. Termine 2027 nach Erscheinen des neuen Kalenders ergänzen.
 2026-10-19,schwarz
 2026-10-22,blau
 2026-10-29,gelb
+2026-10-30,schadstoff
 2026-11-02,schwarz
 2026-11-05,blau
 2026-11-12,gelb

@@ -14,6 +14,7 @@ TONNEN = {
     "blau": "🔵 blaue Tonne (Papier)",
     "gelb": "🟡 gelbe Tonne (Verpackungen)",
 }
+SCHADSTOFF = "☣️ Schadstoffmobil: 13:35 – 13:55 Uhr am Wertstoffcontainerplatz Oelknitz"
 
 
 def lade_termine(pfad):
@@ -22,7 +23,7 @@ def lade_termine(pfad):
         zeilen = (z for z in f if z.strip() and not z.lstrip().startswith("#"))
         for eintrag in csv.DictReader(zeilen):
             tonne = eintrag["tonne"].strip().lower()
-            if tonne not in TONNEN:
+            if tonne not in TONNEN and tonne != "schadstoff":
                 raise ValueError(f"Unbekannte Tonne '{tonne}' am {eintrag['datum']}")
             tag = dt.date.fromisoformat(eintrag["datum"].strip())
             termine.setdefault(tag, []).append(tonne)
@@ -40,8 +41,14 @@ def main():
     tonnen = lade_termine(args.csv).get(morgen)
     if not tonnen:
         return
-    liste = "\n".join(f"• {TONNEN[t]}" for t in sorted(set(tonnen), key=list(TONNEN).index))
-    print(f"Bitte heute Abend rausstellen – Abholung morgen, {morgen:%d.%m.%Y}:\n{liste}")
+    teile = []
+    tonnen_morgen = [t for t in TONNEN if t in tonnen]
+    if tonnen_morgen:
+        liste = "\n".join(f"• {TONNEN[t]}" for t in tonnen_morgen)
+        teile.append(f"Bitte heute Abend rausstellen – Abholung morgen, {morgen:%d.%m.%Y}:\n{liste}")
+    if "schadstoff" in tonnen:
+        teile.append(f"Morgen, {morgen:%d.%m.%Y}, kommt das {SCHADSTOFF}")
+    print("\n\n".join(teile))
 
 
 if __name__ == "__main__":

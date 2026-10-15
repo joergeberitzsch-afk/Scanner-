@@ -206,4 +206,18 @@ DESCRIPTION:Heute Abend rausstellen: Blaue Tonne (Papier)
 TRIGGER:-PT6H
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:20261030-schadstoff@muell-oelknitz
+DTSTAMP:20261015T000000Z
+DTSTART:20261030T123500Z
+DTEND:20261030T125500Z
+SUMMARY:☣ Schadstoffmobil Oelknitz
+LOCATION:Wertstoffcontainerplatz Oelknitz
+DESCRIPTION:Schadstoffe persönlich abgeben (13:35 – 13:55 Uhr)
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Morgen 13:35 – 13:55 Uhr Schadstoffmobil am Wertstoffcontainerplatz
+TRIGGER:-PT19H35M
+END:VALARM
+END:VEVENT
 END:VCALENDAR
