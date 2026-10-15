@@ -3,6 +3,14 @@
 Erinnerung per WhatsApp jeweils am Vorabend einer Abholung um 18:00 Uhr,
 für die schwarze, blaue und gelbe Tonne.
 
+## Schnellstart
+
+- **Hermes/WhatsApp:** Den Text aus `hermes_auftrag.txt` komplett an Hermes schicken. Fertig.
+- **Handy-Kalender:** `muellabfuhr_oelknitz_2026.ics` öffnen und importieren. Jeder Termin erinnert am Vortag um 18:00 Uhr.
+
+Oelknitz laut Tourenplan Landkreis 2026: Restmüll Montag (ungerade KW), blaue Tonne
+Donnerstag (ungerade KW), gelbe Tonne Donnerstag (gerade KW).
+
 ## 1. Termine eintragen
 
 Die Abholtermine stehen im offiziellen Abfallkalender des Saale-Holzland-Kreises

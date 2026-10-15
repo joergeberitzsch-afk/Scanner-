@@ -1,4 +1,21 @@
 datum,tonne
-# Termine aus dem Abfallkalender Saale-Holzland-Kreis (Veolia) für Oelknitz, Dorfanger 18 eintragen.
-# Format: JJJJ-MM-TT,schwarz|blau|gelb  – eine Zeile pro Abholung, z. B.:
-# 2026-10-20,schwarz
+# Oelknitz, Dorfanger 18 – Quelle: Abfallkalender Saale-Holzland-Kreis 2026 (Veolia), Tourenplan Landkreis
+# Restmüll: Montag ungerade KW | Blaue Tonne: Donnerstag ungerade KW | Gelbe Tonne: Donnerstag gerade KW
+# Feiertage ab 16.10.2026 betreffen diese Wochentage nicht. Termine 2027 nach Erscheinen des neuen Kalenders ergänzen.
+2026-10-19,schwarz
+2026-10-22,blau
+2026-10-29,gelb
+2026-11-02,schwarz
+2026-11-05,blau
+2026-11-12,gelb
+2026-11-16,schwarz
+2026-11-19,blau
+2026-11-26,gelb
+2026-11-30,schwarz
+2026-12-03,blau
+2026-12-10,gelb
+2026-12-14,schwarz
+2026-12-17,blau
+2026-12-24,gelb
+2026-12-28,schwarz
+2026-12-31,blau
