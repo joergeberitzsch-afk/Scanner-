@@ -126,8 +126,8 @@ room("AG", "", "Aufzug", "", [N(4, 2.45, 4.50, 2.95, 5.55)])
 # --- WE 1.05 (1-Raum Typ II) – Nassband getauscht: Bad an Achse G
 room("1.05", "1.05.00", "Flur", "4,04", [N(5, 0, 3.21, 0, 1.26)], changed=True)
 room("1.05", "1.05.01", "Bad", "3,86", [N(5, 3.36, W, 0, 1.55)], changed=True)
-room("1.05", "1.05.02", "Schlafen", "9,19", [N(5, 0, 2.465, 1.41, DN)])
-room("1.05", "1.05.03", "Wohnen / Kochen", "14,67", [N(5, 2.615, W, 1.70, DN), N(5, 2.615, 3.21, 1.41, 1.70)],
+room("1.05", "1.05.02", "Schlafen", "≈ 9,90", [N(5, 0, 2.465, 1.41, DN)], changed=True)
+room("1.05", "1.05.03", "Wohnen / Kochen", "≈ 13,90", [N(5, 2.615, W, 1.70, DN), N(5, 2.615, 3.21, 1.41, 1.70)],
      changed=True, lab=(bx(5) + 4.2, N0 + 3.9))
 
 # --- WE 1.06 (1-Raum Typ II) – unverändert
@@ -174,9 +174,9 @@ room("1.10", "1.10.04", "Wohnen", "16,03", [S(4, 0, 3.21, 1.41, DS), S(4, 3.21, 
 # --- WE 1.09 (1-Raum Typ II) – Nassband getauscht: Bad an Achse F
 room("1.09", "1.09.01", "Bad", "3,86", [S(5, 0, 2.49, 0, 1.55)], changed=True)
 room("1.09", "1.09.00", "Flur", "4,04", [S(5, 2.64, W, 0, 1.26)], changed=True)
-room("1.09", "1.09.03", "Wohnen / Kochen", "14,67", [S(5, 0, 3.235, 1.70, DS), S(5, 2.64, 3.235, 1.41, 1.70)],
+room("1.09", "1.09.03", "Wohnen / Kochen", "≈ 13,90", [S(5, 0, 3.235, 1.70, DS), S(5, 2.64, 3.235, 1.41, 1.70)],
      changed=True, lab=(bx(5) + 1.6, S0 - 3.9))
-room("1.09", "1.09.02", "Schlafen", "9,19", [S(5, 3.385, W, 1.41, DS)])
+room("1.09", "1.09.02", "Schlafen", "≈ 9,90", [S(5, 3.385, W, 1.41, DS)], changed=True)
 
 # --- WE 1.08 (1-Raum Typ III) – unverändert
 room("1.08", "1.08.00", "Flur", "4,04", [S(6, 0, 3.21, 0, 1.26)])
@@ -429,6 +429,13 @@ for kind, a0, a1, c, t, swing in doors:
                 f'A {r:.2f} {r:.2f} 0 0 {0 if swing == "w" else 1} {xb:.2f} {py(a1):.2f}" '
                 f'fill="none" stroke="#666" stroke-width="0.12"/>')
 
+# Neue Türöffnungen in tragender Flurwand (WE 1.05 / 1.09) – Statik prüfen
+for (gx0, gx1, yc, ty) in ((bx(5) + 1.00, bx(5) + 2.20, Y3, M1 - 0.42), (bx(5) + 3.60, bx(5) + 4.80, Y2, M0 + 0.42)):
+    add(rect(gx0, yc - 0.22, gx1, yc + 0.22, fill="none", stroke="#c00000", stroke_width=0.35,
+             stroke_dasharray="1,0.6"))
+    add(f'<circle cx="{px((gx0 + gx1) / 2):.2f}" cy="{py(ty):.2f}" r="1.9" fill="#c00000"/>')
+    add(text(px((gx0 + gx1) / 2), py(ty) + 0.9, "!", 2.6, weight="bold", fill="#ffffff"))
+
 # Treppe TH 1 / Aufzug
 for k in range(14):
     yy = N0 + 0.6 + k * 0.30
@@ -459,10 +466,10 @@ for rects, we, name, nr, area, changed, lab in rooms:
 # WE-Bezeichnungen
 we_lab = {
     "1.02": (3.0, 12.6, "5-Raum · 123,93 m²"), "1.03": (9.0, 12.85, "2-Raum · 64,49 m²"),
-    "1.04": (22.2, 13.4, "1-Raum Typ I · 32,00 m²"), "1.05": (34.3, 13.4, "1-Raum Typ II · 31,76 m²"),
+    "1.04": (22.2, 13.4, "1-Raum Typ I · 32,00 m²"), "1.05": (34.3, 13.4, "1-Raum Typ II · ≈ 31,71 m²"),
     "1.06": (40.3, 13.4, "1-Raum Typ II · 31,76 m²"), "1.07": (44.6, 12.85, "3-Raum groß · 78,03 m²"),
     "1.01": (19.6, 0.95, "3-Raum klein · 64,13 m²"), "1.10": (25.8, 0.95, "1-Raum Typ I · 32,00 m²"),
-    "1.09": (31.6, 0.95, "1-Raum Typ II · 31,76 m²"), "1.08": (37.6, 0.95, "1-Raum Typ III · 31,69 m²"),
+    "1.09": (31.6, 0.95, "1-Raum Typ II · ≈ 31,71 m²"), "1.08": (37.6, 0.95, "1-Raum Typ III · 31,69 m²"),
 }
 for we, (x, y, s) in we_lab.items():
     add(text(px(x), py(y), f"WE {we}", 2.9, weight="bold", fill="#1f4e79"))
@@ -547,7 +554,7 @@ add(line(8, BY - 6, SHEET_W - 8, BY - 6, w=0.35))
 
 # --- Übersicht Bestand vs. Vorschlag (M 1:400)
 def mini(ox, oy, title, pts, knots):
-    s = 2.5     # mm je m
+    s = 2.2     # mm je m
     def X(x): return ox + x * s
     def Y(y): return oy + (Y4 - y) * s
     add(text(ox, oy - 4.2, title, 2.9, "start", "bold"))
@@ -569,17 +576,23 @@ def mini(ox, oy, title, pts, knots):
     return Y(Y1)
 
 
-yb = mini(16, BY + 6, "Bestand (AP Index A): 17 Sanitär-/Lüftungsstandorte + Kernsteiger",
+knots_v = [(((s[1] + s[3]) / 2), ((s[2] + s[4]) / 2), "#1565c0" if s[0] == "IS 4" else SHAFT)
+           for s in shafts]
+# Rückfallvariante: WE 1.05 / 1.09 wie AP Index A, je eigener Schacht
+knots_r = knots_v + [(bx(5) + 0.27, N0 + 0.22, "#7a7a7a"), (bx(5) + 5.58, S0 - 0.22, "#7a7a7a")]
+yb = mini(16, BY + 5, "Bestand (AP Index A): 17 Sanitär-/Lüftungsstandorte + Kernsteiger",
           bestand, [(bestand_kern[0], bestand_kern[1], "#1565c0")])
-yv = mini(16, BY + 56, "Vorschlag: 7 Installationsknoten (S · L) + 1 Kernschacht (E · M)",
-          [], [(((s[1] + s[3]) / 2), ((s[2] + s[4]) / 2), "#1565c0" if s[0] == "IS 4" else SHAFT)
-               for s in shafts])
-add(f'<circle cx="18" cy="{BY + 104:.2f}" r="1.05" fill="{SHAFT}"/>')
-add(text(21, BY + 104.8, "Sanitär-/Lüftungsstandort mit eigener Leitungsführung (schematisch)", 1.9, "start"))
-add(f'<rect x="16.5" y="{BY + 107.5:.2f}" width="3" height="3" fill="{SHAFT}"/>')
-add(text(21, BY + 110.0, "Installationsknoten (gebündelter Schacht)", 1.9, "start"))
-add(f'<rect x="16.5" y="{BY + 112.5:.2f}" width="3" height="3" fill="#1565c0"/>')
-add(text(21, BY + 115.0, "Kernschacht Elektro / Medien", 1.9, "start"))
+yv = mini(16, BY + 46, "Vorschlag: 7 Installationsknoten (S · L) + 1 Kernschacht (E · M)", [], knots_v)
+yr = mini(16, BY + 87, "Rückfallvariante (WE 1.05/1.09 wie AP): 9 Knoten + 1 Kernschacht", [], knots_r)
+for k, (sym, lab) in enumerate((
+        (f'<circle cx="18" cy="{{y}}" r="1.05" fill="{SHAFT}"/>', "Einzelstandort (schematisch)"),
+        (f'<rect x="16.5" y="{{y0}}" width="3" height="3" fill="{SHAFT}"/>', "Installationsknoten"),
+        ('<rect x="16.5" y="{y0}" width="3" height="3" fill="#1565c0"/>', "Kernschacht E · M"),
+        ('<rect x="16.5" y="{y0}" width="3" height="3" fill="#7a7a7a"/>', "zusätzlicher Schacht Rückfallvariante"))):
+    xo = (k % 2) * 58
+    yy = BY + 125 + (k // 2) * 4.6
+    add(sym.format(y=yy, y0=yy - 1.5).replace('cx="18"', f'cx="{18 + xo}"').replace('x="16.5"', f'x="{16.5 + xo}"'))
+    add(text(21 + xo, yy + 0.8, lab, 1.9, "start"))
 
 # --- Legende
 LX = 150
@@ -597,12 +610,15 @@ leg = [
     ('<line x1="{x}" y1="{ym}" x2="{x8}" y2="{ym}" stroke="#1565c0" stroke-width="0.4" stroke-dasharray="1.6,0.8"/>',
      "Elektro-/Medientrasse in Flur-Unterdecke"),
     ('<rect x="{x2}" y="{y}" width="4" height="3" fill="#1565c0"/>', "Wohnungsunterverteilung (UV)"),
+    ('<rect x="{x}" y="{y}" width="8" height="3.5" fill="none" stroke="#c00000" stroke-width="0.35" '
+     'stroke-dasharray="1,0.6"/><circle cx="{xc}" cy="{ym}" r="1.4" fill="#c00000"/>',
+     "Neue Türöffnung in tragender Flurwand – Statik prüfen"),
 ]
 for k, (sym, lab) in enumerate(leg):
-    y = BY + 4 + k * 5.6
-    add(sym.format(x=LX, y=y, ym=y + 1.75, x8=LX + 8, x2=LX + 2))
+    y = BY + 4 + k * 5.0
+    add(sym.format(x=LX, y=y, ym=y + 1.75, x8=LX + 8, x2=LX + 2, xc=LX + 4))
     add(text(LX + 11, y + 2.8, lab, 2.1, "start"))
-add(text(LX, BY + 46, "S = Sanitär (TW/AW)   L = Abluft DIN 18017-3   E = Elektro   M = Medien/TK", 1.9,
+add(text(LX, BY + 48, "S = Sanitär (TW/AW)   L = Abluft DIN 18017-3   E = Elektro   M = Medien/TK", 1.9,
          "start", fill="#444"))
 
 # --- Knotentabelle
@@ -640,10 +656,16 @@ notes = [
                    "1.07: Nassräume der Mittelzone auf je einen Knoten gelegt."),
     ("Elektro", "Ein Hauptsteiger im Kern (Aufzug-Vorraum, Lage gem. AP bereits vorgesehen), "
                 "horizontale Verteilung in der Flur-Unterdecke zu den Unterverteilungen der WE."),
-    ("Flächen", "Raum- und Wohnungsgrößen bleiben unverändert (Werte gem. AP Index A); "
-                "Abweichungen aus der Schachtlage liegen je WE unter 0,5 m² und sind in der "
-                "Werkplanung zu bilanzieren."),
-    ("Zu prüfen", "Statik (Wand-/Deckendurchbrüche im WBS-70-Bestand, Nutzung vorhandener BD), "
+    ("Flächen", "Wohnungsgrößen bleiben erhalten. In WE 1.05 und 1.09 verschieben sich durch den "
+                "Tausch ca. 0,8 m² vom Wohnen/Kochen (≈ 13,90 m²) zum Schlafen (≈ 9,90 m²), "
+                "WE gesamt ≈ 31,71 m² statt 31,76 m². Übrige Flächen gem. AP Index A; Bilanzierung "
+                "in der Werkplanung."),
+    ("Kritisch", "Die Wohnungstüren von WE 1.05 und 1.09 wandern zur anderen Achse. Die Flurwände "
+                 "sind tragend (Wandpfeilernachweise); neue Öffnungslage nur mit statischem Nachweis."),
+    ("Rückfall", "Lässt die Statik die neuen Türlagen nicht zu, bleiben WE 1.05 und 1.09 wie in der "
+                 "AP mit je eigenem Schacht: 9 Knoten + 1 Kernschacht statt rund 17 Standorten. "
+                 "Alle anderen Änderungen bleiben gültig."),
+    ("Zu prüfen", "Statik (Türöffnungen Flurwand, Wand-/Deckendurchbrüche, Nutzung vorhandener BD), "
                   "Brandschutz (F90-Schächte, Abschottungen), Schallschutz DIN 4109, "
                   "Fortführung in EG, 5. OG und Drempel, Abstimmung TGA-Planung."),
 ]
@@ -677,7 +699,7 @@ rows = [
     ("Bauherr", "jenawohnen GmbH, Löbdergraben 19, 07743 Jena"),
     ("Planinhalt", "Grundriss Regelgeschoss 1.–4. OG"),
     ("", "Vorschlag Installationsknoten (Variante)"),
-    ("Planstand", "Variantenstudie V1 · 29.10.2026"),
+    ("Planstand", "Variantenstudie V2 · 29.10.2026"),
     ("Maßstab", "1:100 (A2) · Maße schematisch, am Bestand prüfen"),
     ("Grundlage", "AP Index A, 301_A_H5_1051 / 1301"),
 ]

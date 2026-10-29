@@ -91,7 +91,7 @@
 <rect x="317.25" y="90.35" width="20.50" height="26.00" fill="#f2f2f2"/>
 <rect x="352.75" y="133.25" width="32.10" height="12.60" fill="#fff3b8"/>
 <rect x="386.35" y="130.35" width="24.90" height="15.50" fill="#fff3b8"/>
-<rect x="352.75" y="86.50" width="24.65" height="45.25" fill="#e5f2f0"/>
+<rect x="352.75" y="86.50" width="24.65" height="45.25" fill="#fff3b8"/>
 <rect x="378.90" y="86.50" width="32.35" height="42.35" fill="#fff3b8"/>
 <rect x="378.90" y="128.85" width="5.95" height="2.90" fill="#fff3b8"/>
 <rect x="412.75" y="130.35" width="24.90" height="15.50" fill="#f4ede6"/>
@@ -127,7 +127,7 @@
 <rect x="379.15" y="167.35" width="32.10" height="12.60" fill="#fff3b8"/>
 <rect x="352.75" y="184.35" width="32.35" height="42.35" fill="#fff3b8"/>
 <rect x="379.15" y="181.45" width="5.95" height="2.90" fill="#fff3b8"/>
-<rect x="386.60" y="181.45" width="24.65" height="45.25" fill="#f6e9ec"/>
+<rect x="386.60" y="181.45" width="24.65" height="45.25" fill="#fff3b8"/>
 <rect x="412.75" y="167.35" width="32.10" height="12.60" fill="#eceaf6"/>
 <rect x="446.35" y="167.35" width="24.90" height="15.50" fill="#eceaf6"/>
 <rect x="446.35" y="184.35" width="24.90" height="15.00" fill="#eceaf6"/>
@@ -341,6 +341,12 @@
 <rect x="171.15" y="131.85" width="1.70" height="13.00" fill="#ffffff"/>
 <rect x="111.15" y="168.35" width="1.70" height="10.00" fill="#ffffff"/>
 <rect x="231.15" y="168.35" width="1.70" height="9.50" fill="#ffffff"/>
+<rect x="362.75" y="144.40" width="12.00" height="4.40" fill="none" stroke="#c00000" stroke-width="0.35" stroke-dasharray="1,0.6"/>
+<circle cx="368.75" cy="151.55" r="1.9" fill="#c00000"/>
+<text x="368.75" y="152.45" font-size="2.6" text-anchor="middle" font-weight="bold" fill="#ffffff" >!</text>
+<rect x="388.75" y="164.40" width="12.00" height="4.40" fill="none" stroke="#c00000" stroke-width="0.35" stroke-dasharray="1,0.6"/>
+<circle cx="394.75" cy="161.65" r="1.9" fill="#c00000"/>
+<text x="394.75" y="162.55" font-size="2.6" text-anchor="middle" font-weight="bold" fill="#ffffff" >!</text>
 <line x1="293.75" y1="139.85" x2="303.25" y2="139.85" stroke="#1d1d1d" stroke-width="0.12" />
 <line x1="304.75" y1="139.85" x2="314.25" y2="139.85" stroke="#1d1d1d" stroke-width="0.12" />
 <line x1="293.75" y1="136.85" x2="303.25" y2="136.85" stroke="#1d1d1d" stroke-width="0.12" />
@@ -462,10 +468,10 @@
 <text x="398.80" y="140.57" font-size="1.72" text-anchor="middle" font-weight="normal" fill="#1d1d1d" >3,86 m²</text>
 <text x="365.07" y="106.87" font-size="1.5479999999999998" text-anchor="middle" font-weight="normal" fill="#666" >1.05.02</text>
 <text x="365.07" y="109.33" font-size="2.15" text-anchor="middle" font-weight="bold" fill="#1d1d1d" >Schlafen</text>
-<text x="365.07" y="111.60" font-size="1.72" text-anchor="middle" font-weight="normal" fill="#1d1d1d" >9,19 m²</text>
+<text x="365.07" y="111.60" font-size="1.72" text-anchor="middle" font-weight="normal" fill="#1d1d1d" >≈ 9,90 m²</text>
 <text x="394.75" y="104.59" font-size="1.5479999999999998" text-anchor="middle" font-weight="normal" fill="#666" >1.05.03</text>
 <text x="394.75" y="107.05" font-size="2.15" text-anchor="middle" font-weight="bold" fill="#1d1d1d" >Wohnen / Kochen</text>
-<text x="394.75" y="109.32" font-size="1.72" text-anchor="middle" font-weight="normal" fill="#1d1d1d" >14,67 m²</text>
+<text x="394.75" y="109.32" font-size="1.72" text-anchor="middle" font-weight="normal" fill="#1d1d1d" >≈ 13,90 m²</text>
 <text x="425.20" y="135.84" font-size="1.5479999999999998" text-anchor="middle" font-weight="normal" fill="#666" >1.06.01</text>
 <text x="425.20" y="138.30" font-size="2.15" text-anchor="middle" font-weight="bold" fill="#1d1d1d" >Bad</text>
 <text x="425.20" y="140.57" font-size="1.72" text-anchor="middle" font-weight="normal" fill="#1d1d1d" >3,86 m²</text>
@@ -540,10 +546,10 @@
 <text x="395.20" y="176.12" font-size="1.72" text-anchor="middle" font-weight="normal" fill="#1d1d1d" >4,04 m²</text>
 <text x="368.75" y="204.09" font-size="1.5479999999999998" text-anchor="middle" font-weight="normal" fill="#666" >1.09.03</text>
 <text x="368.75" y="206.55" font-size="2.15" text-anchor="middle" font-weight="bold" fill="#1d1d1d" >Wohnen / Kochen</text>
-<text x="368.75" y="208.82" font-size="1.72" text-anchor="middle" font-weight="normal" fill="#1d1d1d" >14,67 m²</text>
+<text x="368.75" y="208.82" font-size="1.72" text-anchor="middle" font-weight="normal" fill="#1d1d1d" >≈ 13,90 m²</text>
 <text x="398.92" y="201.82" font-size="1.5479999999999998" text-anchor="middle" font-weight="normal" fill="#666" >1.09.02</text>
 <text x="398.92" y="204.28" font-size="2.15" text-anchor="middle" font-weight="bold" fill="#1d1d1d" >Schlafen</text>
-<text x="398.92" y="206.55" font-size="1.72" text-anchor="middle" font-weight="normal" fill="#1d1d1d" >9,19 m²</text>
+<text x="398.92" y="206.55" font-size="1.72" text-anchor="middle" font-weight="normal" fill="#1d1d1d" >≈ 9,90 m²</text>
 <text x="428.80" y="171.39" font-size="1.5479999999999998" text-anchor="middle" font-weight="normal" fill="#666" >1.08.00</text>
 <text x="428.80" y="173.85" font-size="2.15" text-anchor="middle" font-weight="bold" fill="#1d1d1d" >Flur</text>
 <text x="428.80" y="176.12" font-size="1.72" text-anchor="middle" font-weight="normal" fill="#1d1d1d" >4,04 m²</text>
@@ -566,7 +572,7 @@
 <text x="274.00" y="94.00" font-size="2.9" text-anchor="middle" font-weight="bold" fill="#1f4e79" >WE 1.04</text>
 <text x="274.00" y="96.70" font-size="1.9" text-anchor="middle" font-weight="normal" fill="#1f4e79" >1-Raum Typ I · 32,00 m²</text>
 <text x="395.00" y="94.00" font-size="2.9" text-anchor="middle" font-weight="bold" fill="#1f4e79" >WE 1.05</text>
-<text x="395.00" y="96.70" font-size="1.9" text-anchor="middle" font-weight="normal" fill="#1f4e79" >1-Raum Typ II · 31,76 m²</text>
+<text x="395.00" y="96.70" font-size="1.9" text-anchor="middle" font-weight="normal" fill="#1f4e79" >1-Raum Typ II · ≈ 31,71 m²</text>
 <text x="455.00" y="94.00" font-size="2.9" text-anchor="middle" font-weight="bold" fill="#1f4e79" >WE 1.06</text>
 <text x="455.00" y="96.70" font-size="1.9" text-anchor="middle" font-weight="normal" fill="#1f4e79" >1-Raum Typ II · 31,76 m²</text>
 <text x="498.00" y="99.50" font-size="2.9" text-anchor="middle" font-weight="bold" fill="#1f4e79" >WE 1.07</text>
@@ -576,7 +582,7 @@
 <text x="310.00" y="218.50" font-size="2.9" text-anchor="middle" font-weight="bold" fill="#1f4e79" >WE 1.10</text>
 <text x="310.00" y="221.20" font-size="1.9" text-anchor="middle" font-weight="normal" fill="#1f4e79" >1-Raum Typ I · 32,00 m²</text>
 <text x="368.00" y="218.50" font-size="2.9" text-anchor="middle" font-weight="bold" fill="#1f4e79" >WE 1.09</text>
-<text x="368.00" y="221.20" font-size="1.9" text-anchor="middle" font-weight="normal" fill="#1f4e79" >1-Raum Typ II · 31,76 m²</text>
+<text x="368.00" y="221.20" font-size="1.9" text-anchor="middle" font-weight="normal" fill="#1f4e79" >1-Raum Typ II · ≈ 31,71 m²</text>
 <text x="428.00" y="218.50" font-size="2.9" text-anchor="middle" font-weight="bold" fill="#1f4e79" >WE 1.08</text>
 <text x="428.00" y="221.20" font-size="1.9" text-anchor="middle" font-weight="normal" fill="#1f4e79" >1-Raum Typ III · 31,69 m²</text>
 <line x1="195.75" y1="157.10" x2="461.75" y2="157.10" stroke="#1565c0" stroke-width="0.35" stroke-dasharray="1.6,0.8"/>
@@ -788,110 +794,152 @@
 <path d="M 554.0 56.0 L 556.0 65.0 L 554.0 63.6 L 552.0 65.0 Z" fill="#1d1d1d"/>
 <text x="554.00" y="55.00" font-size="2.6" text-anchor="middle" font-weight="bold" fill="#1d1d1d" >N</text>
 <line x1="8.00" y1="266.00" x2="586.00" y2="266.00" stroke="#1d1d1d" stroke-width="0.35" />
-<text x="16.00" y="273.80" font-size="2.9" text-anchor="start" font-weight="bold" fill="#1d1d1d" >Bestand (AP Index A): 17 Sanitär-/Lüftungsstandorte + Kernsteiger</text>
-<rect x="16.00" y="278.00" width="120.00" height="35.70" fill="#fafafa" stroke="#1d1d1d" stroke-width="0.3"/>
-<line x1="31.00" y1="278.00" x2="31.00" y2="293.35" stroke="#888" stroke-width="0.25" />
-<line x1="31.00" y1="298.35" x2="31.00" y2="313.70" stroke="#888" stroke-width="0.25" />
-<line x1="46.00" y1="278.00" x2="46.00" y2="293.35" stroke="#888" stroke-width="0.25" />
-<line x1="46.00" y1="298.35" x2="46.00" y2="313.70" stroke="#888" stroke-width="0.25" />
-<line x1="61.00" y1="278.00" x2="61.00" y2="293.35" stroke="#888" stroke-width="0.25" />
-<line x1="61.00" y1="298.35" x2="61.00" y2="313.70" stroke="#888" stroke-width="0.25" />
-<line x1="76.00" y1="278.00" x2="76.00" y2="293.35" stroke="#888" stroke-width="0.25" />
-<line x1="76.00" y1="298.35" x2="76.00" y2="313.70" stroke="#888" stroke-width="0.25" />
-<line x1="91.00" y1="278.00" x2="91.00" y2="293.35" stroke="#888" stroke-width="0.25" />
-<line x1="91.00" y1="298.35" x2="91.00" y2="313.70" stroke="#888" stroke-width="0.25" />
-<line x1="106.00" y1="278.00" x2="106.00" y2="293.35" stroke="#888" stroke-width="0.25" />
-<line x1="106.00" y1="298.35" x2="106.00" y2="313.70" stroke="#888" stroke-width="0.25" />
-<line x1="121.00" y1="278.00" x2="121.00" y2="293.35" stroke="#888" stroke-width="0.25" />
-<line x1="121.00" y1="298.35" x2="121.00" y2="313.70" stroke="#888" stroke-width="0.25" />
-<line x1="16.00" y1="298.35" x2="136.00" y2="298.35" stroke="#888" stroke-width="0.25" />
-<line x1="16.00" y1="293.35" x2="136.00" y2="293.35" stroke="#888" stroke-width="0.25" />
-<rect x="76.25" y="278.00" width="14.50" height="15.35" fill="#e3e3e3"/>
-<text x="16.00" y="277.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >A</text>
-<text x="31.00" y="277.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >B</text>
-<text x="46.00" y="277.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >C</text>
-<text x="61.00" y="277.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >D</text>
-<text x="76.00" y="277.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >E</text>
-<text x="91.00" y="277.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >F</text>
-<text x="106.00" y="277.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >G</text>
-<text x="121.00" y="277.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >H</text>
-<text x="136.00" y="277.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >I</text>
-<circle cx="31.94" cy="289.41" r="1.05" fill="#d9481c"/>
-<circle cx="47.44" cy="288.41" r="1.05" fill="#d9481c"/>
-<circle cx="61.94" cy="292.41" r="1.05" fill="#d9481c"/>
-<circle cx="91.94" cy="292.41" r="1.05" fill="#d9481c"/>
-<circle cx="106.94" cy="292.41" r="1.05" fill="#d9481c"/>
-<circle cx="134.94" cy="289.16" r="1.05" fill="#d9481c"/>
-<circle cx="22.69" cy="294.29" r="1.05" fill="#d9481c"/>
-<circle cx="29.94" cy="294.29" r="1.05" fill="#d9481c"/>
-<circle cx="31.94" cy="294.29" r="1.05" fill="#d9481c"/>
-<circle cx="47.69" cy="295.91" r="1.05" fill="#d9481c"/>
-<circle cx="134.94" cy="296.66" r="1.05" fill="#d9481c"/>
-<circle cx="47.69" cy="299.29" r="1.05" fill="#d9481c"/>
-<circle cx="59.94" cy="305.04" r="1.05" fill="#d9481c"/>
-<circle cx="74.94" cy="299.29" r="1.05" fill="#d9481c"/>
-<circle cx="89.94" cy="299.29" r="1.05" fill="#d9481c"/>
-<circle cx="104.94" cy="299.29" r="1.05" fill="#d9481c"/>
-<circle cx="119.94" cy="299.29" r="1.05" fill="#d9481c"/>
-<rect x="88.44" y="290.91" width="3" height="3" fill="#1565c0"/>
-<text x="16.00" y="323.80" font-size="2.9" text-anchor="start" font-weight="bold" fill="#1d1d1d" >Vorschlag: 7 Installationsknoten (S · L) + 1 Kernschacht (E · M)</text>
-<rect x="16.00" y="328.00" width="120.00" height="35.70" fill="#fafafa" stroke="#1d1d1d" stroke-width="0.3"/>
-<line x1="31.00" y1="328.00" x2="31.00" y2="343.35" stroke="#888" stroke-width="0.25" />
-<line x1="31.00" y1="348.35" x2="31.00" y2="363.70" stroke="#888" stroke-width="0.25" />
-<line x1="46.00" y1="328.00" x2="46.00" y2="343.35" stroke="#888" stroke-width="0.25" />
-<line x1="46.00" y1="348.35" x2="46.00" y2="363.70" stroke="#888" stroke-width="0.25" />
-<line x1="61.00" y1="328.00" x2="61.00" y2="343.35" stroke="#888" stroke-width="0.25" />
-<line x1="61.00" y1="348.35" x2="61.00" y2="363.70" stroke="#888" stroke-width="0.25" />
-<line x1="76.00" y1="328.00" x2="76.00" y2="343.35" stroke="#888" stroke-width="0.25" />
-<line x1="76.00" y1="348.35" x2="76.00" y2="363.70" stroke="#888" stroke-width="0.25" />
-<line x1="91.00" y1="328.00" x2="91.00" y2="343.35" stroke="#888" stroke-width="0.25" />
-<line x1="91.00" y1="348.35" x2="91.00" y2="363.70" stroke="#888" stroke-width="0.25" />
-<line x1="106.00" y1="328.00" x2="106.00" y2="343.35" stroke="#888" stroke-width="0.25" />
-<line x1="106.00" y1="348.35" x2="106.00" y2="363.70" stroke="#888" stroke-width="0.25" />
-<line x1="121.00" y1="328.00" x2="121.00" y2="343.35" stroke="#888" stroke-width="0.25" />
-<line x1="121.00" y1="348.35" x2="121.00" y2="363.70" stroke="#888" stroke-width="0.25" />
-<line x1="16.00" y1="348.35" x2="136.00" y2="348.35" stroke="#888" stroke-width="0.25" />
-<line x1="16.00" y1="343.35" x2="136.00" y2="343.35" stroke="#888" stroke-width="0.25" />
-<rect x="76.25" y="328.00" width="14.50" height="15.35" fill="#e3e3e3"/>
-<text x="16.00" y="327.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >A</text>
-<text x="31.00" y="327.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >B</text>
-<text x="46.00" y="327.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >C</text>
-<text x="61.00" y="327.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >D</text>
-<text x="76.00" y="327.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >E</text>
-<text x="91.00" y="327.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >F</text>
-<text x="106.00" y="327.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >G</text>
-<text x="121.00" y="327.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >H</text>
-<text x="136.00" y="327.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >I</text>
-<rect x="30.38" y="342.60" width="3" height="3" fill="#d9481c"/>
-<rect x="60.38" y="341.10" width="3" height="3" fill="#d9481c"/>
-<rect x="54.25" y="353.35" width="3" height="3" fill="#d9481c"/>
-<rect x="88.62" y="341.10" width="3" height="3" fill="#1565c0"/>
-<rect x="88.62" y="347.60" width="3" height="3" fill="#d9481c"/>
-<rect x="105.38" y="341.10" width="3" height="3" fill="#d9481c"/>
-<rect x="118.63" y="347.60" width="3" height="3" fill="#d9481c"/>
-<rect x="133.62" y="342.60" width="3" height="3" fill="#d9481c"/>
-<circle cx="18" cy="376.00" r="1.05" fill="#d9481c"/>
-<text x="21.00" y="376.80" font-size="1.9" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Sanitär-/Lüftungsstandort mit eigener Leitungsführung (schematisch)</text>
-<rect x="16.5" y="379.50" width="3" height="3" fill="#d9481c"/>
-<text x="21.00" y="382.00" font-size="1.9" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Installationsknoten (gebündelter Schacht)</text>
-<rect x="16.5" y="384.50" width="3" height="3" fill="#1565c0"/>
-<text x="21.00" y="387.00" font-size="1.9" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Kernschacht Elektro / Medien</text>
+<text x="16.00" y="272.80" font-size="2.9" text-anchor="start" font-weight="bold" fill="#1d1d1d" >Bestand (AP Index A): 17 Sanitär-/Lüftungsstandorte + Kernsteiger</text>
+<rect x="16.00" y="277.00" width="105.60" height="31.42" fill="#fafafa" stroke="#1d1d1d" stroke-width="0.3"/>
+<line x1="29.20" y1="277.00" x2="29.20" y2="290.51" stroke="#888" stroke-width="0.25" />
+<line x1="29.20" y1="294.91" x2="29.20" y2="308.42" stroke="#888" stroke-width="0.25" />
+<line x1="42.40" y1="277.00" x2="42.40" y2="290.51" stroke="#888" stroke-width="0.25" />
+<line x1="42.40" y1="294.91" x2="42.40" y2="308.42" stroke="#888" stroke-width="0.25" />
+<line x1="55.60" y1="277.00" x2="55.60" y2="290.51" stroke="#888" stroke-width="0.25" />
+<line x1="55.60" y1="294.91" x2="55.60" y2="308.42" stroke="#888" stroke-width="0.25" />
+<line x1="68.80" y1="277.00" x2="68.80" y2="290.51" stroke="#888" stroke-width="0.25" />
+<line x1="68.80" y1="294.91" x2="68.80" y2="308.42" stroke="#888" stroke-width="0.25" />
+<line x1="82.00" y1="277.00" x2="82.00" y2="290.51" stroke="#888" stroke-width="0.25" />
+<line x1="82.00" y1="294.91" x2="82.00" y2="308.42" stroke="#888" stroke-width="0.25" />
+<line x1="95.20" y1="277.00" x2="95.20" y2="290.51" stroke="#888" stroke-width="0.25" />
+<line x1="95.20" y1="294.91" x2="95.20" y2="308.42" stroke="#888" stroke-width="0.25" />
+<line x1="108.40" y1="277.00" x2="108.40" y2="290.51" stroke="#888" stroke-width="0.25" />
+<line x1="108.40" y1="294.91" x2="108.40" y2="308.42" stroke="#888" stroke-width="0.25" />
+<line x1="16.00" y1="294.91" x2="121.60" y2="294.91" stroke="#888" stroke-width="0.25" />
+<line x1="16.00" y1="290.51" x2="121.60" y2="290.51" stroke="#888" stroke-width="0.25" />
+<rect x="69.02" y="277.00" width="12.76" height="13.51" fill="#e3e3e3"/>
+<text x="16.00" y="276.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >A</text>
+<text x="29.20" y="276.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >B</text>
+<text x="42.40" y="276.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >C</text>
+<text x="55.60" y="276.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >D</text>
+<text x="68.80" y="276.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >E</text>
+<text x="82.00" y="276.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >F</text>
+<text x="95.20" y="276.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >G</text>
+<text x="108.40" y="276.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >H</text>
+<text x="121.60" y="276.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >I</text>
+<circle cx="30.02" cy="287.04" r="1.05" fill="#d9481c"/>
+<circle cx="43.66" cy="286.16" r="1.05" fill="#d9481c"/>
+<circle cx="56.43" cy="289.68" r="1.05" fill="#d9481c"/>
+<circle cx="82.83" cy="289.68" r="1.05" fill="#d9481c"/>
+<circle cx="96.03" cy="289.68" r="1.05" fill="#d9481c"/>
+<circle cx="120.67" cy="286.82" r="1.05" fill="#d9481c"/>
+<circle cx="21.89" cy="291.33" r="1.05" fill="#d9481c"/>
+<circle cx="28.27" cy="291.33" r="1.05" fill="#d9481c"/>
+<circle cx="30.02" cy="291.33" r="1.05" fill="#d9481c"/>
+<circle cx="43.89" cy="292.76" r="1.05" fill="#d9481c"/>
+<circle cx="120.67" cy="293.42" r="1.05" fill="#d9481c"/>
+<circle cx="43.89" cy="295.73" r="1.05" fill="#d9481c"/>
+<circle cx="54.66" cy="300.79" r="1.05" fill="#d9481c"/>
+<circle cx="67.87" cy="295.73" r="1.05" fill="#d9481c"/>
+<circle cx="81.06" cy="295.73" r="1.05" fill="#d9481c"/>
+<circle cx="94.27" cy="295.73" r="1.05" fill="#d9481c"/>
+<circle cx="107.47" cy="295.73" r="1.05" fill="#d9481c"/>
+<rect x="79.56" y="288.18" width="3" height="3" fill="#1565c0"/>
+<text x="16.00" y="313.80" font-size="2.9" text-anchor="start" font-weight="bold" fill="#1d1d1d" >Vorschlag: 7 Installationsknoten (S · L) + 1 Kernschacht (E · M)</text>
+<rect x="16.00" y="318.00" width="105.60" height="31.42" fill="#fafafa" stroke="#1d1d1d" stroke-width="0.3"/>
+<line x1="29.20" y1="318.00" x2="29.20" y2="331.51" stroke="#888" stroke-width="0.25" />
+<line x1="29.20" y1="335.91" x2="29.20" y2="349.42" stroke="#888" stroke-width="0.25" />
+<line x1="42.40" y1="318.00" x2="42.40" y2="331.51" stroke="#888" stroke-width="0.25" />
+<line x1="42.40" y1="335.91" x2="42.40" y2="349.42" stroke="#888" stroke-width="0.25" />
+<line x1="55.60" y1="318.00" x2="55.60" y2="331.51" stroke="#888" stroke-width="0.25" />
+<line x1="55.60" y1="335.91" x2="55.60" y2="349.42" stroke="#888" stroke-width="0.25" />
+<line x1="68.80" y1="318.00" x2="68.80" y2="331.51" stroke="#888" stroke-width="0.25" />
+<line x1="68.80" y1="335.91" x2="68.80" y2="349.42" stroke="#888" stroke-width="0.25" />
+<line x1="82.00" y1="318.00" x2="82.00" y2="331.51" stroke="#888" stroke-width="0.25" />
+<line x1="82.00" y1="335.91" x2="82.00" y2="349.42" stroke="#888" stroke-width="0.25" />
+<line x1="95.20" y1="318.00" x2="95.20" y2="331.51" stroke="#888" stroke-width="0.25" />
+<line x1="95.20" y1="335.91" x2="95.20" y2="349.42" stroke="#888" stroke-width="0.25" />
+<line x1="108.40" y1="318.00" x2="108.40" y2="331.51" stroke="#888" stroke-width="0.25" />
+<line x1="108.40" y1="335.91" x2="108.40" y2="349.42" stroke="#888" stroke-width="0.25" />
+<line x1="16.00" y1="335.91" x2="121.60" y2="335.91" stroke="#888" stroke-width="0.25" />
+<line x1="16.00" y1="331.51" x2="121.60" y2="331.51" stroke="#888" stroke-width="0.25" />
+<rect x="69.02" y="318.00" width="12.76" height="13.51" fill="#e3e3e3"/>
+<text x="16.00" y="317.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >A</text>
+<text x="29.20" y="317.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >B</text>
+<text x="42.40" y="317.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >C</text>
+<text x="55.60" y="317.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >D</text>
+<text x="68.80" y="317.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >E</text>
+<text x="82.00" y="317.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >F</text>
+<text x="95.20" y="317.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >G</text>
+<text x="108.40" y="317.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >H</text>
+<text x="121.60" y="317.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >I</text>
+<rect x="28.47" y="330.67" width="3" height="3" fill="#d9481c"/>
+<rect x="54.87" y="329.35" width="3" height="3" fill="#d9481c"/>
+<rect x="49.48" y="340.13" width="3" height="3" fill="#d9481c"/>
+<rect x="79.73" y="329.35" width="3" height="3" fill="#1565c0"/>
+<rect x="79.73" y="335.07" width="3" height="3" fill="#d9481c"/>
+<rect x="94.47" y="329.35" width="3" height="3" fill="#d9481c"/>
+<rect x="106.13" y="335.07" width="3" height="3" fill="#d9481c"/>
+<rect x="119.33" y="330.67" width="3" height="3" fill="#d9481c"/>
+<text x="16.00" y="354.80" font-size="2.9" text-anchor="start" font-weight="bold" fill="#1d1d1d" >Rückfallvariante (WE 1.05/1.09 wie AP): 9 Knoten + 1 Kernschacht</text>
+<rect x="16.00" y="359.00" width="105.60" height="31.42" fill="#fafafa" stroke="#1d1d1d" stroke-width="0.3"/>
+<line x1="29.20" y1="359.00" x2="29.20" y2="372.51" stroke="#888" stroke-width="0.25" />
+<line x1="29.20" y1="376.91" x2="29.20" y2="390.42" stroke="#888" stroke-width="0.25" />
+<line x1="42.40" y1="359.00" x2="42.40" y2="372.51" stroke="#888" stroke-width="0.25" />
+<line x1="42.40" y1="376.91" x2="42.40" y2="390.42" stroke="#888" stroke-width="0.25" />
+<line x1="55.60" y1="359.00" x2="55.60" y2="372.51" stroke="#888" stroke-width="0.25" />
+<line x1="55.60" y1="376.91" x2="55.60" y2="390.42" stroke="#888" stroke-width="0.25" />
+<line x1="68.80" y1="359.00" x2="68.80" y2="372.51" stroke="#888" stroke-width="0.25" />
+<line x1="68.80" y1="376.91" x2="68.80" y2="390.42" stroke="#888" stroke-width="0.25" />
+<line x1="82.00" y1="359.00" x2="82.00" y2="372.51" stroke="#888" stroke-width="0.25" />
+<line x1="82.00" y1="376.91" x2="82.00" y2="390.42" stroke="#888" stroke-width="0.25" />
+<line x1="95.20" y1="359.00" x2="95.20" y2="372.51" stroke="#888" stroke-width="0.25" />
+<line x1="95.20" y1="376.91" x2="95.20" y2="390.42" stroke="#888" stroke-width="0.25" />
+<line x1="108.40" y1="359.00" x2="108.40" y2="372.51" stroke="#888" stroke-width="0.25" />
+<line x1="108.40" y1="376.91" x2="108.40" y2="390.42" stroke="#888" stroke-width="0.25" />
+<line x1="16.00" y1="376.91" x2="121.60" y2="376.91" stroke="#888" stroke-width="0.25" />
+<line x1="16.00" y1="372.51" x2="121.60" y2="372.51" stroke="#888" stroke-width="0.25" />
+<rect x="69.02" y="359.00" width="12.76" height="13.51" fill="#e3e3e3"/>
+<text x="16.00" y="358.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >A</text>
+<text x="29.20" y="358.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >B</text>
+<text x="42.40" y="358.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >C</text>
+<text x="55.60" y="358.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >D</text>
+<text x="68.80" y="358.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >E</text>
+<text x="82.00" y="358.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >F</text>
+<text x="95.20" y="358.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >G</text>
+<text x="108.40" y="358.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >H</text>
+<text x="121.60" y="358.00" font-size="1.8" text-anchor="middle" font-weight="normal" fill="#555" >I</text>
+<rect x="28.47" y="371.67" width="3" height="3" fill="#d9481c"/>
+<rect x="54.87" y="370.35" width="3" height="3" fill="#d9481c"/>
+<rect x="49.48" y="381.13" width="3" height="3" fill="#d9481c"/>
+<rect x="79.73" y="370.35" width="3" height="3" fill="#1565c0"/>
+<rect x="79.73" y="376.07" width="3" height="3" fill="#d9481c"/>
+<rect x="94.47" y="370.35" width="3" height="3" fill="#d9481c"/>
+<rect x="106.13" y="376.07" width="3" height="3" fill="#d9481c"/>
+<rect x="119.33" y="371.67" width="3" height="3" fill="#d9481c"/>
+<rect x="81.26" y="370.36" width="3" height="3" fill="#7a7a7a"/>
+<rect x="92.94" y="376.06" width="3" height="3" fill="#7a7a7a"/>
+<circle cx="18" cy="397.0" r="1.05" fill="#d9481c"/>
+<text x="21.00" y="397.80" font-size="1.9" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Einzelstandort (schematisch)</text>
+<rect x="74.5" y="395.5" width="3" height="3" fill="#d9481c"/>
+<text x="79.00" y="397.80" font-size="1.9" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Installationsknoten</text>
+<rect x="16.5" y="400.1" width="3" height="3" fill="#1565c0"/>
+<text x="21.00" y="402.40" font-size="1.9" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Kernschacht E · M</text>
+<rect x="74.5" y="400.1" width="3" height="3" fill="#7a7a7a"/>
+<text x="79.00" y="402.40" font-size="1.9" text-anchor="start" font-weight="normal" fill="#1d1d1d" >zusätzlicher Schacht Rückfallvariante</text>
 <text x="150.00" y="272.00" font-size="3.2" text-anchor="start" font-weight="bold" fill="#1d1d1d" >Legende</text>
 <rect x="150" y="276.0" width="8" height="3.5" fill="url(#hBear)" stroke="#1d1d1d" stroke-width="0.15"/>
 <text x="161.00" y="278.80" font-size="2.1" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Tragende Wand Bestand (WBS 70)</text>
-<rect x="150" y="281.6" width="8" height="3.5" fill="#3c3c3c"/>
-<text x="161.00" y="284.40" font-size="2.1" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Nichttragende Wand / Trockenbau</text>
-<rect x="150" y="287.2" width="8" height="3.5" fill="url(#hShaft)" stroke="#d9481c" stroke-width="0.3"/>
-<text x="161.00" y="290.00" font-size="2.1" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Installationsschacht F90, durchgehend KG–DG</text>
-<rect x="150" y="292.8" width="8" height="3.5" fill="#fff3b8" stroke="#999" stroke-width="0.15"/>
-<text x="161.00" y="295.60" font-size="2.1" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Raum geändert ggü. AP Index A</text>
-<rect x="150" y="298.4" width="8" height="3.5" fill="url(#hKit)" stroke="#555" stroke-width="0.15"/>
-<text x="161.00" y="301.20" font-size="2.1" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Küchenzeile (Lage)</text>
-<line x1="150" y1="305.75" x2="158" y2="305.75" stroke="#1565c0" stroke-width="0.4" stroke-dasharray="1.6,0.8"/>
-<text x="161.00" y="306.80" font-size="2.1" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Elektro-/Medientrasse in Flur-Unterdecke</text>
-<rect x="152" y="309.6" width="4" height="3" fill="#1565c0"/>
-<text x="161.00" y="312.40" font-size="2.1" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Wohnungsunterverteilung (UV)</text>
-<text x="150.00" y="318.00" font-size="1.9" text-anchor="start" font-weight="normal" fill="#444" >S = Sanitär (TW/AW)   L = Abluft DIN 18017-3   E = Elektro   M = Medien/TK</text>
+<rect x="150" y="281.0" width="8" height="3.5" fill="#3c3c3c"/>
+<text x="161.00" y="283.80" font-size="2.1" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Nichttragende Wand / Trockenbau</text>
+<rect x="150" y="286.0" width="8" height="3.5" fill="url(#hShaft)" stroke="#d9481c" stroke-width="0.3"/>
+<text x="161.00" y="288.80" font-size="2.1" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Installationsschacht F90, durchgehend KG–DG</text>
+<rect x="150" y="291.0" width="8" height="3.5" fill="#fff3b8" stroke="#999" stroke-width="0.15"/>
+<text x="161.00" y="293.80" font-size="2.1" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Raum geändert ggü. AP Index A</text>
+<rect x="150" y="296.0" width="8" height="3.5" fill="url(#hKit)" stroke="#555" stroke-width="0.15"/>
+<text x="161.00" y="298.80" font-size="2.1" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Küchenzeile (Lage)</text>
+<line x1="150" y1="302.75" x2="158" y2="302.75" stroke="#1565c0" stroke-width="0.4" stroke-dasharray="1.6,0.8"/>
+<text x="161.00" y="303.80" font-size="2.1" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Elektro-/Medientrasse in Flur-Unterdecke</text>
+<rect x="152" y="306.0" width="4" height="3" fill="#1565c0"/>
+<text x="161.00" y="308.80" font-size="2.1" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Wohnungsunterverteilung (UV)</text>
+<rect x="150" y="311.0" width="8" height="3.5" fill="none" stroke="#c00000" stroke-width="0.35" stroke-dasharray="1,0.6"/><circle cx="154" cy="312.75" r="1.4" fill="#c00000"/>
+<text x="161.00" y="313.80" font-size="2.1" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Neue Türöffnung in tragender Flurwand – Statik prüfen</text>
+<text x="150.00" y="320.00" font-size="1.9" text-anchor="start" font-weight="normal" fill="#444" >S = Sanitär (TW/AW)   L = Abluft DIN 18017-3   E = Elektro   M = Medien/TK</text>
 <text x="150.00" y="326.00" font-size="3.2" text-anchor="start" font-weight="bold" fill="#1d1d1d" >Installationsknoten je Regelgeschoss</text>
 <text x="150.00" y="332.00" font-size="2.0" text-anchor="start" font-weight="bold" fill="#1d1d1d" >Knoten</text>
 <text x="165.00" y="332.00" font-size="2.0" text-anchor="start" font-weight="bold" fill="#1d1d1d" >Gewerke</text>
@@ -952,13 +1000,22 @@
 <text x="310.00" y="322.85" font-size="2.0" text-anchor="start" font-weight="normal" fill="#1d1d1d" >vorgesehen), horizontale Verteilung in der Flur-Unterdecke zu den</text>
 <text x="310.00" y="326.00" font-size="2.0" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Unterverteilungen der WE.</text>
 <text x="292.00" y="330.45" font-size="2.15" text-anchor="start" font-weight="bold" fill="#1d1d1d" >Flächen</text>
-<text x="310.00" y="330.45" font-size="2.0" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Raum- und Wohnungsgrößen bleiben unverändert (Werte gem. AP Index A);</text>
-<text x="310.00" y="333.60" font-size="2.0" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Abweichungen aus der Schachtlage liegen je WE unter 0,5 m² und sind in der</text>
-<text x="310.00" y="336.75" font-size="2.0" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Werkplanung zu bilanzieren.</text>
-<text x="292.00" y="341.20" font-size="2.15" text-anchor="start" font-weight="bold" fill="#1d1d1d" >Zu prüfen</text>
-<text x="310.00" y="341.20" font-size="2.0" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Statik (Wand-/Deckendurchbrüche im WBS-70-Bestand, Nutzung vorhandener</text>
-<text x="310.00" y="344.35" font-size="2.0" text-anchor="start" font-weight="normal" fill="#1d1d1d" >BD), Brandschutz (F90-Schächte, Abschottungen), Schallschutz DIN 4109,</text>
-<text x="310.00" y="347.50" font-size="2.0" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Fortführung in EG, 5. OG und Drempel, Abstimmung TGA-Planung.</text>
+<text x="310.00" y="330.45" font-size="2.0" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Wohnungsgrößen bleiben erhalten. In WE 1.05 und 1.09 verschieben sich</text>
+<text x="310.00" y="333.60" font-size="2.0" text-anchor="start" font-weight="normal" fill="#1d1d1d" >durch den Tausch ca. 0,8 m² vom Wohnen/Kochen (≈ 13,90 m²) zum Schlafen (≈</text>
+<text x="310.00" y="336.75" font-size="2.0" text-anchor="start" font-weight="normal" fill="#1d1d1d" >9,90 m²), WE gesamt ≈ 31,71 m² statt 31,76 m². Übrige Flächen gem. AP</text>
+<text x="310.00" y="339.90" font-size="2.0" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Index A; Bilanzierung in der Werkplanung.</text>
+<text x="292.00" y="344.35" font-size="2.15" text-anchor="start" font-weight="bold" fill="#1d1d1d" >Kritisch</text>
+<text x="310.00" y="344.35" font-size="2.0" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Die Wohnungstüren von WE 1.05 und 1.09 wandern zur anderen Achse. Die</text>
+<text x="310.00" y="347.50" font-size="2.0" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Flurwände sind tragend (Wandpfeilernachweise); neue Öffnungslage nur mit</text>
+<text x="310.00" y="350.65" font-size="2.0" text-anchor="start" font-weight="normal" fill="#1d1d1d" >statischem Nachweis.</text>
+<text x="292.00" y="355.10" font-size="2.15" text-anchor="start" font-weight="bold" fill="#1d1d1d" >Rückfall</text>
+<text x="310.00" y="355.10" font-size="2.0" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Lässt die Statik die neuen Türlagen nicht zu, bleiben WE 1.05 und 1.09 wie</text>
+<text x="310.00" y="358.25" font-size="2.0" text-anchor="start" font-weight="normal" fill="#1d1d1d" >in der AP mit je eigenem Schacht: 9 Knoten + 1 Kernschacht statt rund 17</text>
+<text x="310.00" y="361.40" font-size="2.0" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Standorten. Alle anderen Änderungen bleiben gültig.</text>
+<text x="292.00" y="365.85" font-size="2.15" text-anchor="start" font-weight="bold" fill="#1d1d1d" >Zu prüfen</text>
+<text x="310.00" y="365.85" font-size="2.0" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Statik (Türöffnungen Flurwand, Wand-/Deckendurchbrüche, Nutzung</text>
+<text x="310.00" y="369.00" font-size="2.0" text-anchor="start" font-weight="normal" fill="#1d1d1d" >vorhandener BD), Brandschutz (F90-Schächte, Abschottungen), Schallschutz</text>
+<text x="310.00" y="372.15" font-size="2.0" text-anchor="start" font-weight="normal" fill="#1d1d1d" >DIN 4109, Fortführung in EG, 5. OG und Drempel, Abstimmung TGA-Planung.</text>
 <rect x="452" y="330" width="134" height="74" fill="none" stroke="#1d1d1d" stroke-width="0.4"/>
 <text x="455.00" y="336.50" font-size="1.9" text-anchor="start" font-weight="normal" fill="#666" >Bauvorhaben</text>
 <text x="455.00" y="340.50" font-size="2.4" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Schlegelstraße 3, 07747 Jena – Sanierung Wohngebäude</text>
@@ -972,7 +1029,7 @@
 <text x="455.00" y="369.30" font-size="2.4" text-anchor="start" font-weight="bold" fill="#1d1d1d" >Vorschlag Installationsknoten (Variante)</text>
 <line x1="452.00" y1="371.30" x2="586.00" y2="371.30" stroke="#1d1d1d" stroke-width="0.15" />
 <text x="455.00" y="374.90" font-size="1.9" text-anchor="start" font-weight="normal" fill="#666" >Planstand</text>
-<text x="455.00" y="378.90" font-size="2.4" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Variantenstudie V1 · 29.10.2026</text>
+<text x="455.00" y="378.90" font-size="2.4" text-anchor="start" font-weight="normal" fill="#1d1d1d" >Variantenstudie V2 · 29.10.2026</text>
 <line x1="452.00" y1="380.90" x2="586.00" y2="380.90" stroke="#1d1d1d" stroke-width="0.15" />
 <text x="455.00" y="384.50" font-size="1.9" text-anchor="start" font-weight="normal" fill="#666" >Maßstab</text>
 <text x="455.00" y="388.50" font-size="2.4" text-anchor="start" font-weight="normal" fill="#1d1d1d" >1:100 (A2) · Maße schematisch, am Bestand prüfen</text>
