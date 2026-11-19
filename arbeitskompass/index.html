@@ -1,0 +1,565 @@
+<title>Arbeitskompass</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: sticky Reiterleiste, darunter je Ansicht ein Raster; Projekte als Phasen-Spalten, die am Handy untereinander stehen. */
+:root{
+  --paper:#F2F5F5; --surface:#FFFFFF; --sunken:#E8EEEE; --ink:#15232A; --muted:#5A6A71; --line:#D6DFE1;
+  --accent:#0B6E73; --accent-ink:#FFFFFF; --accent-soft:#D7ECEC;
+  --sun:#B8771A; --sun-soft:#F6E8D0; --warn:#B03F1C; --warn-soft:#F8E1D8; --ok:#2C7A4C; --ok-soft:#DCEFE3;
+  --st-idee:#8A979D; --st-planung:#5B6FC4; --st-umsetzung:#0B6E73; --st-warten:#B8771A; --st-erledigt:#2C7A4C;
+  --f-display:"Sora", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0E161A; --surface:#152127; --sunken:#1B2a31; --ink:#E3EBED; --muted:#93A4AA; --line:#26363C;
+  --accent:#3DB0B2; --accent-ink:#04201F; --accent-soft:#163A3C;
+  --sun:#E2A841; --sun-soft:#3A2E17; --warn:#F07B57; --warn-soft:#3D2219; --ok:#5CC28A; --ok-soft:#183626;
+  --st-idee:#7D8C92; --st-planung:#8C9CF0; --st-umsetzung:#3DB0B2; --st-warten:#E2A841; --st-erledigt:#5CC28A;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0E161A; --surface:#152127; --sunken:#1B2a31; --ink:#E3EBED; --muted:#93A4AA; --line:#26363C;
+  --accent:#3DB0B2; --accent-ink:#04201F; --accent-soft:#163A3C;
+  --sun:#E2A841; --sun-soft:#3A2E17; --warn:#F07B57; --warn-soft:#3D2219; --ok:#5CC28A; --ok-soft:#183626;
+  --st-idee:#7D8C92; --st-planung:#8C9CF0; --st-umsetzung:#3DB0B2; --st-warten:#E2A841; --st-erledigt:#5CC28A;
+  color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.2;letter-spacing:-.01em}
+h1{font-size:1.75rem;font-weight:600}
+h2{font-size:1.15rem;font-weight:600}
+h3{font-size:.95rem;font-weight:600}
+p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* Kopf */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:16px;padding-block:10px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:700;font-size:1.05rem;margin-right:auto}
+.brand svg{flex:none}
+.tabs{display:flex;gap:4px;background:var(--sunken);padding:4px;border-radius:999px}
+.tabs a{text-decoration:none;color:var(--muted);padding:6px 14px;border-radius:999px;font-weight:500;font-size:.92rem;white-space:nowrap}
+.tabs a[aria-current="page"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+
+main{padding-block:24px 48px}
+.eyebrow{font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.muted{color:var(--muted)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.head .meta{display:flex;flex-direction:column;gap:4px}
+
+.grid2{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;align-items:start}
+.col{display:flex;flex-direction:column;gap:20px;min-width:0}
+@media (max-width:860px){.grid2{grid-template-columns:minmax(0,1fr)}}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.panel-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+
+/* Lektion */
+.lesson{background:var(--accent-soft);border-color:transparent}
+.lesson .num{font-family:var(--f-mono);font-size:.8rem;color:var(--accent);font-weight:500}
+.lesson h2{font-size:1.4rem}
+.lesson .why{max-width:62ch}
+.steps{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;counter-reset:s}
+.steps li{display:grid;grid-template-columns:26px 1fr;gap:8px;align-items:start;max-width:64ch}
+.steps li::before{counter-increment:s;content:counter(s);font-family:var(--f-mono);font-size:.78rem;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--surface);color:var(--accent);margin-top:1px}
+.src{font-size:.8rem;color:var(--muted)}
+.btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+.btn{text-decoration:none;display:inline-block;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:500;font-size:.92rem;line-height:1.2}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;border-color:transparent;color:var(--accent);padding-inline:6px}
+.btn.danger{color:var(--warn)}
+.btn.small{padding:4px 9px;font-size:.82rem}
+
+/* Eingaben */
+.field{width:100%;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 10px}
+.field:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px var(--accent-soft)}
+textarea.field{resize:vertical;min-height:70px}
+.check{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.check input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--accent);flex:none}
+.toprow{display:grid;grid-template-columns:28px 18px 1fr;gap:10px;align-items:center}
+.toprow .n{font-family:var(--f-mono);color:var(--sun);font-weight:500}
+.toprow input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent)}
+.toprow.done .field{text-decoration:line-through;color:var(--muted)}
+
+/* Hinweise */
+.alist{display:flex;flex-direction:column;gap:2px;margin:0;padding:0;list-style:none}
+.alist button{all:unset;cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:8px 10px;border-radius:8px;width:100%;box-sizing:border-box}
+.alist button:hover{background:var(--sunken)}
+.alist button:focus-visible{outline:2px solid var(--accent)}
+.alist .t{min-width:0;overflow-wrap:anywhere}
+.alist .t small{display:block;color:var(--muted)}
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:.74rem;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
+.pill.sun{background:var(--sun-soft);color:var(--sun)}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.plain{background:var(--sunken);color:var(--muted)}
+.pill.acc{background:var(--accent-soft);color:var(--accent)}
+.callout{border-radius:8px;padding:10px 12px;font-size:.9rem}
+.callout.warn{background:var(--warn-soft);color:var(--ink)}
+.callout.ok{background:var(--ok-soft)}
+.sub{font-weight:600;font-size:.82rem;color:var(--muted);margin-top:4px}
+
+/* Board */
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+.toolbar .grow{flex:1 1 240px;min-width:0}
+.board{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;align-items:start}
+.board.nodone{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:1100px){.board,.board.nodone{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.board,.board.nodone{grid-template-columns:minmax(0,1fr)}}
+.lane{background:var(--sunken);border-radius:var(--r);padding:10px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.lane-h{display:flex;align-items:center;gap:8px;padding:4px 4px 6px}
+.lane-h .dot{width:10px;height:10px;border-radius:3px;flex:none}
+.lane-h h3{flex:1}
+.lane-h .c{font-family:var(--f-mono);font-size:.8rem;color:var(--muted)}
+.lane-hint{font-size:.78rem;color:var(--muted);padding:0 4px 4px}
+.lane-hint.warn{color:var(--warn);font-weight:600}
+.card{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--stc);border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:6px;cursor:pointer;min-width:0}
+.card:hover{border-color:var(--muted);border-left-color:var(--stc)}
+.card .name{font-weight:600;overflow-wrap:anywhere}
+.card .next{font-size:.88rem;overflow-wrap:anywhere}
+.card .next.miss{color:var(--warn);font-size:.82rem}
+.card .chips{display:flex;gap:4px;flex-wrap:wrap}
+.card .acts{display:flex;gap:2px;justify-content:space-between;align-items:center;border-top:1px dashed var(--line);padding-top:6px;margin-top:2px}
+.iconbtn{border:0;background:transparent;border-radius:6px;padding:3px 8px;cursor:pointer;color:var(--muted);font-size:.85rem}
+.iconbtn:hover{background:var(--sunken);color:var(--ink)}
+.iconbtn[disabled]{opacity:.3;cursor:default;background:transparent}
+.empty{font-size:.86rem;color:var(--muted);padding:6px 4px}
+
+/* Lernpfad */
+.bar{height:8px;background:var(--sunken);border-radius:99px;overflow:hidden}
+.bar span{display:block;height:100%;background:var(--accent);border-radius:99px}
+.weeks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media (max-width:760px){.weeks{grid-template-columns:minmax(0,1fr)}}
+.llist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.llist button{all:unset;box-sizing:border-box;width:100%;cursor:pointer;display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;padding:8px 6px;border-bottom:1px solid var(--line)}
+.llist li:last-child button{border-bottom:0}
+.llist button:hover .lt{color:var(--accent)}
+.llist button:focus-visible{outline:2px solid var(--accent)}
+.llist .ln{font-family:var(--f-mono);font-size:.8rem;color:var(--muted)}
+.llist .cur .ln{color:var(--sun);font-weight:700}
+.llist .lt{min-width:0}
+
+/* Dialoge */
+dialog{border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);padding:0;width:min(620px,calc(100vw - 32px));max-height:calc(100vh - 48px)}
+dialog::backdrop{background:rgba(10,20,24,.45)}
+.dlg{padding:20px 22px;display:flex;flex-direction:column;gap:12px}
+.dlg label.l{display:flex;flex-direction:column;gap:4px;font-size:.84rem;font-weight:600;color:var(--muted)}
+.dlg label.l .field{font-weight:400;color:var(--ink);font-size:.95rem}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:480px){.row2{grid-template-columns:1fr}}
+.flags{display:flex;gap:18px;flex-wrap:wrap}
+.dlg-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:14px;margin-top:4px}
+.dlg-actions .sp{flex:1}
+.log{font-size:.85rem;display:flex;flex-direction:column;gap:2px;max-height:140px;overflow:auto}
+.log div{display:grid;grid-template-columns:56px 1fr;gap:8px}
+.hint{font-size:.84rem;background:var(--sun-soft);border-radius:8px;padding:8px 10px}
+
+.foot{font-size:.8rem;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding-block:0 32px}
+.foot .dot{width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.foot .dot.on{background:var(--ok)}
+.foot .dot.loc{background:var(--sun)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:8px;font-size:.9rem;z-index:20;max-width:calc(100vw - 32px)}
+@media (prefers-reduced-motion:no-preference){.card,.btn,.alist button{transition:border-color .15s, background .15s}}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="11.5" fill="none" stroke="var(--accent)" stroke-width="2"/><path d="M13 5l3 8-3 8-3-8z" fill="var(--accent)"/><circle cx="13" cy="13" r="1.6" fill="var(--surface)"/></svg>
+      Arbeitskompass
+    </div>
+    <nav class="tabs" aria-label="Bereiche">
+      <a href="#heute" data-tab="heute">Heute</a>
+      <a href="#projekte" data-tab="projekte">Projekte</a>
+      <a href="#lernpfad" data-tab="lernpfad">Lernpfad</a>
+      <a href="#woche" data-tab="woche">Woche</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap" id="view"></main>
+<div class="wrap foot" id="foot"></div>
+<div class="toast" id="toast" hidden></div>
+
+<dialog id="pdlg">
+  <form class="dlg" id="pform">
+    <div class="panel-h"><h2 id="p-title">Projekt</h2><span class="pill plain" id="p-upd"></span></div>
+    <div class="hint" id="p-hint" hidden></div>
+    <label class="l">Name<input class="field" id="f-name" required autocomplete="off"></label>
+    <div class="row2">
+      <label class="l">Phase<select class="field" id="f-stage"></select></label>
+      <label class="l">Fällig am<input class="field" type="date" id="f-due"></label>
+    </div>
+    <label class="l">Nächster Schritt<input class="field" id="f-next" autocomplete="off" placeholder="Mit einem Verb beginnen, z. B. „Herrn Krause anrufen und Maße erfragen“"></label>
+    <div class="row2">
+      <label class="l">Wartet auf (wer / was)<input class="field" id="f-wait" autocomplete="off" placeholder="z. B. Statiker: Freigabe"></label>
+      <label class="l">Nachfassen am<input class="field" type="date" id="f-follow"></label>
+    </div>
+    <div class="flags">
+      <label class="check"><input type="checkbox" id="f-imp"> wichtig</label>
+      <label class="check"><input type="checkbox" id="f-urg"> dringend</label>
+    </div>
+    <label class="l">Notizen und Steckbrief<textarea class="field" id="f-notes" rows="4" placeholder="Ziel · Fertig ist es, wenn … · Beteiligte · Meilensteine"></textarea></label>
+    <div id="f-logwrap" hidden><div class="sub">Erledigte Schritte</div><div class="log" id="f-log"></div></div>
+    <div class="dlg-actions">
+      <button type="button" class="btn danger" id="f-del">Löschen</button>
+      <span class="sp"></span>
+      <button type="button" class="btn" id="f-cancel">Abbrechen</button>
+      <button type="submit" class="btn primary">Speichern</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="ldlg">
+  <div class="dlg" id="lbody"></div>
+</dialog>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- Inhalte ---------- */
+const WEEKS=["Überblick schaffen","Prioritäten und Fokus","Kommunikation und digitale Ordnung","Festigen und vereinfachen"];
+const LESSONS=[
+ {t:"Alles aus dem Kopf",w:"Offene Vorhaben, die nur im Kopf existieren, kosten ständig Aufmerksamkeit. Eine vollständige Liste ist die Grundlage für alles Weitere. Als Projekt zählt alles, was mehr als einen Arbeitsschritt braucht.",s:["Stell dir einen Timer auf 10 Minuten.","Schreib jedes Projekt und jeden offenen Vorgang auf, der dir einfällt, auch Kleinkram. Geh dazu gedanklich Kunden, Baustellen, Büro und Privates durch.","Trag alles unter „Projekte“ ein. Fürs Erste reicht der Name, die Phase bleibt „Idee / Eingang“."],src:"Methode: Erfassen nach David Allen, „Getting Things Done“"},
+ {t:"Jedem Projekt eine Phase geben",w:"Projekte in unterschiedlichen Stadien brauchen unterschiedliche Aufmerksamkeit. Wer auf einen Blick sieht, wo etwas steht, plant realistischer.",s:["Ordne jedes Projekt einer Phase zu: Idee, Planung, Umsetzung, Wartet auf andere oder Abgeschlossen.","Was eigentlich erledigt oder nicht mehr aktuell ist, setzt du direkt auf „Abgeschlossen“. Das entlastet sofort.","Zähl nach: Wie viele Projekte sind wirklich in Umsetzung?"]},
+ {t:"Der nächste konkrete Schritt",w:"„Angebot Krause“ ist kein Schritt. „Herrn Krause anrufen und Maße erfragen“ schon. Ein klar formulierter nächster Schritt senkt die Hürde, anzufangen.",s:["Trag für jedes Projekt in Planung und Umsetzung einen nächsten Schritt ein, der mit einem Verb beginnt.","Prüfe jeden Schritt: Könntest du sofort loslegen, ohne vorher nachzudenken? Wenn nicht, ist er noch zu groß.","Unter „Heute“ siehst du ab jetzt, wo ein Schritt fehlt."],src:"Methode: „Next Action“ nach David Allen, „Getting Things Done“"},
+ {t:"Die Warten-auf-Liste",w:"Viele Projekte hängen an Rückmeldungen von Kunden, Lieferanten oder Kollegen. Ohne Notiz geraten sie in Vergessenheit, bis es brennt.",s:["Verschiebe alle Projekte, die gerade an anderen hängen, nach „Wartet auf andere“.","Trag jeweils ein, auf wen und was du wartest, und setze ein Nachfassdatum.","Fällige Nachfassungen erscheinen ab jetzt automatisch unter „Heute“."]},
+ {t:"Drei Dinge für heute",w:"Lange To-do-Listen werden selten fertig und erzeugen eher Druck. Drei bewusst gewählte Aufgaben geben dem Tag eine klare Richtung.",s:["Trag morgens, noch vor dem ersten Blick in die Mails, drei Aufgaben unter „Heute“ ein.","Mindestens eine davon soll ein wichtiges Projekt voranbringen. Du kannst sie direkt aus den nächsten Schritten übernehmen.","Hak abends ab, was geschafft ist. Der Rest wandert bewusst auf morgen."]},
+ {t:"Ein fester Feierabend-Abschluss",w:"Ein kurzer, immer gleicher Abschluss gibt die Sicherheit, dass nichts verloren geht. Das erleichtert das Abschalten deutlich.",s:["Geh am Ende des Arbeitstags die Feierabend-Liste unter „Heute“ durch.","Notier dabei schon die Top 3 für morgen. Sie stehen dann morgen früh bereit.","Leg dir eine feste Uhrzeit dafür fest und trag sie als wiederkehrenden Termin in den Kalender ein."],src:"Idee: „Shutdown-Ritual“ nach Cal Newport, „Deep Work“"},
+ {t:"Die erste Wochenrückschau",w:"Ein System bleibt nur verlässlich, wenn es regelmäßig auf den aktuellen Stand gebracht wird. Die Wochenrückschau ist dafür der wichtigste feste Termin.",s:["Leg einen wiederkehrenden Termin an, z. B. freitags 13:30 Uhr für 30 Minuten.","Geh heute den Reiter „Woche“ einmal vollständig durch. Beim ersten Mal darf es länger als 10 Minuten dauern.","Notiere, was dir dabei aufgefallen ist."],src:"Methode: „Weekly Review“ nach David Allen, „Getting Things Done“"},
+ {t:"Wichtig oder nur dringend?",w:"Dringendes drängt sich vor, Wichtiges wartet leise. Wer beides unterscheidet, schützt die Zeit für die Aufgaben, die wirklich etwas bewegen.",s:["Markiere in jedem aktiven Projekt „wichtig“ und/oder „dringend“.","Wichtig und nicht dringend: dafür reservierst du bewusst Zeit, bevor es dringend wird.","Weder wichtig noch dringend: Kandidat zum Streichen oder Abgeben."],src:"Eisenhower-Prinzip, bekannt geworden durch Stephen R. Covey, „Die 7 Wege zur Effektivität“"},
+ {t:"Fokuszeit im Kalender",w:"Was keinen Termin hat, wird von Terminen verdrängt. Feste Blöcke machen Projektarbeit planbar.",s:["Trag für diese Woche zwei Blöcke à 90 Minuten in den Kalender ein. Als Titel nimmst du den Projektnamen.","In dieser Zeit: Telefon lautlos, Mailprogramm geschlossen.","Behandle den Block wie einen Kundentermin. Verschieben ja, streichen nein."]},
+ {t:"Arbeiten in 25-Minuten-Etappen",w:"Kurze, klar begrenzte Arbeitsphasen helfen, mit unangenehmen Aufgaben anzufangen und dranzubleiben.",s:["Wähl einen nächsten Schritt aus deinen Projekten.","Stell einen Timer auf 25 Minuten und arbeite nur daran. Danach 5 Minuten Pause.","Nach vier Runden machst du eine längere Pause. Probier es zwei Tage aus und entscheide dann, ob es zu dir passt."],src:"Pomodoro-Technik nach Francesco Cirillo"},
+ {t:"Die Zwei-Minuten-Regel",w:"Kleinigkeiten zu notieren und später zu erledigen kostet oft mehr Zeit, als sie sofort zu erledigen.",s:["Erledige heute alles sofort, was weniger als zwei Minuten dauert.","Alles, was länger dauert, wird ein Schritt in einem Projekt oder landet in den Top 3.","Achte darauf, dass die Regel dich nicht vom Fokusblock abhält. Dort gilt sie nicht."],src:"David Allen, „Getting Things Done“"},
+ {t:"Weniger gleichzeitig",w:"Je mehr Projekte parallel laufen, desto länger dauert jedes einzelne. Eine Obergrenze zwingt dazu, Dinge abzuschließen, bevor Neues beginnt.",s:["Leg fest: höchstens drei Projekte gleichzeitig in Umsetzung.","Was darüber hinausgeht, schiebst du zurück in „Planung“.","Die App warnt dich, sobald mehr als drei Projekte in Umsetzung sind."],src:"Kanban-Prinzip der begrenzten parallelen Arbeit, David J. Anderson, „Kanban“"},
+ {t:"Das Unangenehmste zuerst",w:"Wer die schwierigste Aufgabe gleich morgens erledigt, nimmt dem restlichen Tag den Druck.",s:["Such dir aus deinen Top 3 die Aufgabe aus, die du am liebsten aufschieben würdest.","Erledige sie morgen als Erstes, noch vor den Mails.","Achte darauf, wie sich der restliche Tag danach anfühlt."],src:"Brian Tracy, „Eat That Frog“"},
+ {t:"Wochenrückschau mit Blick auf den Fokus",w:"Nach zwei Wochen zeigt sich, welche Gewohnheiten tragen. Die Rückschau ist der Moment, nachzujustieren.",s:["Geh den Reiter „Woche“ vollständig durch.","Prüfe zusätzlich: Welche Fokusblöcke haben stattgefunden, welche nicht und warum?","Plane die Blöcke für die nächste Woche gleich ein."]},
+ {t:"E-Mails in festen Zeitfenstern",w:"Jedes Nachsehen zwischendurch unterbricht die Konzentration neu. Feste Zeitfenster bündeln den Aufwand.",s:["Leg zwei bis drei feste Zeiten für Mails fest, z. B. 9:00, 13:00 und 16:00 Uhr.","Schließ das Mailprogramm zwischen diesen Zeiten.","Wer dich dringend braucht, ruft an. Das kannst du wichtigen Kontakten auch so sagen."]},
+ {t:"Posteingang mit vier Entscheidungen",w:"Ein voller Posteingang ist eine Liste unentschiedener Fragen. Jede Mail braucht nur eine von vier Entscheidungen.",s:["Nimm dir die ältesten Mails vor und entscheide pro Mail: erledigen (unter 2 Min.), weitergeben, als Schritt in ein Projekt oder Kalender übernehmen, löschen bzw. archivieren.","Halte die Ordnerstruktur flach. Ein einziger Ordner „Archiv“ mit Suchfunktion reicht meistens.","Arbeite heute 10 Minuten so. Den Rest schaffst du an den nächsten Tagen."]},
+ {t:"Vorlagen für Wiederkehrendes",w:"Angebote, Terminbestätigungen, Nachfassmails: Wer sie jedes Mal neu formuliert, verschenkt Zeit.",s:["Such dir die drei Texte heraus, die du in der letzten Woche am häufigsten geschrieben hast.","Leg für jeden eine Vorlage an (in Outlook als Schnellbaustein, in Gmail unter Vorlagen).","Nutze sie eine Woche lang und verbessere sie dabei."]},
+ {t:"Benachrichtigungen aufräumen",w:"Jede Meldung auf Handy oder PC ist eine kleine Unterbrechung. Über den Tag summiert sich das erheblich.",s:["Schalte auf Handy und PC alle Benachrichtigungen aus außer Anrufen, Kalender und Nachrichten von wenigen wichtigen Personen.","Richte den Modus „Nicht stören“ bzw. „Fokus“ für deine Fokusblöcke ein.","Prüf nach einer Woche, ob dir etwas Wichtiges entgangen ist. Meist ist es nichts."]},
+ {t:"Besprechungen mit Ergebnis",w:"Besprechungen ohne klares Ziel erzeugen meist die nächste Besprechung.",s:["Schreib für deinen nächsten Termin vorab drei Zeilen: Ziel, Themen, gewünschtes Ergebnis.","Halte am Ende fest: Wer macht was bis wann?","Übernimm die Ergebnisse direkt als nächste Schritte oder Warten-auf-Einträge in deine Projekte. Wenn du Gespräche aufzeichnest, z. B. mit einem Diktiergerät, nur mit Einverständnis aller Beteiligten."]},
+ {t:"Sauber delegieren",w:"Abgeben spart nur Zeit, wenn klar ist, was am Ende herauskommen soll.",s:["Such dir eine Aufgabe aus, die jemand anderes erledigen kann.","Übergib sie mit vier Angaben: gewünschtes Ergebnis, Termin, Rahmen (Budget, Vorgaben) und wann ihr euch abstimmt.","Setz das Projekt auf „Wartet auf andere“ und trag ein Nachfassdatum ein."]},
+ {t:"Wochenrückschau mit Blick auf die Kommunikation",w:"Mails, Termine und Benachrichtigungen sind die größten Zeitfresser im Büroalltag. Jetzt zeigt sich, was die neuen Regeln bringen.",s:["Geh den Reiter „Woche“ vollständig durch.","Prüfe zusätzlich: Haben die festen Mail-Zeiten funktioniert? Was hat dich trotzdem unterbrochen?","Halte eine Änderung für die nächste Woche fest."]},
+ {t:"Wenn-dann-Pläne",w:"Vorsätze funktionieren deutlich besser, wenn eine konkrete Situation und eine Handlung vorab verknüpft werden.",s:["Formuliere zwei Sätze nach dem Muster „Wenn …, dann …“. Beispiel: „Wenn ich morgens den Rechner einschalte, trage ich zuerst meine Top 3 ein.“","Ein zweites Beispiel: „Wenn es 16:30 Uhr ist, mache ich den Feierabend-Check.“","Schreib beide Sätze gut sichtbar auf, z. B. auf einen Zettel am Bildschirm."],src:"Forschung zu „Implementation Intentions“ von Peter M. Gollwitzer, American Psychologist, 1999"},
+ {t:"Ein Steckbrief pro Projekt",w:"Ein Projekt lässt sich nur abschließen, wenn klar ist, wann es fertig ist.",s:["Öffne die Projekte in Umsetzung.","Trag in den Notizen ein: Ziel, „Fertig ist es, wenn …“, Termin und Beteiligte.","Wenn dir das Ziel unklar ist, ist der nächste Schritt eine Klärung mit dem Auftraggeber."]},
+ {t:"Meilensteine statt Riesenaufgaben",w:"Große Projekte wirken lähmend. Drei bis fünf Zwischenziele machen den Fortschritt sichtbar.",s:["Nimm dein größtes Projekt.","Notier drei bis fünf Meilensteine in den Notizen, jeweils mit grobem Termin.","Der nächste Schritt gehört immer zum nächsten offenen Meilenstein."]},
+ {t:"Puffer einplanen",w:"Menschen unterschätzen regelmäßig, wie lange Aufgaben dauern, selbst wenn sie es aus Erfahrung besser wissen.",s:["Rechne bei deinen nächsten Terminzusagen 30 bis 50 Prozent Puffer ein.","Lass im Kalender täglich einen freien Block für Unvorhergesehenes.","Vergleiche bei einem abgeschlossenen Projekt: Wie lange hast du geschätzt, wie lange hat es gedauert?"],src:"„Planning Fallacy“ nach Daniel Kahneman und Amos Tversky, 1979"},
+ {t:"Digitale Assistenten sinnvoll nutzen",w:"Für Entwürfe, Zusammenfassungen und das Ordnen von Gedanken sparen KI-Assistenten viel Zeit. Prüfen und Entscheiden bleibt deine Aufgabe.",s:["Lass dir eine lange Mail oder ein Gesprächsprotokoll zusammenfassen und die Aufgaben daraus auflisten.","Lass dir einen Entwurf für eine Standardantwort erstellen und pass ihn an deinen Ton an.","Gib keine vertraulichen Kunden- oder Personaldaten ein, solange die Nutzung im Betrieb nicht geklärt ist."]},
+ {t:"Die Stopp-Liste",w:"Jedes Ja zu einem neuen Vorhaben ist ein Nein zu Zeit für die bestehenden.",s:["Geh die Projekte unter „Idee / Eingang“ durch.","Frag dich bei jedem: Mache ich das in den nächsten drei Monaten realistisch? Wenn nicht, setze es mit der Notiz „verworfen“ auf Abgeschlossen.","Leg dir eine freundliche Formulierung für Absagen zurecht."]},
+ {t:"Wochenrückschau mit Blick aufs Ganze",w:"Vier Wochen lang hast du neue Gewohnheiten ausprobiert. Diese Rückschau schaut über die einzelne Woche hinaus.",s:["Geh den Reiter „Woche“ vollständig durch.","Prüfe zusätzlich: Ist die Zahl der Projekte in Umsetzung gesunken? Gibt es Projekte ohne Bewegung seit Wochen?","Entscheide für jedes festgefahrene Projekt: weitermachen, pausieren oder streichen."]},
+ {t:"Monatsbilanz",w:"Nicht jede Methode passt zu jedem Arbeitsalltag. Behalte, was wirkt, und lass den Rest.",s:["Geh die Lektionen im Lernpfad durch.","Markiere für dich die drei Gewohnheiten, die dir am meisten gebracht haben.","Streiche bewusst, was du nicht weiterführen willst."]},
+ {t:"Dein System auf einer Seite",w:"Wer seinen Arbeitsablauf in wenigen Sätzen beschreiben kann, hält ihn auch in stressigen Wochen durch.",s:["Schreib fünf Sätze: Morgens …, Fokuszeiten …, Mails …, Feierabend …, Freitags …","Häng den Text sichtbar auf oder leg ihn als Notiz in ein Projekt „Mein Arbeitssystem“.","Wiederhole einzelne Lektionen, wann immer du merkst, dass eine Gewohnheit nachlässt."]}
+];
+const STAGES=[
+ {id:"idee",n:"Idee / Eingang",h:"Gesammelt, noch nicht geplant"},
+ {id:"planung",n:"Planung",h:"Wird vorbereitet"},
+ {id:"umsetzung",n:"In Umsetzung",h:"Höchstens 3 gleichzeitig"},
+ {id:"warten",n:"Wartet auf andere",h:"Mit Nachfassdatum"},
+ {id:"erledigt",n:"Abgeschlossen",h:"Fertig oder bewusst gestoppt"}
+];
+const SHUT=["Top 3 abgehakt oder bewusst auf morgen verschoben","Posteingang einmal durchgesehen","Nächste Schritte in den Projekten aktualisiert","Kalender für morgen angesehen","Top 3 für morgen notiert (unten)"];
+const REVIEW=["Notizen, Zettel und Posteingänge geleert","Kalender der letzten Woche durchgesehen, Offenes übernommen","Kalender der nächsten zwei Wochen durchgesehen, Vorbereitungen als Schritte angelegt","Jedes aktive Projekt geprüft: Phase und nächster Schritt stimmen (Liste unten)","Warten-auf: fällige Nachfassungen erledigt oder neu terminiert","Ideen durchgesehen: starten, streichen oder liegen lassen","Fokusblöcke für die nächste Woche im Kalender eingetragen"];
+
+/* ---------- Datum ---------- */
+const pad=n=>String(n).padStart(2,"0");
+const ymd=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+const NOW=new Date();
+const TODAY=ymd(NOW);
+const TOMORROW=ymd(new Date(NOW.getFullYear(),NOW.getMonth(),NOW.getDate()+1));
+function isoWeek(d){const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const day=t.getUTCDay()||7;t.setUTCDate(t.getUTCDate()+4-day);const y=t.getUTCFullYear();const w=Math.ceil(((t-Date.UTC(y,0,1))/864e5+1)/7);return{y,w,key:y+"-W"+pad(w)}}
+const WK=isoWeek(NOW);
+const fmt=k=>{if(!k)return"";const p=k.split("-");return p[2]+"."+p[1]+"."};
+const longDate=NOW.toLocaleDateString("de-DE",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+
+/* ---------- Zustand ---------- */
+const S={mode:"loading",ready:false,stale:false,projects:{},progress:{done:{}},days:{},reviews:{},q:"",showDone:false,showNext:false};
+let db=null;
+const LKEY="arbeitskompass-v1";
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const clone=o=>JSON.parse(JSON.stringify(o||{}));
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+
+function day(k){let d=S.days[k];if(!d||!Array.isArray(d.top)){d=Object.assign({shut:{}},d||{});d.top=[0,1,2].map(i=>(d.top&&d.top[i])||{t:"",d:false});S.days[k]=d}if(!d.shut)d.shut={};return d}
+function review(){let r=S.reviews[WK.key];if(!r){r={c:{},p:{},good:"",change:"",goals:""};S.reviews[WK.key]=r}r.c=r.c||{};r.p=r.p||{};return r}
+function done(){S.progress=S.progress||{};S.progress.done=S.progress.done||{};return S.progress.done}
+function curLesson(){const d=done();for(let i=1;i<=LESSONS.length;i++)if(!d[i])return i;return 0}
+function doneToday(){const d=done();return Object.keys(d).filter(k=>d[k]===TODAY).map(Number)}
+
+/* ---------- Speichern ---------- */
+const dirty={},timers={},busy={},again={};
+function getDoc(path){const [c,id]=path.split("/");
+ if(c==="projects")return S.projects[id]||null;
+ if(c==="progress")return S.progress;
+ if(c==="days")return S.days[id]||null;
+ if(c==="reviews")return S.reviews[id]||null;return null}
+function save(path,delay){dirty[path]=true;clearTimeout(timers[path]);timers[path]=setTimeout(()=>{timers[path]=null;flush(path)},delay||0)}
+async function flush(path){
+ if(busy[path]){again[path]=true;return}
+ busy[path]=true;
+ do{again[path]=false;const data=getDoc(path);
+  try{
+   if(S.mode==="cloud"){if(data==null)await db.doc(path).delete();else await db.doc(path).set(clone(data))}
+   else saveLocal();
+  }catch(e){toast(errText(e))}
+ }while(again[path]);
+ busy[path]=false;if(!timers[path])delete dirty[path];
+}
+function errText(e){const c=e&&e.code;
+ if(c==="quota_exceeded")return"Der Speicher ist voll. Lösche alte abgeschlossene Projekte und versuche es erneut.";
+ if(c==="invalid_argument")return"Diese Änderung konnte nicht gespeichert werden. Du hast hier vermutlich nur Leserechte.";
+ if(c==="revoked")return"Der Zugriff auf den Speicher wurde beendet. Lade die Seite neu.";
+ return"Speichern hat gerade nicht geklappt. Bitte versuche es gleich noch einmal."}
+function saveLocal(){try{localStorage.setItem(LKEY,JSON.stringify({projects:S.projects,progress:S.progress,days:S.days,reviews:S.reviews}))}catch(e){}}
+function loadLocal(){try{const o=JSON.parse(localStorage.getItem(LKEY)||"null");if(o){S.projects=o.projects||{};S.progress=o.progress||{done:{}};S.days=o.days||{};S.reviews=o.reviews||{}}}catch(e){}}
+
+/* ---------- Verbindung ---------- */
+async function boot(){
+ route();
+ const c=window.claude;
+ if(c&&typeof c.use==="function"){try{db=await c.use("db")}catch(e){db=null}}
+ if(db){S.mode="cloud";subscribe()}else{S.mode="local";loadLocal();S.ready=true;schedule()}
+}
+function subscribe(){
+ const timer=setTimeout(()=>{if(!S.ready){S.stale=true;schedule()}},10000);
+ const fail=e=>{clearTimeout(timer);S.ready=true;S.err=e&&e.code;schedule()};
+ db.collection("projects").onSnapshot(snap=>{
+  const next={};
+  snap.docs.forEach(d=>{if(!dirty["projects/"+d.id])next[d.id]=clone(d.data())});
+  Object.keys(S.projects).forEach(id=>{if(dirty["projects/"+id])next[id]=S.projects[id]});
+  S.projects=next;
+  if(!snap.metadata.fromCache){S.ready=true;S.stale=false;clearTimeout(timer)}
+  schedule();
+ },fail);
+ db.doc("progress/main").onSnapshot(s=>{if(!dirty["progress/main"])S.progress=s.exists?clone(s.data()):{done:{}};schedule()},fail);
+ [TODAY,TOMORROW].forEach(k=>db.doc("days/"+k).onSnapshot(s=>{if(!dirty["days/"+k]){if(s.exists)S.days[k]=clone(s.data());else delete S.days[k]}schedule()},fail));
+ db.doc("reviews/"+WK.key).onSnapshot(s=>{if(!dirty["reviews/"+WK.key]){if(s.exists)S.reviews[WK.key]=clone(s.data());else delete S.reviews[WK.key]}schedule()},fail);
+}
+
+/* ---------- Rendern ---------- */
+let pending=false,raf=0;
+function editing(){const a=document.activeElement;return a&&$view.contains(a)&&(a.tagName==="TEXTAREA"||(a.tagName==="INPUT"&&a.type!=="checkbox"))}
+function schedule(){if(editing()){pending=true;return}cancelAnimationFrame(raf);raf=requestAnimationFrame(render)}
+document.addEventListener("focusout",()=>setTimeout(()=>{if(pending&&!editing()){pending=false;render()}},0));
+
+const $view=document.getElementById("view");
+function tab(){const h=(location.hash||"").slice(1);return["heute","projekte","lernpfad","woche"].includes(h)?h:"heute"}
+function route(){document.querySelectorAll(".tabs a").forEach(a=>a.toggleAttribute("aria-current",false));const a=document.querySelector('.tabs a[data-tab="'+tab()+'"]');if(a)a.setAttribute("aria-current","page");render();window.scrollTo(0,0)}
+window.addEventListener("hashchange",route);
+
+function render(){
+ const t=tab();
+ if(!S.ready&&S.mode!=="local"){$view.innerHTML='<div class="panel"><p class="muted">'+(S.stale?"Deine Daten sind gerade nicht erreichbar. Prüfe die Verbindung, die Seite versucht es weiter.":"Deine Daten werden geladen …")+"</p></div>";foot();return}
+ $view.innerHTML=t==="heute"?vToday():t==="projekte"?vProjects():t==="lernpfad"?vPath():vWeek();
+ if(t==="projekte")renderBoard();
+ foot();
+}
+function foot(){
+ const f=document.getElementById("foot");
+ if(S.mode==="cloud")f.innerHTML='<span class="dot on"></span>Wird automatisch in deinem Konto gespeichert und ist auf jedem Gerät verfügbar, auf dem du angemeldet bist.'+(S.err?' <span class="pill warn">Verbindungsproblem</span>':"");
+ else if(S.mode==="local")f.innerHTML='<span class="dot loc"></span>Wird nur in diesem Browser gespeichert.';
+ else f.innerHTML='<span class="dot"></span>Verbinde …';
+}
+const active=()=>Object.entries(S.projects).filter(([,p])=>p.stage!=="erledigt");
+const stageOf=id=>STAGES.find(s=>s.id===id)||STAGES[0];
+
+function lessonBlock(n,opts){
+ const L=LESSONS[n-1],wk=n<=7?1:n<=14?2:n<=21?3:4;
+ const isDone=!!done()[n];
+ return '<div class="num">LEKTION '+pad(n)+' / 30 · WOCHE '+wk+': '+esc(WEEKS[wk-1]).toUpperCase()+'</div>'+
+  '<h2>'+esc(L.t)+'</h2><p class="why">'+esc(L.w)+'</p>'+
+  '<ol class="steps">'+L.s.map(s=>'<li><span>'+esc(s)+'</span></li>').join("")+'</ol>'+
+  (L.src?'<p class="src">'+esc(L.src)+'</p>':"")+
+  '<div class="btns">'+(isDone?'<span class="pill ok">Erledigt am '+fmt(done()[n])+'</span><button class="btn ghost" data-act="undo" data-n="'+n+'">Wieder öffnen</button>':'<button class="btn primary" data-act="ldone" data-n="'+n+'">Lektion umgesetzt</button>')+(opts&&opts.more?'<a class="btn ghost" href="#lernpfad">Alle Lektionen</a>':"")+'</div>';
+}
+
+function vToday(){
+ const h=NOW.getHours(),greet=h<11?"Guten Morgen":h<17?"Guten Tag":"Guten Abend";
+ const n=curLesson(),dt=doneToday(),cnt=Object.keys(done()).length;
+ let lesson;
+ if(!n)lesson='<div class="panel lesson"><div class="num">LERNPFAD ABGESCHLOSSEN</div><h2>Alle 30 Lektionen sind umgesetzt.</h2><p class="why">Wiederhole einzelne Lektionen im Lernpfad, wann immer eine Gewohnheit nachlässt. Die Wochenrückschau bleibt dein fester Termin.</p></div>';
+ else if(dt.length&&!S.showNext){const L=LESSONS[n-1];lesson='<div class="panel lesson"><div class="num">DEINE 10 MINUTEN</div><h2>Für heute geschafft.</h2><p class="why">Lektion '+dt.sort((a,b)=>a-b).map(x=>pad(x)).join(", ")+' ist umgesetzt. Morgen geht es weiter mit „'+esc(L.t)+'“. Eine Lektion am Tag reicht, damit sich die Gewohnheiten festigen.</p><div class="btns"><button class="btn" data-act="shownext">Trotzdem schon ansehen</button></div></div>'}
+ else lesson='<div class="panel lesson">'+lessonBlock(n,{more:true})+'</div>';
+
+ const d=day(TODAY);
+ const opts=active().filter(([,p])=>p.nextStep).map(([id,p])=>'<option value="'+id+'">'+esc(p.name)+': '+esc(p.nextStep)+'</option>').join("");
+ const top='<div class="panel"><div class="panel-h"><h2>Top 3 für heute</h2><span class="muted mono">'+d.top.filter(x=>x.d).length+'/3</span></div>'+
+  d.top.map((x,i)=>'<div class="toprow'+(x.d?" done":"")+'"><span class="n">'+(i+1)+'</span><input type="checkbox" id="td'+i+'" data-ch="topd" data-k="'+TODAY+'" data-i="'+i+'" '+(x.d?"checked":"")+' aria-label="Aufgabe '+(i+1)+' erledigt"><input class="field" id="tt'+i+'" data-in="top" data-k="'+TODAY+'" data-i="'+i+'" value="'+esc(x.t)+'" placeholder="'+["Wichtigste Aufgabe des Tages","Zweite Aufgabe","Dritte Aufgabe"][i]+'" autocomplete="off"></div>').join("")+
+  (opts?'<select class="field" id="pick" data-ch="pick"><option value="">Aus nächsten Schritten übernehmen …</option>'+opts+'</select>':'<p class="muted" style="font-size:.86rem">Sobald deine Projekte nächste Schritte haben, kannst du sie hier direkt übernehmen.</p>')+'</div>';
+
+ const act=active(),items=[];
+ act.forEach(([id,p])=>{
+  if(p.stage==="warten"&&p.followUp&&p.followUp<=TODAY)items.push({id,p,k:0,pill:'<span class="pill sun">Nachfassen '+(p.followUp<TODAY?"seit ":"")+fmt(p.followUp)+'</span>',sub:p.waitingFor?"Wartet auf: "+p.waitingFor:"Nachfassen fällig"});
+  if(p.due&&p.due<=TODAY)items.push({id,p,k:1,pill:'<span class="pill warn">'+(p.due<TODAY?"Überfällig ":"Heute fällig ")+fmt(p.due)+'</span>',sub:p.nextStep||"Termin erreicht"});
+  if((p.stage==="planung"||p.stage==="umsetzung")&&!p.nextStep)items.push({id,p,k:2,pill:'<span class="pill plain">Schritt fehlt</span>',sub:stageOf(p.stage).n});
+  if(p.stage==="warten"&&!p.followUp)items.push({id,p,k:3,pill:'<span class="pill plain">Kein Nachfassdatum</span>',sub:p.waitingFor||"Wartet auf andere"});
+ });
+ items.sort((a,b)=>a.k-b.k);
+ const wip=act.filter(([,p])=>p.stage==="umsetzung").length;
+ let att='<div class="panel"><div class="panel-h"><h2>Braucht Aufmerksamkeit</h2><a class="btn ghost small" href="#projekte">Alle Projekte</a></div>';
+ if(wip>3)att+='<div class="callout warn"><b>'+wip+' Projekte gleichzeitig in Umsetzung.</b> Schieb mindestens '+(wip-3)+' zurück in die Planung, damit die anderen schneller fertig werden.</div>';
+ if(!Object.keys(S.projects).length)att+='<p class="muted">Noch keine Projekte erfasst. Lektion 1 zeigt dir, wie du in 10 Minuten alles sammelst.</p><div><a class="btn primary" href="#projekte">Projekte erfassen</a></div>';
+ else if(!items.length)att+='<div class="callout ok">Nichts überfällig, alle aktiven Projekte haben einen nächsten Schritt.</div>';
+ else att+='<ul class="alist">'+items.slice(0,12).map(x=>'<li><button data-act="open" data-id="'+x.id+'"><span class="dotc" style="width:8px;height:8px;border-radius:2px;background:var(--st-'+x.p.stage+')"></span><span class="t">'+esc(x.p.name)+'<small>'+esc(x.sub)+'</small></span>'+x.pill+'</button></li>').join("")+'</ul>'+(items.length>12?'<p class="muted" style="font-size:.84rem">und '+(items.length-12)+' weitere im Reiter Projekte</p>':"");
+ att+='</div>';
+
+ const t2=day(TOMORROW);
+ const shut='<div class="panel"><div class="panel-h"><h2>Feierabend-Check</h2><span class="muted mono">'+SHUT.filter((_,i)=>d.shut[i]).length+'/'+SHUT.length+'</span></div>'+
+  SHUT.map((s,i)=>'<label class="check"><input type="checkbox" id="sh'+i+'" data-ch="shut" data-x="'+i+'" '+(d.shut[i]?"checked":"")+'><span>'+esc(s)+'</span></label>').join("")+
+  '<div class="sub">Top 3 für morgen</div>'+t2.top.map((x,i)=>'<input class="field" id="tm'+i+'" data-in="top" data-k="'+TOMORROW+'" data-i="'+i+'" value="'+esc(x.t)+'" placeholder="Morgen '+(i+1)+'" autocomplete="off">').join("")+
+  (SHUT.every((_,i)=>d.shut[i])?'<div class="callout ok"><b>Feierabend.</b> Alles Offene ist notiert und wartet auf morgen.</div>':"")+'</div>';
+
+ return '<div class="head"><div class="meta"><span class="eyebrow">'+esc(longDate)+' · KW '+WK.w+'</span><h1>'+greet+'</h1></div><div class="meta" style="min-width:200px"><span class="muted" style="font-size:.86rem">Lernpfad: '+cnt+' von 30 Lektionen</span><div class="bar"><span style="width:'+(cnt/30*100).toFixed(1)+'%"></span></div></div></div>'+
+  '<div class="grid2"><div class="col">'+lesson+top+'</div><div class="col">'+att+shut+'</div></div>';
+}
+
+function vProjects(){
+ const act=active().length,all=Object.keys(S.projects).length;
+ return '<div class="head"><div class="meta"><span class="eyebrow">'+act+' aktiv · '+(all-act)+' abgeschlossen</span><h1>Projekte</h1></div></div>'+
+ '<div class="toolbar"><input class="field grow" id="quick" data-in="quick" placeholder="Neues Projekt eingeben und Enter drücken" autocomplete="off" aria-label="Neues Projekt"><button class="btn primary" data-act="new">Projekt mit Details</button>'+
+ '<input class="field" style="flex:0 1 220px" id="search" data-in="search" value="'+esc(S.q)+'" placeholder="Suchen" aria-label="Projekte durchsuchen" autocomplete="off">'+
+ '<label class="check"><input type="checkbox" id="showdone" data-ch="showdone" '+(S.showDone?"checked":"")+'><span>Abgeschlossene zeigen</span></label></div><div id="board"></div>';
+}
+function renderBoard(){
+ const el=document.getElementById("board");if(!el)return;
+ const q=S.q.trim().toLowerCase();
+ const list=Object.entries(S.projects).filter(([,p])=>!q||[p.name,p.nextStep,p.waitingFor,p.notes].join(" ").toLowerCase().includes(q));
+ const stages=STAGES.filter(s=>S.showDone||s.id!=="erledigt");
+ el.className="board"+(S.showDone?"":" nodone");
+ el.innerHTML=stages.map((s,si)=>{
+  const items=list.filter(([,p])=>(p.stage||"idee")===s.id).sort((a,b)=>score(b[1])-score(a[1])||String(a[1].name).localeCompare(b[1].name,"de"));
+  const over=s.id==="umsetzung"&&items.length>3;
+  return '<section class="lane" aria-label="'+esc(s.n)+'"><div class="lane-h"><span class="dot" style="background:var(--st-'+s.id+')"></span><h3>'+esc(s.n)+'</h3><span class="c">'+items.length+'</span></div><div class="lane-hint'+(over?" warn":"")+'">'+(over?"Mehr als 3 gleichzeitig":esc(s.h))+'</div>'+
+   (items.length?items.map(([id,p])=>card(id,p)).join(""):'<div class="empty">'+(s.id==="idee"&&!Object.keys(S.projects).length?"Noch keine Projekte. Trag oben dein erstes ein.":"Leer")+'</div>')+'</section>';
+ }).join("");
+}
+function score(p){let s=0;if(p.imp)s+=2;if(p.urg)s+=1;if(p.due&&p.due<=TODAY)s+=4;if(p.followUp&&p.followUp<=TODAY)s+=3;return s}
+function card(id,p){
+ const st=p.stage||"idee",idx=STAGES.findIndex(s=>s.id===st);
+ const chips=[];
+ if(p.imp)chips.push('<span class="pill acc">wichtig</span>');
+ if(p.urg)chips.push('<span class="pill sun">dringend</span>');
+ if(p.due)chips.push('<span class="pill '+(p.due<=TODAY&&st!=="erledigt"?"warn":"plain")+'">fällig '+fmt(p.due)+'</span>');
+ if(st==="warten"&&p.followUp)chips.push('<span class="pill '+(p.followUp<=TODAY?"sun":"plain")+'">nachfassen '+fmt(p.followUp)+'</span>');
+ let next="";
+ if(st==="warten")next=p.waitingFor?'<div class="next">Wartet auf: '+esc(p.waitingFor)+'</div>':"";
+ else if(st!=="erledigt")next=p.nextStep?'<div class="next">→ '+esc(p.nextStep)+'</div>':(st==="idee"?"":'<div class="next miss">Nächster Schritt fehlt</div>');
+ return '<article class="card" style="--stc:var(--st-'+st+')" data-act="open" data-id="'+id+'" tabindex="0" role="button" aria-label="'+esc(p.name)+' öffnen"><div class="name">'+esc(p.name)+'</div>'+next+(chips.length?'<div class="chips">'+chips.join("")+'</div>':"")+
+  '<div class="acts"><span><button class="iconbtn" data-act="move" data-id="'+id+'" data-dir="-1" '+(idx<=0?"disabled":"")+' aria-label="Eine Phase zurück" title="Eine Phase zurück">◀</button><button class="iconbtn" data-act="move" data-id="'+id+'" data-dir="1" '+(idx>=STAGES.length-1?"disabled":"")+' aria-label="Eine Phase weiter" title="Eine Phase weiter">▶</button></span>'+
+  (st!=="erledigt"&&st!=="warten"&&p.nextStep?'<button class="iconbtn" data-act="step" data-id="'+id+'" title="Schritt erledigt, neuen festlegen">✓ Schritt erledigt</button>':"")+'</div></article>';
+}
+
+function vPath(){
+ const d=done(),cnt=Object.keys(d).length,cur=curLesson();
+ let html='<div class="head"><div class="meta"><span class="eyebrow">10 Minuten am Tag · 30 Lektionen</span><h1>Lernpfad</h1></div><div class="meta" style="min-width:220px"><span class="muted" style="font-size:.86rem">'+cnt+' von 30 umgesetzt</span><div class="bar"><span style="width:'+(cnt/30*100).toFixed(1)+'%"></span></div></div></div>'+
+ '<p class="muted" style="max-width:68ch;margin-bottom:20px">Jede Lektion besteht aus einer kurzen Erklärung und zwei bis drei Handgriffen, die du sofort in deinen echten Projekten umsetzt. Es gibt keinen festen Kalender: Wenn du einen Tag auslässt, geht es einfach mit der nächsten offenen Lektion weiter.</p><div class="weeks">';
+ const ranges=[[1,7],[8,14],[15,21],[22,30]];
+ ranges.forEach((r,wi)=>{
+  html+='<div class="panel"><div class="panel-h"><h2>Woche '+(wi+1)+': '+esc(WEEKS[wi])+'</h2><span class="muted mono">'+(function(){let c=0;for(let i=r[0];i<=r[1];i++)if(d[i])c++;return c})()+'/'+(r[1]-r[0]+1)+'</span></div><ul class="llist">';
+  for(let i=r[0];i<=r[1];i++)html+='<li class="'+(i===cur?"cur":"")+'"><button data-act="lesson" data-n="'+i+'"><span class="ln">'+pad(i)+'</span><span class="lt">'+esc(LESSONS[i-1].t)+'</span>'+(d[i]?'<span class="pill ok">✓ '+fmt(d[i])+'</span>':i===cur?'<span class="pill sun">als Nächstes</span>':'<span></span>')+'</button></li>';
+  html+='</ul></div>';
+ });
+ return html+'</div>';
+}
+
+function vWeek(){
+ const r=review(),act=active().sort((a,b)=>STAGES.findIndex(s=>s.id===a[1].stage)-STAGES.findIndex(s=>s.id===b[1].stage));
+ const c=REVIEW.filter((_,i)=>r.c[i]).length;
+ return '<div class="head"><div class="meta"><span class="eyebrow">Kalenderwoche '+WK.w+' / '+WK.y+'</span><h1>Wochenrückschau</h1></div><span class="pill '+(c===REVIEW.length?"ok":"plain")+'">'+c+' von '+REVIEW.length+' Punkten</span></div>'+
+ '<div class="grid2"><div class="col"><div class="panel"><h2>Ablauf</h2><p class="muted" style="font-size:.88rem">Plane dafür einmal pro Woche 30 Minuten ein, am besten freitags. Die Häkchen gelten nur für diese Kalenderwoche.</p>'+
+ REVIEW.map((s,i)=>'<label class="check"><input type="checkbox" id="rc'+i+'" data-ch="rvc" data-x="'+i+'" '+(r.c[i]?"checked":"")+'><span>'+esc(s)+'</span></label>').join("")+'</div>'+
+ '<div class="panel"><h2>Notizen zur Woche</h2>'+
+ '<label class="l" style="display:flex;flex-direction:column;gap:4px"><span class="sub">Was lief gut?</span><textarea class="field" id="rv-good" data-in="rv" data-f="good" rows="3">'+esc(r.good)+'</textarea></label>'+
+ '<label class="l" style="display:flex;flex-direction:column;gap:4px"><span class="sub">Was ändere ich nächste Woche?</span><textarea class="field" id="rv-change" data-in="rv" data-f="change" rows="3">'+esc(r.change)+'</textarea></label>'+
+ '<label class="l" style="display:flex;flex-direction:column;gap:4px"><span class="sub">Drei Ziele für nächste Woche</span><textarea class="field" id="rv-goals" data-in="rv" data-f="goals" rows="3">'+esc(r.goals)+'</textarea></label></div></div>'+
+ '<div class="col"><div class="panel"><div class="panel-h"><h2>Projekte durchgehen</h2><span class="muted mono">'+act.filter(([id])=>r.p[id]).length+'/'+act.length+'</span></div><p class="muted" style="font-size:.88rem">Öffne jedes Projekt kurz, prüfe Phase und nächsten Schritt und hake es dann ab.</p>'+
+ (act.length?'<ul class="alist">'+act.map(([id,p])=>'<li style="display:grid;grid-template-columns:24px 1fr;align-items:center"><input type="checkbox" id="rp-'+id+'" data-ch="rvp" data-id="'+id+'" '+(r.p[id]?"checked":"")+' aria-label="'+esc(p.name)+' geprüft" style="width:18px;height:18px;accent-color:var(--accent)"><button data-act="open" data-id="'+id+'" style="grid-template-columns:1fr auto"><span class="t">'+esc(p.name)+'<small>'+esc(p.stage==="warten"?("Wartet auf: "+(p.waitingFor||"–")):(p.nextStep||"Kein nächster Schritt"))+'</small></span><span class="pill plain">'+esc(stageOf(p.stage).n)+'</span></button></li>').join("")+'</ul>':'<p class="muted">Keine aktiven Projekte.</p>')+'</div></div></div>';
+}
+
+/* ---------- Projekt-Dialog ---------- */
+const pdlg=document.getElementById("pdlg"),pform=document.getElementById("pform");
+const F=k=>document.getElementById("f-"+k);
+F("stage").innerHTML=STAGES.map(s=>'<option value="'+s.id+'">'+esc(s.n)+'</option>').join("");
+let editId=null,delArm=false;
+function openProject(id,hint){
+ editId=id;delArm=false;const p=id?S.projects[id]:{stage:"idee"};
+ if(id&&!p)return;
+ document.getElementById("p-title").textContent=id?"Projekt bearbeiten":"Neues Projekt";
+ document.getElementById("p-upd").textContent=p.updated?"Zuletzt geändert "+fmt(p.updated):"";
+ document.getElementById("p-upd").hidden=!p.updated;
+ const h=document.getElementById("p-hint");h.hidden=!hint;h.textContent=hint||"";
+ F("name").value=p.name||"";F("stage").value=p.stage||"idee";F("next").value=p.nextStep||"";F("due").value=p.due||"";F("wait").value=p.waitingFor||"";F("follow").value=p.followUp||"";F("imp").checked=!!p.imp;F("urg").checked=!!p.urg;F("notes").value=p.notes||"";
+ const log=(p.log||[]).slice().reverse();
+ document.getElementById("f-logwrap").hidden=!log.length;
+ document.getElementById("f-log").innerHTML=log.map(l=>'<div><span class="mono muted">'+fmt(l.d)+'</span><span>'+esc(l.t)+'</span></div>').join("");
+ F("del").hidden=!id;F("del").textContent="Löschen";
+ try{pdlg.showModal()}catch(e){pdlg.setAttribute("open","")}
+ setTimeout(()=>(hint?F("next"):F("name")).focus(),30);
+}
+pform.addEventListener("submit",e=>{
+ e.preventDefault();
+ const name=F("name").value.trim();if(!name){F("name").focus();return}
+ const id=editId||uid();const old=S.projects[id]||{created:TODAY,log:[]};
+ S.projects[id]=Object.assign({},old,{name,stage:F("stage").value,nextStep:F("next").value.trim(),due:F("due").value,waitingFor:F("wait").value.trim(),followUp:F("follow").value,imp:F("imp").checked,urg:F("urg").checked,notes:F("notes").value,updated:TODAY});
+ save("projects/"+id);pdlg.close();render();toast(editId?"Gespeichert":"Projekt angelegt");
+});
+F("cancel").addEventListener("click",()=>pdlg.close());
+F("del").addEventListener("click",()=>{
+ if(!delArm){delArm=true;F("del").textContent="Wirklich löschen?";return}
+ delete S.projects[editId];save("projects/"+editId);pdlg.close();render();toast("Projekt gelöscht");
+});
+
+/* ---------- Lektions-Dialog ---------- */
+const ldlg=document.getElementById("ldlg");
+function openLesson(n){document.getElementById("lbody").innerHTML=lessonBlock(n)+'<div class="dlg-actions"><span class="sp"></span><button class="btn" data-act="lclose">Schließen</button></div>';try{ldlg.showModal()}catch(e){ldlg.setAttribute("open","")}}
+ldlg.addEventListener("click",e=>{const b=e.target.closest("[data-act]");if(!b)return;handleAct(b);if(b.dataset.act!=="lclose"&&ldlg.open)openLesson(+b.dataset.n||1)});
+
+/* ---------- Ereignisse ---------- */
+function handleAct(b){
+ const a=b.dataset.act,id=b.dataset.id;
+ if(a==="open")openProject(id);
+ else if(a==="new")openProject(null);
+ else if(a==="move"){const p=S.projects[id];if(!p)return;const i=STAGES.findIndex(s=>s.id===(p.stage||"idee"))+Number(b.dataset.dir);if(i<0||i>=STAGES.length)return;p.stage=STAGES[i].id;p.updated=TODAY;save("projects/"+id);render();if(p.stage==="warten"&&!p.followUp)openProject(id,"Auf wen wartest du, und wann fasst du nach?")}
+ else if(a==="step"){const p=S.projects[id];if(!p)return;p.log=(p.log||[]).concat([{d:TODAY,t:p.nextStep}]).slice(-50);p.nextStep="";p.updated=TODAY;save("projects/"+id);render();openProject(id,"Schritt erledigt. Was ist jetzt der nächste konkrete Schritt?")}
+ else if(a==="ldone"){done()[b.dataset.n]=TODAY;S.showNext=false;save("progress/main");render();toast("Lektion "+b.dataset.n+" umgesetzt")}
+ else if(a==="undo"){delete done()[b.dataset.n];save("progress/main");render()}
+ else if(a==="lesson")openLesson(+b.dataset.n);
+ else if(a==="lclose")ldlg.close();
+ else if(a==="shownext"){S.showNext=true;render()}
+}
+$view.addEventListener("click",e=>{const b=e.target.closest("[data-act]");if(b&&!b.disabled)handleAct(b)});
+$view.addEventListener("keydown",e=>{
+ if(e.target.matches&&e.target.matches(".card")&&(e.key==="Enter"||e.key===" ")){e.preventDefault();openProject(e.target.dataset.id)}
+ if(e.target.id==="quick"&&e.key==="Enter"){const v=e.target.value.trim();if(!v)return;const id=uid();S.projects[id]={name:v,stage:"idee",nextStep:"",created:TODAY,updated:TODAY,log:[]};save("projects/"+id);render();const qi=document.getElementById("quick");if(qi)qi.focus();toast("„"+v+"“ angelegt")}
+});
+$view.addEventListener("input",e=>{
+ const t=e.target,k=t.dataset.in;if(!k)return;
+ if(k==="top"){day(t.dataset.k).top[t.dataset.i].t=t.value;save("days/"+t.dataset.k,700)}
+ else if(k==="rv"){review()[t.dataset.f]=t.value;save("reviews/"+WK.key,700)}
+ else if(k==="search"){S.q=t.value;renderBoard()}
+});
+$view.addEventListener("change",e=>{
+ const t=e.target,k=t.dataset.ch;if(!k)return;
+ if(k==="topd"){day(t.dataset.k).top[t.dataset.i].d=t.checked;save("days/"+t.dataset.k);render()}
+ else if(k==="shut"){day(TODAY).shut[t.dataset.x]=t.checked;save("days/"+TODAY);render()}
+ else if(k==="rvc"){review().c[t.dataset.x]=t.checked;save("reviews/"+WK.key);render()}
+ else if(k==="rvp"){review().p[t.dataset.id]=t.checked;save("reviews/"+WK.key);render()}
+ else if(k==="showdone"){S.showDone=t.checked;renderBoard()}
+ else if(k==="pick"){const p=S.projects[t.value];if(!p)return;const d=day(TODAY);const i=d.top.findIndex(x=>!x.t.trim());if(i<0){toast("Alle drei Plätze sind belegt. Leere zuerst einen.");t.value="";return}d.top[i]={t:p.name+": "+p.nextStep,d:false};save("days/"+TODAY);render()}
+});
+
+let tt=0;function toast(m){const el=document.getElementById("toast");el.textContent=m;el.hidden=false;clearTimeout(tt);tt=setTimeout(()=>el.hidden=true,2600)}
+
+boot();
+})();
+</script>
